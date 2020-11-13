@@ -1,0 +1,36 @@
+{
+  "name": "fm-githubjobsapi-challenge",
+  "version": "1.0.0",
+  "description": "![Design preview for the GitHub Jobs API coding challenge](./preview.jpg)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "format": "prettier --write \"src/**/*.{js,html}\"",
+    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakwakwa/FM-GithubJobsApi-Challenge.git"
+  },
+  "author": "Jaco Kotzee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jakwakwa/FM-GithubJobsApi-Challenge/issues"
+  },
+  "homepage": "https://github.com/jakwakwa/FM-GithubJobsApi-Challenge#readme",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.1.2"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}

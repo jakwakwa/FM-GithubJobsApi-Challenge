@@ -5,10 +5,10 @@ import Jobs from "./Jobs";
 const App = () => {
   return (
     <div>
-      <h1>Adopt Me!</h1>
-      <Jobs name="Luna" animal="dog" breed="Havanese" />
-      <Jobs name="Pepper" animal="bird" breed="Cockatiel" />
-      <Jobs name="Doink" animal="cat" breed="Mix" />
+      <h1>Github Jobs Api</h1>
+      <Jobs name="J Kotzee" title="FE Dev" description="na" />
+      <Jobs name="Pepper" title="BE Dev" description="na" />
+      <Jobs name="Doink" title="Fullstack Dev" description="na" />
     </div>
   );
 };

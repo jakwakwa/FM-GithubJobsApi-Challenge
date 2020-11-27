@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import Grid from "@material-ui/core/Grid";
 import JobLogo from "../assets/joblogo.svg";
+import Oval from "../assets/oval.svg";
 
 const Jobs = ({ jobtitle, company, country }) => {
   const Wrapper = styled.div`
@@ -10,6 +12,7 @@ const Jobs = ({ jobtitle, company, country }) => {
     height: 228px;
     border-radius: 6px;
     padding: 30px;
+    padding-top: 50px;
   `;
 
   const Logo = styled.div`
@@ -20,18 +23,46 @@ const Jobs = ({ jobtitle, company, country }) => {
     top: -32px;
   `;
 
+  const OvalIcon = styled.div`
+    position: relative;
+    background: url(${Oval}) no-repeat;
+    width: 4px;
+    height: 4px;
+    bottom: 9px;
+    margin-left: 10px;
+    margin-right: 10px;
+  `;
+
+  const JobTitle = styled.h3`
+    padding-top: 10px;
+    padding-bottom: 10px;
+  `;
+
   const CountryTitle = styled.h4`
     color: #5964e0;
+    padding-top: 40px;
   `;
 
   return (
     <Wrapper>
       <Logo></Logo>
-      <div>
-        <span>1d ago</span>
-        <span>Part Time</span>
-      </div>
-      <h3>{jobtitle}</h3>
+      <Grid
+        container
+        direction="row"
+        justify="flex-start"
+        alignItems="flex-end"
+      >
+        <Grid item>
+          <span>1d ago</span>
+        </Grid>
+        <Grid item>
+          <OvalIcon></OvalIcon>
+        </Grid>
+        <Grid item>
+          <span>Part Time</span>
+        </Grid>
+      </Grid>
+      <JobTitle>{jobtitle}</JobTitle>
       <p>{company}</p>
       <CountryTitle>{country}</CountryTitle>
     </Wrapper>

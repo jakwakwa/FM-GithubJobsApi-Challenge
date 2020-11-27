@@ -31,7 +31,7 @@ function LocationIcon(props) {
   );
 }
 const SearchParams = () => {
-  const [location, setLocation] = useState("City, State/Province");
+  const [location, setLocation] = useState("Filter by location...");
 
   const Wrapper = styled.div`
     position: relative;
@@ -40,6 +40,7 @@ const SearchParams = () => {
     width: 100%;
     height: 80px;
     border-radius: 6px;
+    margin-bottom: 80px;
   `;
 
   const SearchIcon = styled.div`
@@ -53,6 +54,7 @@ const SearchParams = () => {
     height: 80px;
     position: relative;
   `;
+
   const SearchBox = styled.input`
     background-color: #fff;
     height: 80px;
@@ -78,11 +80,10 @@ const SearchParams = () => {
               <SearchIcon>
                 <FilterIcon />
               </SearchIcon>
-
               <SearchBox
                 id="filter"
-                value="Filter by Company, Title or Location"
-                placeholder="Filter by Company, Title or Location"
+                value="Filter by title, companies, expertise..."
+                placeholder="Filter by title, companies, expertise..."
               />
             </Label>
           </Grid>

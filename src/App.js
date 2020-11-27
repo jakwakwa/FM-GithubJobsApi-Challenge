@@ -66,7 +66,7 @@ const App = () => {
         <Grid
           container
           direction="row"
-          justify="center"
+          justify="space-between"
           alignItems="flex-start"
           spacing={3}
         >

@@ -66,7 +66,7 @@ const Header = () => {
     border-bottom-left-radius: 100px;
     overflow: hidden;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding-top: 45px;
     padding: 45px 165px 0 165px;
   `;

@@ -1,12 +1,40 @@
 import React from "react";
+import styled from "styled-components";
+import JobLogo from "../assets/joblogo.svg";
 
-const Jobs = ({ name, title, description }) => {
+const Jobs = ({ jobtitle, company, country }) => {
+  const Wrapper = styled.div`
+    position: relative;
+    background-color: #fff;
+    width: 350px;
+    height: 228px;
+    border-radius: 6px;
+    padding: 30px;
+  `;
+
+  const Logo = styled.div`
+    position: absolute;
+    background: url(${JobLogo}) no-repeat;
+    width: 50px;
+    height: 50px;
+    top: -32px;
+  `;
+
+  const CountryTitle = styled.h4`
+    color: #5964e0;
+  `;
+
   return (
-    <div className="job">
-      <h1>{name}</h1>
-      <h2>{title}</h2>
-      <h2>{description}</h2>
-    </div>
+    <Wrapper>
+      <Logo></Logo>
+      <div>
+        <span>1d ago</span>
+        <span>Part Time</span>
+      </div>
+      <h3>{jobtitle}</h3>
+      <p>{company}</p>
+      <CountryTitle>{country}</CountryTitle>
+    </Wrapper>
   );
 };
 

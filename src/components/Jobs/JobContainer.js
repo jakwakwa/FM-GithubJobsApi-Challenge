@@ -1,5 +1,5 @@
 import React from "react";
-import Jobs from "../Jobs";
+import Jobs from "./Jobs";
 import { Grid } from "@material-ui/core/";
 
 const JobContainer = () => {

@@ -4,8 +4,8 @@ import FormGroup from "@material-ui/core/FormGroup";
 import { Switch } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import styled from "styled-components";
-import headerBg from "../assets/desktop/bg-pattern-header.svg";
-import logo from "../assets/desktop/logo.svg";
+import headerBg from "../../../assets/desktop/bg-pattern-header.svg";
+import logo from "../../../assets/desktop/logo.svg";
 import Typography from "@material-ui/core/Typography";
 import SvgIcon from "@material-ui/core/SvgIcon";
 

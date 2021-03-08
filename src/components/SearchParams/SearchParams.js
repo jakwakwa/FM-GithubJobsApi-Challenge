@@ -33,39 +33,6 @@ function LocationIcon(props) {
 const SearchParams = () => {
   const [location, setLocation] = useState("Filter by location...");
 
-  const Wrapper = styled.div`
-    position: relative;
-    top: -40px;
-    background-color: #fff;
-    width: 100%;
-    height: 80px;
-    border-radius: 6px;
-    margin-bottom: 80px;
-  `;
-
-  const SearchIcon = styled.div`
-    position: absolute;
-    top: -5px;
-    left: 23px;
-  `;
-
-  const Label = styled.label`
-    background-color: #fff;
-    height: 80px;
-    position: relative;
-  `;
-
-  const SearchBox = styled.input`
-    background-color: #fff;
-    height: 80px;
-    width: 100%;
-    border: none;
-    resize: none;
-    outline: none;
-    padding: 23px;
-    padding-left: 60px;
-  `;
-
   return (
     <Wrapper>
       <form>
@@ -128,3 +95,36 @@ const SearchParams = () => {
 };
 
 export default SearchParams;
+
+const Wrapper = styled.div`
+  position: relative;
+  top: -40px;
+  background-color: #fff;
+  width: 100%;
+  height: 80px;
+  border-radius: 6px;
+  margin-bottom: 80px;
+`;
+
+const SearchIcon = styled.div`
+  position: absolute;
+  top: -5px;
+  left: 23px;
+`;
+
+const Label = styled.label`
+  background-color: #fff;
+  height: 80px;
+  position: relative;
+`;
+
+const SearchBox = styled.input`
+  background-color: #fff;
+  height: 80px;
+  width: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  padding: 23px;
+  padding-left: 60px;
+`;

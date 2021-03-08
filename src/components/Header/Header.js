@@ -59,24 +59,6 @@ const Header = () => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const Wrapper = styled.header`
-    background: url(${headerBg}) no-repeat top center fixed;
-    width: 100%;
-    height: 162px;
-    border-bottom-left-radius: 100px;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-around;
-    padding-top: 45px;
-    padding: 45px 165px 0 165px;
-  `;
-
-  const Logo = styled.div`
-    background: url(${logo}) no-repeat;
-    width: 115px;
-    height: 32px;
-  `;
-
   return (
     <div className={classes.root}>
       <Wrapper>
@@ -102,3 +84,21 @@ const Header = () => {
 };
 
 export default Header;
+
+const Wrapper = styled.header`
+  background: url(${headerBg}) no-repeat top center fixed;
+  width: 100%;
+  height: 162px;
+  border-bottom-left-radius: 100px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 45px;
+  padding: 45px 165px 0 165px;
+`;
+
+const Logo = styled.div`
+  background: url(${logo}) no-repeat;
+  width: 115px;
+  height: 32px;
+`;

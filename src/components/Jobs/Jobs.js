@@ -4,7 +4,10 @@ import Grid from "@material-ui/core/Grid";
 import JobLogo from "../../../assets/joblogo.svg";
 import Oval from "../../../assets/oval.svg";
 
-const Jobs = ({ jobtitle, company, country }) => {
+import Moment from "react-moment";
+
+const Jobs = ({ jobtitle, company, country, typePos, date }) => {
+  const dateToFormat = date;
   return (
     <Wrapper>
       <Logo></Logo>
@@ -15,13 +18,15 @@ const Jobs = ({ jobtitle, company, country }) => {
         alignItems="flex-end"
       >
         <Grid item>
-          <span>1d ago</span>
+          <span>
+            <Moment fromNow>{dateToFormat}</Moment>
+          </span>
         </Grid>
         <Grid item>
           <OvalIcon></OvalIcon>
         </Grid>
         <Grid item>
-          <span>Part Time</span>
+          <span>{typePos}</span>
         </Grid>
       </Grid>
       <JobTitle>{jobtitle}</JobTitle>
@@ -41,6 +46,7 @@ const Wrapper = styled.div`
   border-radius: 6px;
   padding: 30px;
   padding-top: 50px;
+  margin-top: 50px;
 `;
 
 const Logo = styled.div`

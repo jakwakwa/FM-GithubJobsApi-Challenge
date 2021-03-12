@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import SearchParams from "./components/SearchParams/SearchParams";
 import GlobalStyles from "./styles/theme/GlobalStyles";
 import Layout from "./components/Layout/Layout";
-import JobContainer from "./components/Jobs/JobContainer";
 import { Container } from "@material-ui/core/";
 
 const App = () => {
@@ -13,7 +12,6 @@ const App = () => {
       <Layout />
       <Container maxWidth="lg">
         <SearchParams />
-        <JobContainer />
       </Container>
     </div>
   );

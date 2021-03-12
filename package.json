@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "![Design preview for the GitHub Jobs API coding challenge](./preview.jpg)",
   "main": "index.js",
+  "proxy" : "https://jobs.github.com",
   "scripts": {
     "dev": "parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,html}\"",
@@ -33,9 +34,12 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@types/react": "^16.8.6",
-    "react": ">=16.3.0",
+    "moment": "^2.29.0",
+    "prop-types": "^15.7.0",
+    "react": "^16.0 || ^17.0.0",
     "react-dom": "^16.8.0",
     "react-helmet": "^6.1.0",
+    "react-moment": "^1.1.1",
     "styled-components": "^5.2.1"
   }
 }

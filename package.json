@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "![Design preview for the GitHub Jobs API coding challenge](./preview.jpg)",
   "main": "index.js",
-  "proxy" : "https://jobs.github.com",
   "scripts": {
     "dev": "parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,html}\"",

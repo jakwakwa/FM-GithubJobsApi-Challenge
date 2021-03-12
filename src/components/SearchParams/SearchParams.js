@@ -11,15 +11,22 @@ import JobContainer from "../Jobs/JobContainer";
 
 const SearchParams = () => {
   const [locationInput, setLocationInput] = useState("");
+  const [descriptionInput, setDescriptionInput] = useState("");
   const [locationProp, setLocationProp] = useState("");
+  const [descriptionProp, setDescriptionProp] = useState("");
 
-  const handleLocation = (e) => {
+  const handleLocationFilter = (e) => {
     setLocationInput(e.target.value);
+  };
+
+  const handleDescriptionFilter = (e) => {
+    setDescriptionInput(e.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLocationProp(locationInput);
+    setDescriptionProp(descriptionInput);
   };
 
   return (
@@ -32,16 +39,17 @@ const SearchParams = () => {
           alignItems="flex-start"
         >
           <Grid item xs>
-            {/*<Label htmlFor="filter">
+            <Label htmlFor="filter">
               <SearchIcon>
                 <FilterIcon />
               </SearchIcon>
               <SearchInput
                 id="filter"
-                value="Filter by title, companies, expertise..."
-                placeholder="Filter by title, companies, expertise..."
+                value={descriptionInput}
+                placeholder="Filter by description, companies, expertise..."
+                onChange={handleDescriptionFilter}
               />
-            </Label>*/}
+            </Label>
           </Grid>
           <Grid item xs>
             <Label htmlFor="location">
@@ -56,7 +64,7 @@ const SearchParams = () => {
                 id="location"
                 value={locationInput}
                 placeholder="Filter by location..."
-                onChange={handleLocation}
+                onChange={handleLocationFilter}
               />
             </Label>
           </Grid>
@@ -86,7 +94,7 @@ const SearchParams = () => {
         </Grid>
       </form>
 
-      <JobContainer location={locationProp} />
+      <JobContainer description={descriptionProp} location={locationProp} />
     </Wrapper>
   );
 };

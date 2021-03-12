@@ -3,57 +3,32 @@ import "regenerator-runtime/runtime";
 import Jobs from "./Jobs";
 import { Grid } from "@material-ui/core/";
 
-const JobContainer = ({ location }) => {
-  console.log(location.length);
+const JobContainer = ({ description, location }) => {
   let urlNow =
-    "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json";
-  if (location.length === 0) {
-    null;
-  } else {
-    console.log(location);
-    urlNow = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions?&location=${location}`;
+    "https:cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json";
+  if (description.length === 0 && location.length > 0) {
+    urlNow = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?&location=${location}`;
+  } else if (location.length === 0 && description.length > 0) {
+    urlNow = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${description}`;
+  } else if (description.length > 0 && location.length > 0) {
+    urlNow = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${description}&location=${location}`;
   }
-  console.log(urlNow);
 
   const [positions, setPositions] = useState([]);
-  //
-  //  if (location === undefined) {
-  //    console.log("location in JobContainer", "not");
-  //  } else {
-  //    console.log(location);
-  //    newLocation += location;
-  //  }
-  //  if (newLocation.length === 0) {
-  //    console.log("new location still empty");
-  //  } else {
-  //    console.log(newLocation);
-  //  }
-  //
-  //  const handleUrl = (loc) => {
-  //    if (!loc.length === undefined) {
-  //      url += `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions?&location=${loc}`;
-  //    } else {
-  //      url +=
-  //        "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json";
-  //    }
-  //
-  //    console.log("url in handleUrl()", url);
-  //    return url;
-  //  };
-  //
-  //  handleUrl(newLocation);
-  //
+
   useEffect(() => {
     const getDataFromApi = async () => {
-      const response = await fetch(urlNow, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Access-Control-Allow-Origin": "http://localhost:1234/",
-          "Access-Control-Allow-Credentials": "true",
-        },
-      }).then((res) => res.json());
-      setPositions(response);
+      try {
+        const response = await fetch(urlNow, {
+          method: "GET",
+          mode: "cors",
+        });
+        const jsonData = await response.json();
+        setPositions(jsonData);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log("Fetch error: ", error);
+      }
     };
     getDataFromApi();
   }, [urlNow]);

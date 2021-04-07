@@ -14,6 +14,12 @@ const SearchParams = () => {
   const [descriptionInput, setDescriptionInput] = useState("");
   const [locationProp, setLocationProp] = useState("");
   const [descriptionProp, setDescriptionProp] = useState("");
+  const [fullTimeInput, setFullTimeInput] = React.useState({
+    checkedA: false,
+  });
+  let initCount = 0;
+
+  const [fullTimeProp, setFullTimeProp] = useState("");
 
   const handleLocationFilter = (e) => {
     setLocationInput(e.target.value);
@@ -23,10 +29,19 @@ const SearchParams = () => {
     setDescriptionInput(e.target.value);
   };
 
+  const handleFullTimeFilter = (event) => {
+    setFullTimeInput({
+      ...fullTimeInput,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
   const handleSubmit = (event) => {
+    initCount = 0;
     event.preventDefault();
     setLocationProp(locationInput);
     setDescriptionProp(descriptionInput);
+    setFullTimeProp(fullTimeInput.checkedA);
   };
 
   return (
@@ -77,9 +92,20 @@ const SearchParams = () => {
             xs
             style={{ height: "80px" }}
           >
-            <FormControlLabel
+            {/*<FormControlLabel
               control={<Checkbox checked={false} name="gilad" />}
               label="Full time only"
+            />*/}
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={fullTimeInput.checkedA}
+                  onChange={handleFullTimeFilter}
+                  name="checkedA"
+                  color="primary"
+                />
+              }
+              label="Full Time Only"
             />
             <Button
               type="Submit"
@@ -93,7 +119,12 @@ const SearchParams = () => {
         </Grid>
       </form>
 
-      <JobContainer description={descriptionProp} location={locationProp} />
+      <JobContainer
+        description={descriptionProp}
+        location={locationProp}
+        fullTime={fullTimeProp}
+        initialCounter={initCount}
+      />
     </Wrapper>
   );
 };

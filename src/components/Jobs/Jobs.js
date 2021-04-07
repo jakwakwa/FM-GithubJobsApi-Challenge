@@ -6,7 +6,7 @@ import Oval from "../../../assets/oval.svg";
 
 import Moment from "react-moment";
 // TODO: add id from parent
-const Jobs = ({ jobtitle, company, country, typePos, date, id }) => {
+const Jobs = ({ jobtitle, company, country, typePos, date }) => {
   const dateToFormat = date;
   return (
     <Wrapper>

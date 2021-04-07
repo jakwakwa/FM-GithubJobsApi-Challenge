@@ -3,17 +3,11 @@ import "regenerator-runtime/runtime";
 import Jobs from "./Jobs";
 import { Grid } from "@material-ui/core/";
 
-const JobContainer = ({ description, location }) => {
-  let urlNow =
-    "https:cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json";
-  if (description.length === 0 && location.length > 0) {
-    urlNow = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?&location=${location}`;
-  } else if (location.length === 0 && description.length > 0) {
-    urlNow = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${description}`;
-  } else if (description.length > 0 && location.length > 0) {
-    urlNow = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${description}&location=${location}`;
-  }
+import { urlUpdater } from "./utils/utils";
+import { Link } from "@reach/router";
 
+const JobContainer = ({ description, location }) => {
+  let urlNow = urlUpdater(location, description);
   const [positions, setPositions] = useState([]);
 
   useEffect(() => {
@@ -24,12 +18,13 @@ const JobContainer = ({ description, location }) => {
           mode: "cors",
         });
         const jsonData = await response.json();
-        setPositions(jsonData);
+        setPositions(jsonData || []);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log("Fetch error: ", error);
       }
     };
+    setPositions([]);
     getDataFromApi();
   }, [urlNow]);
 
@@ -43,13 +38,16 @@ const JobContainer = ({ description, location }) => {
     >
       {positions.map((pos) => (
         <Grid key={pos.id} item>
-          <Jobs
-            typePos={pos.type}
-            date={pos.created_at}
-            jobtitle={pos.title}
-            company={pos.company}
-            country={pos.location}
-          />
+          <Link to={`/details/${pos.id}`}>
+            <Jobs
+              typePos={pos.type}
+              date={pos.created_at}
+              jobtitle={pos.title}
+              company={pos.company}
+              country={pos.location}
+              id={pos.id}
+            />
+          </Link>
         </Grid>
       ))}
     </Grid>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@reach/router";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import FormGroup from "@material-ui/core/FormGroup";
 import { Switch } from "@material-ui/core";
@@ -62,7 +63,9 @@ const Header = () => {
   return (
     <div className={classes.root}>
       <Wrapper>
-        <Logo></Logo>
+        <Link to="/">
+          <Logo></Logo>
+        </Link>
         <FormGroup>
           <Typography component="div">
             <Grid direction="row" container alignItems="center" spacing={2}>

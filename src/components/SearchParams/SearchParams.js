@@ -83,9 +83,8 @@ const SearchParams = () => {
             />
             <Button
               type="Submit"
-              variant="contained"
-              size="large"
               color="primary"
+              variant="contained"
               value="Submit"
             >
               Search

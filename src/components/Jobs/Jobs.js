@@ -5,8 +5,8 @@ import JobLogo from "../../../assets/joblogo.svg";
 import Oval from "../../../assets/oval.svg";
 
 import Moment from "react-moment";
-
-const Jobs = ({ jobtitle, company, country, typePos, date }) => {
+// TODO: add id from parent
+const Jobs = ({ jobtitle, company, country, typePos, date, id }) => {
   const dateToFormat = date;
   return (
     <Wrapper>
@@ -30,7 +30,7 @@ const Jobs = ({ jobtitle, company, country, typePos, date }) => {
         </Grid>
       </Grid>
       <JobTitle>{jobtitle}</JobTitle>
-      <p>{company}</p>
+      <CompanyName>{company}</CompanyName>
       <CountryTitle>{country}</CountryTitle>
     </Wrapper>
   );
@@ -70,9 +70,20 @@ const OvalIcon = styled.div`
 const JobTitle = styled.h3`
   padding-top: 10px;
   padding-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+const CompanyName = styled.p`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const CountryTitle = styled.h4`
   color: #5964e0;
   padding-top: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

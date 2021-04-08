@@ -75,7 +75,6 @@ class JobDetails extends React.Component {
             <Grid
               container
               style={{
-                backgroundColor: "#fff",
                 height: "140px",
                 borderRadius: "6px",
               }}
@@ -141,7 +140,7 @@ class JobDetails extends React.Component {
               direction="row"
               justify="space-between"
               alignItems="center"
-              style={{ width: "80vw" }}
+              style={{ width: "60vw" }}
             >
               <div>
                 <CompanyTitle>{company}</CompanyTitle>
@@ -165,12 +164,13 @@ export default JobDetails;
 
 const CompanyDetails = styled.div`
   margin-top: -50px;
+  background: ${({ theme }) => theme.jobcards};
 `;
 
 const CompanyJobDescription = styled.div`
   margin-top: 50px;
   padding: 48px;
-  background-color: #fff;
+  background: ${({ theme }) => theme.jobcards};
 `;
 
 const CompanyLogo = styled.div`
@@ -191,6 +191,13 @@ const CompanySiteUrl = styled.p`
 
 const DescriptionWrapper = styled.div`
   padding: 48px 0;
+  & p {
+    padding-bottom: 24px;
+  }
+  & p > strong {
+    /* styles to apply to the li tag */
+    margin-bottom: 24px;
+  }
 `;
 
 const JobType = styled.div`
@@ -230,7 +237,7 @@ const ApplyNowBackground = styled.div`
   z-index: 3;
   bottom: 0px;
   left: 0;
-  background-color: #fff;
+  background: ${({ theme }) => theme.jobcards};
   height: 96px;
   width: 100vw;
 `;

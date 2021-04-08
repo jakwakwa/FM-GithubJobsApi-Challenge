@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import JobLogo from "../../../assets/joblogo.svg";
 import Oval from "../../../assets/oval.svg";
-
+//import { darkTheme } from "./styles/theme/themetest/ThemeStyled";
 import Moment from "react-moment";
 // TODO: add id from parent
 const Jobs = ({ jobtitle, company, country, typePos, date }) => {
@@ -40,7 +40,7 @@ export default Jobs;
 
 const Wrapper = styled.div`
   position: relative;
-  background-color: #fff;
+  background: ${({ theme }) => theme.jobcards};
   width: 350px;
   height: 228px;
   border-radius: 6px;
@@ -68,6 +68,7 @@ const OvalIcon = styled.div`
 `;
 
 const JobTitle = styled.h3`
+  color: ${({ theme }) => theme.jobcardTitle};
   padding-top: 10px;
   padding-bottom: 10px;
   white-space: nowrap;
@@ -75,6 +76,7 @@ const JobTitle = styled.h3`
   text-overflow: ellipsis;
 `;
 const CompanyName = styled.p`
+  color: ${({ theme }) => theme.jobText};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

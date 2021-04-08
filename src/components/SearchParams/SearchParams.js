@@ -134,7 +134,7 @@ export default SearchParams;
 const Wrapper = styled.div`
   position: relative;
   top: -40px;
-  background-color: #fff;
+  background: ${({ theme }) => theme.jobcards};
   width: 100%;
   height: 80px;
   border-radius: 6px;
@@ -153,7 +153,7 @@ const Label = styled.label`
 `;
 
 const SearchInput = styled.input`
-  background-color: #fff;
+  background: ${({ theme }) => theme.jobcards};
   height: 80px;
   width: 100%;
   border: none;

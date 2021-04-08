@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "@reach/router";
+
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import FormGroup from "@material-ui/core/FormGroup";
 import { Switch } from "@material-ui/core";
@@ -52,12 +53,11 @@ function NightIcon(props) {
 
 const Header = () => {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
+  const [themeColor, setThemeColor] = useState({
+    checkedA: false,
   });
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    setThemeColor({ ...themeColor, [event.target.name]: event.target.checked });
   };
 
   return (
@@ -72,9 +72,9 @@ const Header = () => {
               <DayIcon style={{ color: "#fff" }} />
 
               <WhiteSwitch
-                checked={state.checkedC}
+                checked={themeColor.checkedA}
                 onChange={handleChange}
-                name="checkedC"
+                name="checkedA"
               />
 
               <NightIcon style={{ color: "#fff", marginTop: "2px" }} />

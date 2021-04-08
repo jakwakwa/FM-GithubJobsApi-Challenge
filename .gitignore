@@ -17,7 +17,7 @@
 # Standard things to hide 
 node_modules
 .cache/
-dist/
+
 .env
 coverage/
 .vscode/

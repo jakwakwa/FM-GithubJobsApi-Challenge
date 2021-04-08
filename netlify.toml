@@ -1,8 +1,8 @@
 
 
 # A basic redirect rule
-[[redirects]]
-  from = "/cors-proxy/*"
-  to = ":splat"
-  status = 200
-  force = true
+#[[redirects]]
+#  from = "/cors-proxy/*"
+#  to = ":splat"
+#  status = 200
+#  force = true

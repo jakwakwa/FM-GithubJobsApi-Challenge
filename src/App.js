@@ -17,6 +17,7 @@ import { DayIcon, NightIcon } from "./icons/Icons";
 
 const App = () => {
   const [theme, setTheme] = useState("light");
+
   const themeToggler = () => {
     theme === "light" ? setTheme("dark") : setTheme("light");
   };
@@ -41,6 +42,7 @@ const App = () => {
           <Container maxWidth="lg">
             <Router>
               <SearchParams path="/" />
+
               <JobDetails
                 path="/details/:id"
                 location="San Francisco"

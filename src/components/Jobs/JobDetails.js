@@ -5,6 +5,8 @@ import JobLogo from "../../../assets/jobdetailslogo.svg";
 import { PrimaryButton, SecondaryButton } from "../Buttons/Buttons";
 import Oval from "../../../assets/oval.svg";
 import Moment from "react-moment";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import JobSkeletons from "./JobSkeletons";
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -52,7 +54,23 @@ class JobDetails extends React.Component {
   }
   render() {
     if (this.state.loading) {
-      return <h1>loading...</h1>;
+      return (
+        <>
+          <LinearProgress
+            color="secondary"
+            style={{
+              position: "fixed",
+              top: "0px",
+              left: "0px",
+              zIndex: "200",
+              width: "100vw",
+            }}
+          />
+          <Grid container>
+            <JobSkeletons variant="text" />
+          </Grid>
+        </>
+      );
     }
 
     const {

@@ -3,9 +3,9 @@ import "regenerator-runtime/runtime";
 import styled from "styled-components";
 import Jobs from "./Jobs";
 import { Grid } from "@material-ui/core/";
-
+import LinearProgress from "@material-ui/core/LinearProgress";
 import { PrimaryButton } from "../Buttons/Buttons";
-
+import JobSkeletons from "./JobSkeletons";
 import { urlUpdater } from "./utils/utils";
 import { Link } from "@reach/router";
 
@@ -56,6 +56,18 @@ const JobContainer = ({ description, location, fullTime, initialCounter }) => {
 
   return (
     <>
+      {positions.length === 0 ? (
+        <LinearProgress
+          color="secondary"
+          style={{
+            position: "fixed",
+            top: "0px",
+            left: "0px",
+            zIndex: "200",
+            width: "100vw",
+          }}
+        />
+      ) : null}
       <Grid
         container
         direction="row"
@@ -63,6 +75,19 @@ const JobContainer = ({ description, location, fullTime, initialCounter }) => {
         alignItems="flex-start"
         spacing={3}
       >
+        {positions.length === 0 ? (
+          <>
+            <Grid item style={{ width: "350px" }}>
+              <JobSkeletons />
+            </Grid>
+            <Grid item style={{ width: "350px" }}>
+              <JobSkeletons />
+            </Grid>
+            <Grid item style={{ width: "350px" }}>
+              <JobSkeletons />
+            </Grid>
+          </>
+        ) : null}
         {positions.map((pos) => (
           <Grid key={pos.id} item>
             <Link to={`/details/${pos.id}`}>

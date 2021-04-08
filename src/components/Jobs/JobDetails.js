@@ -18,9 +18,13 @@ class JobDetails extends React.Component {
     // TODO get id from props
 
     const getDataFromApi = async () => {
+      const PROXY =
+        window.location.hostname === "localhost"
+          ? "https://cors-anywhere.herokuapp.com"
+          : "/cors-proxy";
       try {
         const response = await fetch(
-          `https:cors-anywhere.herokuapp.com/https://jobs.github.com/positions/${this.props.id}.json`,
+          `${PROXY}/https://jobs.github.com/positions/${this.props.id}.json`,
           {
             method: "GET",
             mode: "cors",

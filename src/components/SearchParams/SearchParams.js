@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     borderRadius: 3,
     width: 24,
     height: 24,
-
+    backgroundColor: "#E7E8E9",
     "$root.Mui-focusVisible &": {
       outline: "2px auto rgba(19,124,189,.6)",
       outlineOffset: 2,
@@ -230,9 +230,6 @@ const CheckBoxStyled = styled.div`
     font-size: 15px;
   }
   & label span span span {
-    background: ${({ theme }) => theme.checkboxBg};
-  }
-  & .makeStyles-checkedIcon-10 {
-    background: #5964e0;
+    opacity: ${({ theme }) => theme.checkboxBg};
   }
 `;

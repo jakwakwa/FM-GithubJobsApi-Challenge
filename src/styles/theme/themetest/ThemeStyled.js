@@ -9,7 +9,6 @@ export const lightTheme = {
   background: "#363537",
   bullets: "#5964E0",
   stroke: "#E7E8E9",
-  checkboxBg: "rgba(25,32,45,0.1)",
 };
 export const darkTheme = {
   body: "#121721",
@@ -22,5 +21,4 @@ export const darkTheme = {
   background: "#121721",
   bullets: "#5964E0",
   stroke: "#2A3342",
-  checkboxBg: "rgba(255,255,255,0.1)",
 };

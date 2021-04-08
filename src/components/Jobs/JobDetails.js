@@ -184,12 +184,14 @@ const CompanyDetails = styled.div`
   margin-top: -50px;
   background: ${({ theme }) => theme.jobcards};
   border-radius: 6px;
+  overflow: hidden;
 `;
 
 const CompanyJobDescription = styled.div`
   margin-top: 32px;
   padding: 48px 48px 0 48px;
   background: ${({ theme }) => theme.jobcards};
+  border-radius: 6px;
 `;
 
 const CompanyLogo = styled.div`

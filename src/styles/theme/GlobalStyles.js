@@ -81,7 +81,7 @@ p a {
     line-height: 26px;
 }
 
-span {
+div.span {
     color: ${({ theme }) => theme.jobText};
 }
 

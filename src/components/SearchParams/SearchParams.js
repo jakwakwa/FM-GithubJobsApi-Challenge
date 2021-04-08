@@ -1,15 +1,77 @@
 import React, { useState } from "react";
-
+import clsx from "clsx";
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { PrimaryButton } from "../Buttons/Buttons";
 
 import { FilterIcon, LocationIcon } from "./Icons/Icons";
 import JobContainer from "../Jobs/JobContainer";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  root: {
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+  },
+  icon: {
+    borderRadius: 3,
+    width: 24,
+    height: 24,
+
+    "$root.Mui-focusVisible &": {
+      outline: "2px auto rgba(19,124,189,.6)",
+      outlineOffset: 2,
+    },
+    "input:hover ~ &": {
+      backgroundColor: "#D5D8F7",
+    },
+    "input:disabled ~ &": {
+      boxShadow: "none",
+      background: "rgba(206,217,224,.5)",
+    },
+  },
+  checkedIcon: {
+    backgroundColor: "#5964E0",
+    backgroundImage:
+      "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+    "&:before": {
+      display: "block",
+      width: 24,
+      height: 24,
+      backgroundImage:
+        "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
+        " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
+        "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
+      content: '""',
+    },
+    "input:hover ~ &": {
+      backgroundColor: "#106ba3",
+    },
+  },
+});
+
+// Inspired by blueprintjs
+function StyledCheckbox(props) {
+  const classes = useStyles();
+
+  return (
+    <Checkbox
+      className={classes.root}
+      color="default"
+      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+      icon={<span className={classes.icon} />}
+      inputProps={{ "aria-label": "decorative checkbox" }}
+      {...props}
+    />
+  );
+}
 
 const SearchParams = () => {
+  //const classes = useStyles();
   const [locationInput, setLocationInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
   const [locationProp, setLocationProp] = useState("");
@@ -45,79 +107,69 @@ const SearchParams = () => {
   };
 
   return (
-    <Wrapper>
-      <form onSubmit={handleSubmit}>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="flex-start"
-        >
-          <Grid item xs>
-            <Label htmlFor="filter">
-              <SearchIcon>
-                <FilterIcon />
-              </SearchIcon>
-              <SearchInput
-                id="filter"
-                value={descriptionInput}
-                placeholder="Filter by description, companies, expertise..."
-                onChange={handleDescriptionFilter}
-              />
-            </Label>
-          </Grid>
-          <Grid item xs>
-            <Label htmlFor="location">
-              <SearchIcon>
-                <LocationIcon />
-              </SearchIcon>
-              <SearchInput
-                style={{
-                  borderRight: "1px solid #E7E8E9",
-                  borderLeft: "1px solid #E7E8E9",
-                }}
-                id="location"
-                value={locationInput}
-                placeholder="Filter by location..."
-                onChange={handleLocationFilter}
-              />
-            </Label>
-          </Grid>
+    <>
+      <Wrapper>
+        <form onSubmit={handleSubmit}>
           <Grid
             container
             direction="row"
-            justify="space-around"
-            alignItems="center"
-            item
-            xs
-            style={{ height: "80px" }}
+            justify="center"
+            alignItems="flex-start"
           >
-            {/*<FormControlLabel
-              control={<Checkbox checked={false} name="gilad" />}
-              label="Full time only"
-            />*/}
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={fullTimeInput.checkedA}
-                  onChange={handleFullTimeFilter}
-                  name="checkedA"
-                  color="primary"
+            <Grid item xs>
+              <Label htmlFor="filter">
+                <SearchIcon>
+                  <FilterIcon />
+                </SearchIcon>
+                <SearchInput
+                  id="filter"
+                  value={descriptionInput}
+                  placeholder="Filter by description, companies, expertise..."
+                  onChange={handleDescriptionFilter}
                 />
-              }
-              label="Full Time Only"
-            />
-            <Button
-              type="Submit"
-              color="primary"
-              variant="contained"
-              value="Submit"
+              </Label>
+            </Grid>
+            <Grid item xs>
+              <Label htmlFor="location">
+                <SearchIcon>
+                  <LocationIcon />
+                </SearchIcon>
+                <SearchInput
+                  id="location"
+                  value={locationInput}
+                  placeholder="Filter by location..."
+                  onChange={handleLocationFilter}
+                />
+              </Label>
+            </Grid>
+            <Grid
+              container
+              direction="row"
+              justify="space-around"
+              alignItems="center"
+              item
+              xs
+              style={{ height: "80px" }}
             >
-              Search
-            </Button>
+              <CheckBoxStyled>
+                <FormControlLabel
+                  control={
+                    <StyledCheckbox
+                      checked={fullTimeInput.checkedA}
+                      onChange={handleFullTimeFilter}
+                      name="checkedA"
+                    />
+                  }
+                  label="Full Time Only"
+                />
+              </CheckBoxStyled>
+              <PrimaryButton type="Submit" value="Submit" variant="contained">
+                Search
+              </PrimaryButton>
+            </Grid>
           </Grid>
-        </Grid>
-      </form>
+        </form>
+      </Wrapper>
 
       <JobContainer
         description={descriptionProp}
@@ -125,7 +177,7 @@ const SearchParams = () => {
         fullTime={fullTimeProp}
         initialCounter={initCount}
       />
-    </Wrapper>
+    </>
   );
 };
 
@@ -137,7 +189,12 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.jobcards};
   width: 100%;
   height: 80px;
+  overflow: hidden;
   border-radius: 6px;
+
+  & input:first-of-type {
+    border-right: 1px solid ${({ theme }) => theme.stroke};
+  }
 `;
 
 const SearchIcon = styled.div`
@@ -161,4 +218,13 @@ const SearchInput = styled.input`
   outline: none;
   padding: 23px;
   padding-left: 60px;
+`;
+
+const CheckBoxStyled = styled.div`
+  & .makeStyles-icon-9 {
+    background: ${({ theme }) => theme.checkboxBg};
+  }
+  & .makeStyles-checkedIcon-10 {
+    background: #5964e0;
+  }
 `;

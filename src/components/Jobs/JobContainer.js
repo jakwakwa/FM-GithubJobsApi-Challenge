@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import "regenerator-runtime/runtime";
 import styled from "styled-components";
 import Jobs from "./Jobs";
-import { Grid, Button } from "@material-ui/core/";
+import { Grid } from "@material-ui/core/";
+
+import { PrimaryButton } from "../Buttons/Buttons";
 
 import { urlUpdater } from "./utils/utils";
 import { Link } from "@reach/router";
@@ -76,20 +78,17 @@ const JobContainer = ({ description, location, fullTime, initialCounter }) => {
           </Grid>
         ))}
       </Grid>
-      {description.length > 0 || location.length > 0 ? null : (
-        <form onSubmit={handleSubmit}>
-          <LoadMoreJobs>
-            <Button
-              type="Submit"
-              color="primary"
-              variant="contained"
-              value="Submit"
-            >
-              Load More
-            </Button>
-          </LoadMoreJobs>
-        </form>
-      )}
+      <div style={{ height: "140px" }}>
+        {description.length > 0 || location.length > 0 ? null : (
+          <form onSubmit={handleSubmit}>
+            <LoadMoreJobs>
+              <PrimaryButton type="Submit" variant="contained" value="Submit">
+                Load More
+              </PrimaryButton>
+            </LoadMoreJobs>
+          </form>
+        )}
+      </div>
     </>
   );
 };
@@ -101,4 +100,5 @@ const LoadMoreJobs = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 100px;
 `;

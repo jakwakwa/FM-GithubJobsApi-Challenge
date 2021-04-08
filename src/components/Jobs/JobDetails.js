@@ -1,18 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, Button } from "@material-ui/core/";
+import { Grid } from "@material-ui/core/";
 import JobLogo from "../../../assets/jobdetailslogo.svg";
-//import data;
-//import { urlUpdater } from "./utils/utils";
-
-// ** Funtional Component **
-//const JobDetails = (props) => {
-//  return (
-//    <pre>
-//      <code>{JSON.stringify(props, null, 4)}</code>
-//    </pre>
-//  );
-//};
+import { PrimaryButton, SecondaryButton } from "../Buttons/Buttons";
+import Oval from "../../../assets/oval.svg";
+import Moment from "react-moment";
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -66,7 +58,10 @@ class JobDetails extends React.Component {
       companyUrl,
       location,
       description,
+      created_at,
     } = this.state;
+
+    const dateToFormat = created_at;
 
     return (
       <>
@@ -74,49 +69,65 @@ class JobDetails extends React.Component {
           <CompanyDetails>
             <Grid
               container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
               style={{
                 height: "140px",
                 borderRadius: "6px",
               }}
             >
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-              >
-                {/*// Goal is to align this to the LEFT*/}
-
-                <Grid item xs={6}>
-                  <Grid
-                    container
-                    direction="row"
-                    justify="flex-start"
-                    alignItems="center"
-                  >
-                    <div>
-                      <CompanyLogo />
-                    </div>
-                    <div style={{ marginLeft: "50px" }}>
-                      <CompanyTitle>{company}</CompanyTitle>
-                      <CompanySiteUrl>{companyUrl}</CompanySiteUrl>
-                    </div>
-                  </Grid>
+              <Grid item xs={6}>
+                <Grid
+                  container
+                  direction="row"
+                  justify="flex-start"
+                  alignItems="center"
+                >
+                  <div>
+                    <CompanyLogo />
+                  </div>
+                  <div style={{ marginLeft: "50px" }}>
+                    <CompanyTitle>{company}</CompanyTitle>
+                    <CompanySiteUrl>{companyUrl}</CompanySiteUrl>
+                  </div>
                 </Grid>
-                {/*// Goal is to align this to the RIGHT*/}
-                <Grid item xs={3}>
-                  <Button color="secondary" variant="contained">
-                    Company Site
-                  </Button>
-                </Grid>
+              </Grid>
+              {/*// Goal is to align this to the RIGHT*/}
+              <Grid item xs={3} align="right">
+                <SecondaryButton
+                  color="secondary"
+                  variant="contained"
+                  style={{ marginRight: "48px" }}
+                >
+                  Company Site
+                </SecondaryButton>
               </Grid>
             </Grid>
           </CompanyDetails>
           <CompanyJobDescription>
-            <h1>{title}</h1>
-            <JobType>
-              {type}, {location}
-            </JobType>
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
+            >
+              <div>
+                <JobTime>
+                  <Moment fromNow>{dateToFormat}</Moment>
+                  <OvalIcon></OvalIcon>
+                  <p>{type}</p>
+                </JobTime>
+                <h1>{title}</h1>
+                <JobType>
+                  {type}, {location}
+                </JobType>
+              </div>
+              <div>
+                <PrimaryButton variant="contained">Apply Now</PrimaryButton>
+              </div>
+            </Grid>
+
             <DescriptionWrapper
               dangerouslySetInnerHTML={{ __html: description }}
             >
@@ -134,27 +145,34 @@ class JobDetails extends React.Component {
 
             <span>https://examplelink.com/how-to-apply</span>
           </ApplyHowSection>
-          <ApplyNowSection>
-            <Grid
-              container
-              direction="row"
-              justify="space-between"
-              alignItems="center"
-              style={{ width: "60vw" }}
-            >
+
+          {/*<ApplyNowBackground></ApplyNowBackground>*/}
+        </div>
+        <ApplyNowSection>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+            style={{ height: "92px" }}
+          >
+            {/*// Goal is to align this to the LEFT*/}
+
+            <Grid item xs={6}>
               <div>
                 <CompanyTitle>{company}</CompanyTitle>
                 <CompanySiteUrl>{companyUrl}</CompanySiteUrl>
               </div>
-              <div>
-                <Button color="primary" variant="contained">
-                  Apply Now
-                </Button>
-              </div>
             </Grid>
-          </ApplyNowSection>
-          <ApplyNowBackground></ApplyNowBackground>
-        </div>
+            {/*// Goal is to align this to the RIGHT*/}
+            <Grid item xs={2} align="right">
+              <PrimaryButton color="secondary" variant="contained">
+                Apply Now
+              </PrimaryButton>
+            </Grid>
+          </Grid>
+          <ApplyNowBg />
+        </ApplyNowSection>
       </>
     );
   }
@@ -165,11 +183,12 @@ export default JobDetails;
 const CompanyDetails = styled.div`
   margin-top: -50px;
   background: ${({ theme }) => theme.jobcards};
+  border-radius: 6px;
 `;
 
 const CompanyJobDescription = styled.div`
-  margin-top: 50px;
-  padding: 48px;
+  margin-top: 32px;
+  padding: 48px 48px 0 48px;
   background: ${({ theme }) => theme.jobcards};
 `;
 
@@ -200,15 +219,23 @@ const DescriptionWrapper = styled.div`
   }
 `;
 
+const JobTime = styled.p`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+`;
+
 const JobType = styled.div`
   color: #5964e0;
   font-weight: 700;
+  margin-top: 13px;
 `;
 const ApplyHowSection = styled.div`
   margin-top: 50px;
   padding: 41px;
   background-color: #5964e0;
-  margin-bottom: 156px;
+  margin-bottom: 92px;
+  border-radius: 6px;
   & h3,
   p,
   span {
@@ -218,26 +245,30 @@ const ApplyHowSection = styled.div`
   & span {
     color: white;
     font-weight: 700;
-    margin-bottom: 0;
+    margin-bottom: 164px;
   }
 `;
 
 const ApplyNowSection = styled.div`
-  position: fixed;
-  z-index: 2000;
-  bottom: 0;
-  margin-top: 0px;
-  padding: 25px;
-  height: 96px;
-  /*background-color: #5964e0;*/
+  position: relative;
 `;
 
-const ApplyNowBackground = styled.div`
-  position: fixed;
-  z-index: 3;
-  bottom: 0px;
-  left: 0;
-  background: ${({ theme }) => theme.jobcards};
-  height: 96px;
+const ApplyNowBg = styled.div`
+  position: absolute;
+  z-index: -1;
+  left: -100px;
+  bottom: 0;
   width: 100vw;
+  height: 92px;
+  background: ${({ theme }) => theme.jobcards};
+`;
+
+const OvalIcon = styled.div`
+  position: relative;
+  background: url(${Oval}) no-repeat;
+  width: 4px;
+  height: 4px;
+  bottom: -12px;
+  margin-left: 10px;
+  margin-right: 10px;
 `;

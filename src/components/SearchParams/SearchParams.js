@@ -221,6 +221,13 @@ const SearchInput = styled.input`
 `;
 
 const CheckBoxStyled = styled.div`
+  & .MuiTypography-body1 {
+    font-family: "Kumbh Sans", sans-serif;
+    font-weight: 700;
+    margin-top: 4px;
+    margin-left: 7px;
+    font-size: 15px;
+  }
   & .makeStyles-icon-9 {
     background: ${({ theme }) => theme.checkboxBg};
   }

@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     },
   },
   checkedIcon: {
-    backgroundColor: "#5964E0",
+    backgroundColor: "#5964e0",
     backgroundImage:
       "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
     "&:before": {
@@ -49,7 +49,8 @@ const useStyles = makeStyles({
       content: '""',
     },
     "input:hover ~ &": {
-      backgroundColor: "#106ba3",
+      backgroundColor: "#5964e0",
+      opacity: "0.9",
     },
   },
 });
@@ -228,7 +229,7 @@ const CheckBoxStyled = styled.div`
     margin-left: 7px;
     font-size: 15px;
   }
-  & .makeStyles-icon-9 {
+  & label span span span {
     background: ${({ theme }) => theme.checkboxBg};
   }
   & .makeStyles-checkedIcon-10 {

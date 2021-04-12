@@ -39,17 +39,16 @@ const App = () => {
           </Container>
 
           <Layout />
-          <Container maxWidth="lg">
-            <Router>
-              <SearchParams path="/" />
 
-              <JobDetails
-                path="/details/:id"
-                location="San Francisco"
-                description="blah"
-              />
-            </Router>
-          </Container>
+          <Router>
+            <SearchParams path="/" />
+
+            <JobDetails
+              path="/details/:id"
+              location="San Francisco"
+              description="blah"
+            />
+          </Router>
         </ThemeProvider>
       </div>
     </React.StrictMode>

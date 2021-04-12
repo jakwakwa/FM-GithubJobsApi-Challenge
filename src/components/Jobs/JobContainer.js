@@ -50,7 +50,7 @@ const JobContainer = ({ description, location, fullTime, counter }) => {
         direction="row"
         justify="space-between"
         alignItems="flex-start"
-        spacing={3}
+        spacing={4}
       >
         {positions.length === 0 ? (
           <>
@@ -66,7 +66,7 @@ const JobContainer = ({ description, location, fullTime, counter }) => {
           </>
         ) : null}
         {positions.map((pos) => (
-          <Grid key={pos.id} item>
+          <Grid key={pos.id} item xs={12} sm={6} md={4}>
             <Link to={`/details/${pos.id}`}>
               <Jobs
                 typePos={pos.type}
@@ -80,18 +80,6 @@ const JobContainer = ({ description, location, fullTime, counter }) => {
           </Grid>
         ))}
       </Grid>
-      <div style={{ height: "140px" }}>
-        {/*original solution*/}
-        {/*{description.length > 0 || location.length > 0 ? null : (
-          <form onSubmit={handleSubmit}>
-            <LoadMoreJobs>
-              <PrimaryButton type="Submit" variant="contained" value="Submit">
-                Load More
-              </PrimaryButton>
-            </LoadMoreJobs>
-          </form>
-        )}*/}
-      </div>
     </>
   );
 };

@@ -9,6 +9,8 @@ export const PrimaryButton = withStyles(() => ({
     textTransform: "capitalize",
     backgroundColor: "#5964E0",
     padding: "10px 27px",
+    width: "100%",
+    minWidth: "100%",
     "&:hover": {
       backgroundColor: "#939BF4",
     },

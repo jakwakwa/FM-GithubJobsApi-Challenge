@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import styled from "styled-components";
 //import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
+import { Container, Grid } from "@material-ui/core/";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { PrimaryButton } from "../Buttons/Buttons";
@@ -116,82 +116,92 @@ const SearchParams = () => {
 
   return (
     <>
-      <Wrapper>
-        <form onSubmit={handleSubmit}>
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="flex-start"
-          >
-            <Grid item xs>
-              <Label htmlFor="filter">
-                <SearchIcon>
-                  <FilterIcon />
-                </SearchIcon>
-                <SearchInput
-                  id="filter"
-                  value={descriptionInput}
-                  placeholder="Filter by description, companies, expertise..."
-                  onChange={handleDescriptionFilter}
-                />
-              </Label>
-            </Grid>
-            <Grid item xs>
-              <Label htmlFor="location">
-                <SearchIcon>
-                  <LocationIcon />
-                </SearchIcon>
-                <SearchInput
-                  id="location"
-                  value={locationInput}
-                  placeholder="Filter by location..."
-                  onChange={handleLocationFilter}
-                />
-              </Label>
-            </Grid>
+      <Container maxWidth="lg">
+        <Wrapper>
+          <form onSubmit={handleSubmit}>
             <Grid
               container
               direction="row"
-              justify="space-around"
-              alignItems="center"
-              item
-              xs
-              style={{ height: "80px" }}
+              justify="center"
+              alignItems="flex-start"
             >
-              <CheckBoxStyled>
-                <FormControlLabel
-                  control={
-                    <StyledCheckbox
-                      checked={fullTimeInput.checkedA}
-                      onChange={handleFullTimeFilter}
-                      name="checkedA"
-                    />
-                  }
-                  label="Full Time Only"
-                />
-              </CheckBoxStyled>
-              <PrimaryButton type="Submit" value="Submit" variant="contained">
-                Search
-              </PrimaryButton>
+              <Grid item xs>
+                <Label htmlFor="filter">
+                  <SearchIcon>
+                    <FilterIcon />
+                  </SearchIcon>
+                  <SearchInput
+                    id="filter"
+                    value={descriptionInput}
+                    placeholder="Filter by description, companies, expertise..."
+                    onChange={handleDescriptionFilter}
+                  />
+                </Label>
+              </Grid>
+              <Grid item xs>
+                <Label htmlFor="location">
+                  <SearchIcon>
+                    <LocationIcon />
+                  </SearchIcon>
+                  <SearchInput
+                    id="location"
+                    value={locationInput}
+                    placeholder="Filter by location..."
+                    onChange={handleLocationFilter}
+                  />
+                </Label>
+              </Grid>
+              <Grid
+                container
+                direction="row"
+                justify="space-around"
+                alignItems="center"
+                item
+                xs
+                style={{ height: "80px" }}
+              >
+                <CheckBoxStyled>
+                  <FormControlLabel
+                    control={
+                      <StyledCheckbox
+                        checked={fullTimeInput.checkedA}
+                        onChange={handleFullTimeFilter}
+                        name="checkedA"
+                      />
+                    }
+                    label="Full Time Only"
+                  />
+                </CheckBoxStyled>
+                <div>
+                  <PrimaryButton
+                    type="Submit"
+                    value="Submit"
+                    variant="contained"
+                  >
+                    Search
+                  </PrimaryButton>
+                </div>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </Wrapper>
+          </form>
+        </Wrapper>
 
-      <JobContainer
-        description={descriptionProp}
-        location={locationProp}
-        fullTime={fullTimeProp}
-        counter={counter}
-      />
-      <form onSubmit={handleLoadMoreSubmit}>
-        <LoadMoreJobs>
-          <PrimaryButton type="Submit" variant="contained" value="Submit">
-            Load More
-          </PrimaryButton>
-        </LoadMoreJobs>
-      </form>
+        <JobContainer
+          description={descriptionProp}
+          location={locationProp}
+          fullTime={fullTimeProp}
+          counter={counter}
+        />
+        <form onSubmit={handleLoadMoreSubmit}>
+          <LoadMoreJobs>
+            <div>
+              <PrimaryButton type="Submit" variant="contained" value="Submit">
+                Load More
+              </PrimaryButton>
+            </div>
+          </LoadMoreJobs>
+        </form>
+      </Container>
     </>
   );
 };

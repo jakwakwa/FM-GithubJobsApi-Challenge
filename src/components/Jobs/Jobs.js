@@ -41,7 +41,7 @@ export default Jobs;
 const Wrapper = styled.div`
   position: relative;
   background: ${({ theme }) => theme.jobcards};
-  width: 350px;
+  /*width: 350px;*/
   height: 228px;
   border-radius: 6px;
   padding: 30px;

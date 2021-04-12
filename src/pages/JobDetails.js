@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { Container, Grid } from "@material-ui/core/";
 import JobLogo from "../../assets/jobdetailslogo.svg";
-import { PrimaryButton, SecondaryButton } from "../components/Buttons/Buttons";
+import { SecondaryButton } from "../components/Buttons/Buttons";
+import DescriptionButton from "../components/Buttons/ApplyNowButton";
 import Oval from "../../assets/oval.svg";
 import Moment from "react-moment";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import JobSkeletons from "../components/Jobs/JobSkeletons";
+import JobDetailFooter from "./Components/JobDetailFooter";
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -15,10 +17,8 @@ class JobDetails extends React.Component {
       loading: true,
     };
   }
-  // good for ajax
-  componentDidMount() {
-    // TODO get id from props
 
+  componentDidMount() {
     const getDataFromApi = async () => {
       const PROXY =
         window.location.hostname === "localhost"
@@ -43,8 +43,6 @@ class JobDetails extends React.Component {
           description: jsonData.description,
           loading: false,
         });
-
-        //setPositions(jsonData || []);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log("Fetch error: ", error);
@@ -66,9 +64,13 @@ class JobDetails extends React.Component {
               width: "100vw",
             }}
           />
-          <Grid container>
-            <JobSkeletons variant="text" />
-          </Grid>
+          <Container maxWidth="lg">
+            <Grid container>
+              <JobSkeletons variant="text" />
+              <JobSkeletons variant="text" />
+              <JobSkeletons variant="text" />
+            </Grid>
+          </Container>
         </>
       );
     }
@@ -89,7 +91,7 @@ class JobDetails extends React.Component {
       <>
         <Container maxWidth="lg">
           <div>
-            <CompanyDetails>
+            <CompanyDetailsSection>
               <div
                 style={{
                   borderRadius: "6px",
@@ -99,26 +101,27 @@ class JobDetails extends React.Component {
                   <CompanyLogo />
                 </CompanyLogoWrapper>
 
-                <CompanyTitleUrlWrapper>
+                <CompanyInfoWrapper>
                   <CompanyTitle>{company}</CompanyTitle>
                   <CompanySiteUrl>{companyUrl}</CompanySiteUrl>
-                </CompanyTitleUrlWrapper>
+                </CompanyInfoWrapper>
 
-                <CompanyDetailsButtonWrapper>
+                <CompanyButtonWrapper>
                   <SecondaryButton color="secondary" variant="contained">
                     Company Site
                   </SecondaryButton>
-                </CompanyDetailsButtonWrapper>
+                </CompanyButtonWrapper>
               </div>
-            </CompanyDetails>
-            <CompanyJobDescription>
+            </CompanyDetailsSection>
+
+            <JobDescription>
               <Grid
                 container
                 direction="row"
                 justify="space-between"
                 alignItems="center"
               >
-                <CompanyJobDescriptionTitleWrapper>
+                <TitleWrapper>
                   <JobTime>
                     <Moment fromNow>{dateToFormat}</Moment>
                     <OvalIcon></OvalIcon>
@@ -128,19 +131,16 @@ class JobDetails extends React.Component {
                   <JobType>
                     {type}, {location}
                   </JobType>
-                </CompanyJobDescriptionTitleWrapper>
-                <ApplyNowButtonWrapper>
-                  <PrimaryButton variant="contained">Apply Now</PrimaryButton>
-                </ApplyNowButtonWrapper>
+                </TitleWrapper>
+                <DescriptionButton />
               </Grid>
 
-              <DescriptionWrapper
+              <HtmlWrapper
                 dangerouslySetInnerHTML={{ __html: description }}
-              >
-                {/*{description}*/}
-              </DescriptionWrapper>
-            </CompanyJobDescription>
-            <ApplyHowSection>
+              ></HtmlWrapper>
+            </JobDescription>
+
+            <HowToSection>
               <h3>How to Apply</h3>
               <p>
                 Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia,
@@ -150,28 +150,11 @@ class JobDetails extends React.Component {
               </p>
 
               <span>https://examplelink.com/how-to-apply</span>
-            </ApplyHowSection>
+            </HowToSection>
           </div>
         </Container>
-        <ApplyNowSection>
-          <Container maxWidth="lg">
-            <Grid
-              container
-              direction="row"
-              justify="space-between"
-              alignItems="center"
-            >
-              <FooterTextWrapper>
-                <CompanyTitle>{company}</CompanyTitle>
-                <CompanySiteUrl>{companyUrl}</CompanySiteUrl>
-              </FooterTextWrapper>
 
-              <ApplyNowButtonWrapper>
-                <PrimaryButton variant="contained">Apply Now</PrimaryButton>
-              </ApplyNowButtonWrapper>
-            </Grid>
-          </Container>
-        </ApplyNowSection>
+        <JobDetailFooter title={company} weblink={companyUrl} />
       </>
     );
   }
@@ -179,7 +162,7 @@ class JobDetails extends React.Component {
 
 export default JobDetails;
 
-const CompanyDetails = styled.div`
+const CompanyDetailsSection = styled.div`
   margin-top: -50px;
   background: ${({ theme }) => theme.jobcards};
   border-radius: 6px;
@@ -189,7 +172,7 @@ const CompanyDetails = styled.div`
   }
 `;
 
-const CompanyJobDescription = styled.div`
+const JobDescription = styled.div`
   margin-top: 32px;
   padding: 48px 48px 0 48px;
   background: ${({ theme }) => theme.jobcards};
@@ -202,8 +185,6 @@ const CompanyLogoWrapper = styled.div`
     width: 100%;
     float: initial;
   }
-  /*border: none;
-  outline: none;*/
 `;
 const CompanyLogo = styled.div`
   background: url(${JobLogo}) no-repeat;
@@ -225,7 +206,7 @@ const CompanyLogo = styled.div`
   /*border: none;
   outline: none;*/
 `;
-const CompanyTitleUrlWrapper = styled.div`
+const CompanyInfoWrapper = styled.div`
   display: inline-block;
   width: 28%;
   margin-left: 40px;
@@ -236,16 +217,14 @@ const CompanyTitleUrlWrapper = styled.div`
     margin-top: 0;
     margin-left: 0;
   }
-  /*border: none;
-  outline: none;*/
 `;
 
-const CompanyJobDescriptionTitleWrapper = styled.div`
+const TitleWrapper = styled.div`
   @media screen and (max-width: 600px) {
     margin-bottom: 32px;
   }
 `;
-const CompanyDetailsButtonWrapper = styled.div`
+const CompanyButtonWrapper = styled.div`
   margin-right: 48px;
   margin-top: 46px;
   display: inline-block;
@@ -260,8 +239,6 @@ const CompanyDetailsButtonWrapper = styled.div`
     margin-left: 0;
     margin-bottom: 32px;
   }
-  /*border: none;
-  outline: none;*/
 `;
 const CompanyTitle = styled.h2`
   padding: 0px;
@@ -278,7 +255,7 @@ const CompanySiteUrl = styled.p`
   }
 `;
 
-const DescriptionWrapper = styled.div`
+const HtmlWrapper = styled.div`
   padding: 48px 0;
   & p {
     padding-bottom: 24px;
@@ -300,7 +277,7 @@ const JobType = styled.div`
   font-weight: 700;
   margin-top: 13px;
 `;
-const ApplyHowSection = styled.div`
+const HowToSection = styled.div`
   margin-top: 50px;
   padding: 41px;
   background-color: #5964e0;
@@ -316,25 +293,6 @@ const ApplyHowSection = styled.div`
     color: white;
     font-weight: 700;
     margin-bottom: 164px;
-  }
-`;
-
-const ApplyNowSection = styled.div`
-  position: relative;
-  padding: 25px 0;
-  background: ${({ theme }) => theme.jobcards};
-`;
-
-const FooterTextWrapper = styled.div`
-  @media screen and (max-width: 600px) {
-    display: none;
-  }
-`;
-
-const ApplyNowButtonWrapper = styled.div`
-  /*width: 100%;*/
-  @media screen and (max-width: 600px) {
-    width: 100%;
   }
 `;
 

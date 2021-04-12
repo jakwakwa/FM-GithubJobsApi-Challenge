@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import styled from "styled-components";
 //import Button from "@material-ui/core/Button";
-import { Container, Grid } from "@material-ui/core/";
+import { Container, Grid, Hidden } from "@material-ui/core/";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { PrimaryButton } from "../Buttons/Buttons";
-
+import { PrimaryButton, IconButton } from "../Buttons/Buttons";
+import FilterIc from "../../../assets/mobile/icon-filter.svg";
+import SearchIc from "../../../assets/desktop/icon-search.svg";
 import { FilterIcon, LocationIcon } from "./Icons/Icons";
 import JobContainer from "../Jobs/JobContainer";
 import { makeStyles } from "@material-ui/core/styles";
@@ -125,63 +126,104 @@ const SearchParams = () => {
               justify="center"
               alignItems="flex-start"
             >
-              <Grid item xs>
+              <Grid item xs sm={3} md={4}>
                 <Label htmlFor="filter">
-                  <SearchIcon>
-                    <FilterIcon />
-                  </SearchIcon>
+                  <Hidden xsDown>
+                    <SearchIcon>
+                      <FilterIcon />
+                    </SearchIcon>
+                  </Hidden>
+
                   <SearchInput
                     id="filter"
                     value={descriptionInput}
                     placeholder="Filter by description, companies, expertise..."
                     onChange={handleDescriptionFilter}
                   />
+                  <Hidden smUp>
+                    <FilterIconStyle>
+                      <FilterIconLogo />
+                    </FilterIconStyle>
+                  </Hidden>
                 </Label>
               </Grid>
-              <Grid item xs>
-                <Label htmlFor="location">
-                  <SearchIcon>
-                    <LocationIcon />
-                  </SearchIcon>
-                  <SearchInput
-                    id="location"
-                    value={locationInput}
-                    placeholder="Filter by location..."
-                    onChange={handleLocationFilter}
-                  />
-                </Label>
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justify="space-around"
-                alignItems="center"
-                item
-                xs
-                style={{ height: "80px" }}
-              >
-                <CheckBoxStyled>
-                  <FormControlLabel
-                    control={
-                      <StyledCheckbox
-                        checked={fullTimeInput.checkedA}
-                        onChange={handleFullTimeFilter}
-                        name="checkedA"
+              <Hidden xsDown>
+                <Grid item xs sm={3} md={4}>
+                  <Label htmlFor="location">
+                    <SearchIcon>
+                      <LocationIcon />
+                    </SearchIcon>
+
+                    <SearchInput
+                      id="location"
+                      value={locationInput}
+                      placeholder="Filter by location..."
+                      onChange={handleLocationFilter}
+                    />
+                  </Label>
+                </Grid>
+              </Hidden>
+
+              <Hidden xsDown>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-around"
+                  alignItems="center"
+                  item
+                  xs
+                  sm={6}
+                  md={4}
+                  style={{ height: "80px" }}
+                >
+                  <Hidden smDown>
+                    <CheckBoxStyled>
+                      <FormControlLabel
+                        control={
+                          <StyledCheckbox
+                            checked={fullTimeInput.checkedA}
+                            onChange={handleFullTimeFilter}
+                            name="checkedA"
+                          />
+                        }
+                        label="Full Time Only"
                       />
-                    }
-                    label="Full Time Only"
-                  />
-                </CheckBoxStyled>
-                <div>
-                  <PrimaryButton
-                    type="Submit"
-                    value="Submit"
-                    variant="contained"
-                  >
-                    Search
-                  </PrimaryButton>
+                    </CheckBoxStyled>
+                  </Hidden>
+                  <Hidden mdUp>
+                    <CheckBoxStyled>
+                      <FormControlLabel
+                        control={
+                          <StyledCheckbox
+                            checked={fullTimeInput.checkedA}
+                            onChange={handleFullTimeFilter}
+                            name="checkedA"
+                          />
+                        }
+                        label="Full Time"
+                      />
+                    </CheckBoxStyled>
+                  </Hidden>
+
+                  <div>
+                    <PrimaryButton
+                      type="Submit"
+                      value="Submit"
+                      variant="contained"
+                    >
+                      Search
+                    </PrimaryButton>
+                  </div>
+                </Grid>
+              </Hidden>
+
+              <Hidden smUp>
+                <div style={{ marginTop: "20px", marginRight: "24px" }}>
+                  <IconButton type="Submit" value="Submit" variant="contained">
+                    <SearchIconLogo />
+                  </IconButton>
                 </div>
-              </Grid>
+              </Hidden>
             </Grid>
           </form>
         </Wrapper>
@@ -219,6 +261,9 @@ const Wrapper = styled.div`
 
   & input:first-of-type {
     border-right: 1px solid ${({ theme }) => theme.stroke};
+    @media screen and (max-width: 600px) {
+      border-right: none;
+    }
   }
 `;
 
@@ -227,7 +272,29 @@ const SearchIcon = styled.div`
   top: -5px;
   left: 23px;
 `;
-
+const FilterIconStyle = styled.div`
+  position: absolute;
+  top: 7px;
+  right: 3px;
+`;
+const FilterIconLogo = styled.div`
+  position: relative;
+  background: url(${FilterIc}) no-repeat;
+  width: 20px;
+  height: 20px;
+  bottom: 9px;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+const SearchIconLogo = styled.div`
+  position: relative;
+  background: url(${SearchIc}) no-repeat;
+  width: 20px;
+  height: 20px;
+  bottom: 3px;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
 const Label = styled.label`
   background-color: #fff;
   height: 80px;
@@ -243,6 +310,9 @@ const SearchInput = styled.input`
   outline: none;
   padding: 23px;
   padding-left: 60px;
+  @media screen and (max-width: 600px) {
+    padding-left: 24px;
+  }
 `;
 
 const CheckBoxStyled = styled.div`

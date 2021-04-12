@@ -54,13 +54,13 @@ const JobContainer = ({ description, location, fullTime, counter }) => {
       >
         {positions.length === 0 ? (
           <>
-            <Grid item style={{ width: "350px" }}>
+            <Grid item xs={12} sm={6} md={4}>
               <JobSkeletons />
             </Grid>
-            <Grid item style={{ width: "350px" }}>
+            <Grid item xs={12} sm={6} md={4}>
               <JobSkeletons />
             </Grid>
-            <Grid item style={{ width: "350px" }}>
+            <Grid item xs={12} sm={6} md={4}>
               <JobSkeletons />
             </Grid>
           </>

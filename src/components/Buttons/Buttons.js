@@ -17,6 +17,19 @@ export const PrimaryButton = withStyles(() => ({
   },
 }))(Button);
 
+export const IconButton = withStyles(() => ({
+  root: {
+    textTransform: "capitalize",
+    backgroundColor: "#5964E0",
+    padding: "10px 5px",
+    width: "100%",
+    minWidth: "100%",
+    "&:hover": {
+      backgroundColor: "#939BF4",
+    },
+  },
+}))(Button);
+
 export const SecondaryButton = withStyles(() => ({
   root: {
     color: "#5964E0",

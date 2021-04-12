@@ -8,7 +8,7 @@ import { lightTheme, darkTheme } from "./styles/theme/themetest/ThemeStyled";
 
 import Layout from "./components/Layout/Layout";
 import SearchParams from "./components/SearchParams/SearchParams";
-import JobDetails from "./components/Jobs/JobDetails";
+import JobDetails from "./pages/JobDetails";
 
 const App = () => {
   const [theme, setTheme] = useState("light");

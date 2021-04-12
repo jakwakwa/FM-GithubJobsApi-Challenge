@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Container, Grid } from "@material-ui/core/";
-import JobLogo from "../../../assets/jobdetailslogo.svg";
-import { PrimaryButton, SecondaryButton } from "../Buttons/Buttons";
-import Oval from "../../../assets/oval.svg";
+import JobLogo from "../../assets/jobdetailslogo.svg";
+import { PrimaryButton, SecondaryButton } from "../components/Buttons/Buttons";
+import Oval from "../../assets/oval.svg";
 import Moment from "react-moment";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import JobSkeletons from "./JobSkeletons";
+import JobSkeletons from "../components/Jobs/JobSkeletons";
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -322,7 +322,7 @@ const ApplyHowSection = styled.div`
 const ApplyNowSection = styled.div`
   position: relative;
   padding: 25px 0;
-  background: #fff;
+  background: ${({ theme }) => theme.jobcards};
 `;
 
 const FooterTextWrapper = styled.div`

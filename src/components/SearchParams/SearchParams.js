@@ -72,7 +72,6 @@ function StyledCheckbox(props) {
 }
 
 const SearchParams = () => {
-  //const classes = useStyles();
   const [locationInput, setLocationInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
   const [locationProp, setLocationProp] = useState("");
@@ -80,9 +79,9 @@ const SearchParams = () => {
   const [fullTimeInput, setFullTimeInput] = React.useState({
     checkedA: false,
   });
-  let initCount = 0;
 
   const [fullTimeProp, setFullTimeProp] = useState("");
+  let [counter, setCounter] = useState(0);
 
   const handleLocationFilter = (e) => {
     setLocationInput(e.target.value);
@@ -100,11 +99,19 @@ const SearchParams = () => {
   };
 
   const handleSubmit = (event) => {
-    initCount = 0;
     event.preventDefault();
+    // TODO: Set Counter back to 0
+    setCounter(0);
     setLocationProp(locationInput);
     setDescriptionProp(descriptionInput);
     setFullTimeProp(fullTimeInput.checkedA);
+  };
+
+  const handleLoadMoreSubmit = () => {
+    event.preventDefault();
+    setCounter(counter + 1);
+
+    // TODO: Pass url to JobContainer
   };
 
   return (
@@ -176,8 +183,15 @@ const SearchParams = () => {
         description={descriptionProp}
         location={locationProp}
         fullTime={fullTimeProp}
-        initialCounter={initCount}
+        counter={counter}
       />
+      <form onSubmit={handleLoadMoreSubmit}>
+        <LoadMoreJobs>
+          <PrimaryButton type="Submit" variant="contained" value="Submit">
+            Load More
+          </PrimaryButton>
+        </LoadMoreJobs>
+      </form>
     </>
   );
 };
@@ -232,4 +246,12 @@ const CheckBoxStyled = styled.div`
   & label span span span {
     opacity: ${({ theme }) => theme.checkboxBg};
   }
+`;
+
+const LoadMoreJobs = styled.div`
+  margin: 50px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100px;
 `;

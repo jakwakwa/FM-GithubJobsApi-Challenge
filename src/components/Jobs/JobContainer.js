@@ -1,45 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "regenerator-runtime/runtime";
-import styled from "styled-components";
 import Jobs from "./Jobs";
 import { Grid } from "@material-ui/core/";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { PrimaryButton } from "../Buttons/Buttons";
 import JobSkeletons from "./JobSkeletons";
 import { urlUpdater } from "./utils/utils";
 import { Link } from "@reach/router";
 
-const JobContainer = ({ description, location, fullTime, initialCounter }) => {
+const JobContainer = ({ description, location, fullTime, counter }) => {
   let urlNow = urlUpdater(location, description, fullTime);
   const [positions, setPositions] = useState([]);
-  let [counter, setCounter] = useState(initialCounter);
 
-  const handleSubmit = () => {
-    event.preventDefault();
-    setCounter(counter + 1);
-    const loadmorejobsUrl = `${urlNow}?&page=${counter}`;
-
-    const getDataFromApi = async () => {
-      try {
-        const response = await fetch(loadmorejobsUrl, {
-          method: "GET",
-          mode: "cors",
-        });
-        const jsonData = await response.json();
-        setPositions(jsonData || []);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log("Fetch error: ", error);
-      }
-    };
-    setPositions([]);
-    getDataFromApi();
-  };
+  const loadmorejobsUrl = `${urlNow}?&page=${counter}`;
 
   useEffect(() => {
     const getDataFromApi = async () => {
       try {
-        const response = await fetch(urlNow, {
+        const response = await fetch(counter > 0 ? loadmorejobsUrl : urlNow, {
           method: "GET",
           mode: "cors",
         });
@@ -52,7 +29,7 @@ const JobContainer = ({ description, location, fullTime, initialCounter }) => {
     };
     setPositions([]);
     getDataFromApi();
-  }, [urlNow]);
+  }, [urlNow, loadmorejobsUrl, counter]);
 
   return (
     <>
@@ -104,7 +81,8 @@ const JobContainer = ({ description, location, fullTime, initialCounter }) => {
         ))}
       </Grid>
       <div style={{ height: "140px" }}>
-        {description.length > 0 || location.length > 0 ? null : (
+        {/*original solution*/}
+        {/*{description.length > 0 || location.length > 0 ? null : (
           <form onSubmit={handleSubmit}>
             <LoadMoreJobs>
               <PrimaryButton type="Submit" variant="contained" value="Submit">
@@ -112,18 +90,10 @@ const JobContainer = ({ description, location, fullTime, initialCounter }) => {
               </PrimaryButton>
             </LoadMoreJobs>
           </form>
-        )}
+        )}*/}
       </div>
     </>
   );
 };
 
 export default JobContainer;
-
-const LoadMoreJobs = styled.div`
-  margin: 50px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 100px;
-`;

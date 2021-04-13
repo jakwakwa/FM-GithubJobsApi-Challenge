@@ -6,7 +6,7 @@ import { Container, Grid, Hidden, Button } from "@material-ui/core/";
 import { PrimaryButton } from "../Buttons/Buttons";
 import { FilterIcon, LocationIcon, SearchIcon } from "./Icons/Icons";
 import FilterCheckbox from "../Checkbox/CustomCheckbox";
-import LoadMoreButton from "../Buttons/LoadMoreButton";
+//import LoadMoreButton from "../Buttons/LoadMoreButton";
 import MobileSearchButton from "../Buttons/MobileSearchButton";
 
 import JobContainer from "../Jobs/JobContainer";
@@ -23,7 +23,7 @@ const SearchParams = () => {
     checkedA: false,
   });
   const [fullTimeProp, setFullTimeProp] = useState("");
-  let [counter, setCounter] = useState(0);
+  let [counter, setCounter] = useState(1);
 
   //  const [selectedValue, setSelectedValue] = useState("");
 
@@ -51,7 +51,7 @@ const SearchParams = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCounter(0);
+    setCounter(1);
     setLocationProp(locationInput);
     setDescriptionProp(descriptionInput);
     setFullTimeProp(fullTimeInput.checkedA);
@@ -182,9 +182,8 @@ const SearchParams = () => {
           location={locationProp}
           fullTime={fullTimeProp}
           counter={counter}
+          handler={handleLoadMoreSubmit}
         />
-
-        <LoadMoreButton handler={handleLoadMoreSubmit} />
       </Container>
     </>
   );

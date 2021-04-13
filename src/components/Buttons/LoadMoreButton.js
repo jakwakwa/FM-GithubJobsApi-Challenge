@@ -4,9 +4,9 @@ import styled from "styled-components";
 
 import { PrimaryButton } from "../Buttons/Buttons";
 
-const LoadMoreButton = ({ handler }) => {
+const LoadMoreButton = ({ handleLoader }) => {
   return (
-    <form onSubmit={handler}>
+    <form onSubmit={handleLoader}>
       <LoadMoreJobs>
         <div>
           <PrimaryButton type="Submit" variant="contained" value="Submit">

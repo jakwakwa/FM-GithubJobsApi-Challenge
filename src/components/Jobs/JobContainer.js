@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "regenerator-runtime/runtime";
 import Jobs from "./Jobs";
+import LoadMoreButton from "../Buttons/LoadMoreButton";
 import { Grid } from "@material-ui/core/";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import JobSkeletons from "./JobSkeletons";
 import { urlUpdater } from "./utils/utils";
 import { Link } from "@reach/router";
 
-const JobContainer = ({ description, location, fullTime, counter }) => {
+const JobContainer = ({
+  description,
+  location,
+  fullTime,
+  counter,
+  handler,
+}) => {
   let urlNow = urlUpdater(location, description, fullTime);
   const [positions, setPositions] = useState([]);
 
@@ -25,6 +32,7 @@ const JobContainer = ({ description, location, fullTime, counter }) => {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log("Fetch error: ", error);
+        alert("Fetch error: ", error);
       }
     };
     setPositions([]);
@@ -80,6 +88,7 @@ const JobContainer = ({ description, location, fullTime, counter }) => {
           </Grid>
         ))}
       </Grid>
+      {positions.length < 46 ? null : <LoadMoreButton handleLoader={handler} />}
     </>
   );
 };

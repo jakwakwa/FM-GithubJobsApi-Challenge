@@ -25,11 +25,7 @@ const App = () => {
           <Layout />
           <Router>
             <SearchParams path="/" />
-            <JobDetails
-              path="/details/:id"
-              location="San Francisco"
-              description="blah"
-            />
+            <JobDetails path="/details/:id" />
           </Router>
         </ThemeProvider>
       </div>

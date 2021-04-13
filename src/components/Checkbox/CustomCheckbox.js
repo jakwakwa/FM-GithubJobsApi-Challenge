@@ -73,7 +73,7 @@ const FilterCheckbox = ({ label, checked, handler }) => {
         control={
           <CustomCheckbox checked={checked} onChange={handler} name={label} />
         }
-        label="Full Time"
+        label={label}
       />
     </CheckBoxStyled>
   );

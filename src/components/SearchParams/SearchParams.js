@@ -45,12 +45,12 @@ const SearchParams = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-    handleSubmit();
+  const handleClose = (value) => {
+    setOpen(value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     setCounter(0);
     setLocationProp(locationInput);
     setDescriptionProp(descriptionInput);

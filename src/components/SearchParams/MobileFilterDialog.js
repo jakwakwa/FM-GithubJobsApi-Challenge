@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Dialog, Container } from "@material-ui/core/";
 import { LocationIcon } from "./Icons/Icons";
-import DialogSearchButton from "../Buttons/DialogSearchButton";
+import { PrimaryButton } from "../Buttons/Buttons";
 import FilterCheckbox from "../Checkbox/CustomCheckbox";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -22,17 +22,13 @@ const useStayles = makeStyles({
 function MobileSearchDialog(props) {
   const classes = useStayles();
   const {
-    onClose,
     open,
+    onClose,
     searchInput,
     inputFilterHandler,
     filterchecked,
     checkboxhandler,
   } = props;
-
-  const handleListItemClick = (value) => {
-    onClose(value);
-  };
 
   return (
     <Dialog
@@ -43,30 +39,41 @@ function MobileSearchDialog(props) {
     >
       <DialogWrapper>
         <Container classes={classes} maxWidth="lg">
-          <Label htmlFor="location">
-            <IconWrapperLeft>
-              <LocationIcon />
-            </IconWrapperLeft>
-            <SearchInput
-              id="location"
-              value={searchInput}
-              placeholder="Filter by location..."
-              onChange={inputFilterHandler}
-            />
-          </Label>
-          <div style={{ marginLeft: "10px", marginBottom: "13px" }}>
-            <FilterCheckbox
-              label="Full Time Only"
-              checked={filterchecked}
-              handler={checkboxhandler}
-            />
-          </div>
-
-          <DialogSearchButton
-            clickHandle={handleListItemClick}
-            color="primary"
-            buttonText={"Search"}
-          />
+          <form
+            action="/"
+            onSubmit={(e) => {
+              e.preventDefault();
+              alert("Submitted form!");
+              onClose(false);
+            }}
+          >
+            <Label htmlFor="location">
+              <IconWrapperLeft>
+                <LocationIcon />
+              </IconWrapperLeft>
+              <SearchInput
+                id="location"
+                value={searchInput}
+                placeholder="Filter by location..."
+                onChange={inputFilterHandler}
+              />
+            </Label>
+            <div style={{ marginLeft: "10px", marginBottom: "13px" }}>
+              <FilterCheckbox
+                label="Full Time Only"
+                checked={filterchecked}
+                handler={checkboxhandler}
+              />
+            </div>
+            <div>
+              <PrimaryButton type="Submit" value="Submit" variant="contained">
+                Search
+              </PrimaryButton>
+            </div>
+            {/*<Button type="submit" value="Submit">
+              Search
+            </Button>*/}
+          </form>
         </Container>
       </DialogWrapper>
     </Dialog>

@@ -7,10 +7,10 @@ const Switch = ({ handler }) => {
   return (
     <Container maxWidth="lg" style={{ marginTop: "-24px" }}>
       <SwitchWrapper>
-        <Grid direction="row" container alignItems="center" spacing={2}>
-          <DayIcon style={{ color: "#fff" }} />
+        <Grid direction="row" container alignItems="center" spacing={3}>
+          <DayIcon style={{ color: "#fff", marginTop: "5px" }} />
           <WhiteSwitch onChange={handler} name="themeswitcher" />
-          <NightIcon style={{ color: "#fff", marginTop: "2px" }} />
+          <NightIcon style={{ color: "#fff", marginTop: "9px" }} />
         </Grid>
       </SwitchWrapper>
     </Container>

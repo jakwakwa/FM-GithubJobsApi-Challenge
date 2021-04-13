@@ -6,6 +6,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import { makeStyles } from "@material-ui/core/styles";
 
+import { themeColors } from "../../styles/theme/ThemeStyled";
+
 const useStyles = makeStyles({
   root: {
     "&:hover": {
@@ -16,13 +18,13 @@ const useStyles = makeStyles({
     borderRadius: 3,
     width: 24,
     height: 24,
-    backgroundColor: "#E7E8E9",
+    backgroundColor: themeColors.secondary.checkBoxBg,
     "$root.Mui-focusVisible &": {
       outline: "2px auto rgba(19,124,189,.6)",
       outlineOffset: 2,
     },
     "input:hover ~ &": {
-      backgroundColor: "#D5D8F7",
+      backgroundColor: themeColors.secondary.checkBoxHover,
     },
     "input:disabled ~ &": {
       boxShadow: "none",
@@ -30,7 +32,7 @@ const useStyles = makeStyles({
     },
   },
   checkedIcon: {
-    backgroundColor: "#5964e0",
+    backgroundColor: themeColors.primary.violet,
     backgroundImage:
       "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
     "&:before": {
@@ -44,13 +46,12 @@ const useStyles = makeStyles({
       content: '""',
     },
     "input:hover ~ &": {
-      backgroundColor: "#5964e0",
+      backgroundColor: themeColors.primary.violet,
       opacity: "0.9",
     },
   },
 });
 
-// Inspired by blueprintjs
 function CustomCheckbox(props) {
   const classes = useStyles();
 
@@ -92,8 +93,5 @@ const CheckBoxStyled = styled.div`
     margin-top: 4px;
     margin-left: 7px;
     font-size: 15px;
-  }
-  & label span span span {
-    opacity: ${({ theme }) => theme.checkboxBg};
   }
 `;

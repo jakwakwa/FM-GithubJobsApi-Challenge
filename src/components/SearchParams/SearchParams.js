@@ -6,7 +6,6 @@ import { Container, Grid, Hidden, Button } from "@material-ui/core/";
 import { PrimaryButton } from "../Buttons/Buttons";
 import { FilterIcon, LocationIcon, SearchIcon } from "./Icons/Icons";
 import FilterCheckbox from "../Checkbox/CustomCheckbox";
-//import LoadMoreButton from "../Buttons/LoadMoreButton";
 import MobileSearchButton from "../Buttons/MobileSearchButton";
 
 import JobContainer from "../Jobs/JobContainer";
@@ -64,7 +63,7 @@ const SearchParams = () => {
 
   return (
     <>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" style={{ marginBottom: "100px" }}>
         <Wrapper>
           <form onSubmit={handleSubmit}>
             <Grid

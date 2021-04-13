@@ -1,7 +1,10 @@
 import { createGlobalStyle } from "styled-components";
+import { themeColors } from "./ThemeStyled";
 
 const GlobalStyles = createGlobalStyle`
+
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,16 +13,13 @@ const GlobalStyles = createGlobalStyle`
 }
 
 body {
-  background-color: #F4F6F8;
-  font-family: 'Kumbh Sans', sans-serif;
-}
-
-body {
+    font-family: 'Kumbh Sans', sans-serif;
     background: ${({ theme }) => theme.body};
     color: ${({ theme }) => theme.text};
-    font-family: Tahoma, Helvetica, Arial, Roboto, sans-serif;
     transition: all 0.50s linear;
-  }
+}
+
+
 h1 {
   font-size: 28px;
   line-height: 34px;
@@ -37,7 +37,6 @@ h2 {
 h3 {
   font-size: 20px;
   line-height: 24px;
-  
   font-weight: 700;
 }
 
@@ -64,41 +63,41 @@ strong {
     float: left;
     width: 100%;
     font-size: 20px;
-    ${"" /*line-height: 92px;*/}
     font-weight: 700;
     color: ${({ theme }) => theme.textHeadings};
     margin-top: -24px;
     padding-top: 48px;
 }
+
 a, a:hover, a:focus, a:active {
-      text-decoration: none;
-      color: inherit;
- }
+    text-decoration: none;
+    color: inherit;
+}
+
 p a {
-    color: #5964E0;
+    color: ${themeColors.primary.violet};
     font-weight: 700;
     font-size: 16px;
     line-height: 26px;
+    text-decoration: underline;
 }
 
 div.span {
     color: ${({ theme }) => theme.jobText};
 }
 
-
 ul {
-  list-style: none;
-  margin-bottom: 24px;
+    list-style: none;
+    margin-bottom: 24px;
 }
 
 li::before {
     content: "• ";
     color: ${({ theme }) => theme.bullets};
     font-weight: bold; /* If you want it to be bold */
-  display: inline-block; /* Needed to add space between the bullet and the text */
-  width:34px; /* Also needed for space (tweak if needed) */
-  margin-left: -2em; /* Also needed for space (tweak if needed) */
-
+    display: inline-block; /* Needed to add space between the bullet and the text */
+    width:34px; /* Also needed for space (tweak if needed) */
+    margin-left: -2em; /* Also needed for space (tweak if needed) */
 }
 
 ul li {

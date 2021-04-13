@@ -4,7 +4,7 @@ import { Router } from "@reach/router";
 import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./styles/theme/GlobalStyles";
 import Switch from "./components/Switch/Switch";
-import { lightTheme, darkTheme } from "./styles/theme/themetest/ThemeStyled";
+import { lightTheme, darkTheme } from "./styles/theme/ThemeStyled";
 
 import Layout from "./components/Layout/Layout";
 import SearchParams from "./components/SearchParams/SearchParams";
@@ -18,11 +18,11 @@ const App = () => {
   };
   return (
     <React.StrictMode>
+      <Switch handler={themeToggler} />
+      <Layout />
       <div>
         <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
           <GlobalStyles />
-          <Switch handler={themeToggler} />
-          <Layout />
           <Router>
             <SearchParams path="/" />
             <JobDetails path="/details/:id" />

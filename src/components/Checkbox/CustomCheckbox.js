@@ -71,7 +71,11 @@ const FilterCheckbox = ({ label, checked, handler }) => {
     <CheckBoxStyled>
       <FormControlLabel
         control={
-          <CustomCheckbox checked={checked} onChange={handler} name={label} />
+          <CustomCheckbox
+            checked={checked}
+            onChange={handler}
+            name="checkedA"
+          />
         }
         label={label}
       />

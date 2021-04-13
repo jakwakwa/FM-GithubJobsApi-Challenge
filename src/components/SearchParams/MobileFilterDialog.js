@@ -6,7 +6,7 @@ import {
   DialogActions,
   Button,
 } from "@material-ui/core/";
-import CustomCheckbox from "../Checkbox/CustomCheckbox";
+import FilterCheckbox from "../Checkbox/CustomCheckbox";
 
 function MobileSearchDialog(props) {
   const {
@@ -14,7 +14,7 @@ function MobileSearchDialog(props) {
     open,
     searchInput,
     inputFilterHandler,
-    checked,
+    filterchecked,
     checkboxhandler,
   } = props;
 
@@ -33,9 +33,9 @@ function MobileSearchDialog(props) {
             onChange={inputFilterHandler}
           />
         </Label>
-        <CustomCheckbox
+        <FilterCheckbox
           label="Full Time Only"
-          checked={checked}
+          checked={filterchecked}
           handler={checkboxhandler}
         />
       </DialogContent>

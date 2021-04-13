@@ -5,7 +5,7 @@ import { Container, Grid, Hidden, Button } from "@material-ui/core/";
 
 import { PrimaryButton } from "../Buttons/Buttons";
 import { FilterIcon, LocationIcon, SearchIcon } from "./Icons/Icons";
-import CustomCheckbox from "../Checkbox/CustomCheckbox";
+import FilterCheckbox from "../Checkbox/CustomCheckbox";
 import LoadMoreButton from "../Buttons/LoadMoreButton";
 import MobileSearchButton from "../Buttons/MobileSearchButton";
 
@@ -13,28 +13,19 @@ import JobContainer from "../Jobs/JobContainer";
 import MobileFilterDialog from "./MobileFilterDialog";
 
 const SearchParams = () => {
+  const [open, setOpen] = useState(false);
   const [locationInput, setLocationInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
   const [locationProp, setLocationProp] = useState("");
   const [descriptionProp, setDescriptionProp] = useState("");
+
   const [fullTimeInput, setFullTimeInput] = React.useState({
     checkedA: false,
   });
-
-  const [open, setOpen] = useState(false);
-  //  const [selectedValue, setSelectedValue] = useState("");
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    handleSubmit();
-  };
-
   const [fullTimeProp, setFullTimeProp] = useState("");
   let [counter, setCounter] = useState(0);
+
+  //  const [selectedValue, setSelectedValue] = useState("");
 
   const handleLocationFilter = (e) => {
     setLocationInput(e.target.value);
@@ -50,11 +41,18 @@ const SearchParams = () => {
       [event.target.name]: event.target.checked,
     });
   };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-  const handleSubmit = () => {
-    //e.preventDefault();
+  const handleClose = () => {
+    setOpen(false);
+    handleSubmit();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     setCounter(0);
-    //setSelectedValue("sf");
     setLocationProp(locationInput);
     setDescriptionProp(descriptionInput);
     setFullTimeProp(fullTimeInput.checkedA);
@@ -137,7 +135,7 @@ const SearchParams = () => {
                 >
                   {/* Fulltime Checkebox Desktop */}
                   <Hidden smDown>
-                    <CustomCheckbox
+                    <FilterCheckbox
                       label="Full Time Only"
                       checked={fullTimeInput.checkedA}
                       handler={handleFullTimeFilter}
@@ -145,7 +143,7 @@ const SearchParams = () => {
                   </Hidden>
                   {/* Fulltime Checkebox Tablet */}
                   <Hidden mdUp>
-                    <CustomCheckbox
+                    <FilterCheckbox
                       label="Full Time"
                       checked={fullTimeInput.checkedA}
                       handler={handleFullTimeFilter}
@@ -167,16 +165,15 @@ const SearchParams = () => {
               {/*  Search Button Mobile  */}
               <Hidden smUp>
                 <MobileSearchButton type={"Submit"} value={"Submit"} />
+                <MobileFilterDialog
+                  open={open}
+                  onClose={handleClose}
+                  SearchInput={locationInput}
+                  inputFilterHandler={handleLocationFilter}
+                  filterchecked={fullTimeInput.checkedA}
+                  checkboxhandler={handleFullTimeFilter}
+                />
               </Hidden>
-
-              <MobileFilterDialog
-                open={open}
-                onClose={handleClose}
-                SearchInput={locationInput}
-                inputFilterHandler={handleLocationFilter}
-                checked={fullTimeInput.checkedA}
-                checkboxhandler={handleFullTimeFilter}
-              />
             </Grid>
           </form>
         </Wrapper>

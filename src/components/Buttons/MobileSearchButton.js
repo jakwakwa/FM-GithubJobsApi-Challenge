@@ -8,7 +8,7 @@ import SearchIc from "../../../assets/desktop/icon-search.svg";
 
 const MobileSearchButton = ({ type, value }) => {
   return (
-    <div style={{ marginTop: "20px", marginRight: "24px" }}>
+    <div style={{ marginTop: "13px", marginRight: "24px" }}>
       <IconButton type={type} value={value} variant="contained">
         <SearchIconLogo />
       </IconButton>

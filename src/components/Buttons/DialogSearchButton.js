@@ -4,14 +4,16 @@ import styled from "styled-components";
 
 import { PrimaryButton } from "../Buttons/Buttons";
 
-const DetailsButton = ({ buttonText }) => {
+const DialogSearchButton = ({ clickHandle, buttonText }) => {
   return (
     <ApplyNowButtonWrapper>
-      <PrimaryButton variant="contained">{buttonText}</PrimaryButton>
+      <PrimaryButton onClick={clickHandle} variant="contained">
+        {buttonText}
+      </PrimaryButton>
     </ApplyNowButtonWrapper>
   );
 };
-export default DetailsButton;
+export default DialogSearchButton;
 
 const ApplyNowButtonWrapper = styled.div`
   /*width: 100%;*/

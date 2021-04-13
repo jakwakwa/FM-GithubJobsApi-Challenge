@@ -132,7 +132,7 @@ class JobDetails extends React.Component {
                     {type}, {location}
                   </JobType>
                 </TitleWrapper>
-                <DescriptionButton />
+                <DescriptionButton buttonText={"Apply Now"} />
               </Grid>
 
               <HtmlWrapper

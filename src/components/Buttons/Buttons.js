@@ -21,7 +21,7 @@ export const IconButton = withStyles(() => ({
   root: {
     textTransform: "capitalize",
     backgroundColor: "#5964E0",
-    padding: "10px 5px",
+    padding: "15px 5px",
     width: "100%",
     minWidth: "100%",
     "&:hover": {

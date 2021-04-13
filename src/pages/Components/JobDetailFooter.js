@@ -18,7 +18,7 @@ const JobDetailFooter = ({ title, weblink }) => {
             <CompanyTitle>{title}</CompanyTitle>
             <CompanySiteUrl>{weblink}</CompanySiteUrl>
           </FooterTextWrapper>
-          <DescriptionButton />
+          <DescriptionButton buttonText={"Apply Now"} />
         </Grid>
       </Container>
     </ApplyNowSection>

@@ -1,14 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  DialogContent,
-  Dialog,
-  DialogActions,
-  Button,
-} from "@material-ui/core/";
+import { Dialog, Container } from "@material-ui/core/";
+import { LocationIcon } from "./Icons/Icons";
+import DialogSearchButton from "../Buttons/DialogSearchButton";
 import FilterCheckbox from "../Checkbox/CustomCheckbox";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStayles = makeStyles({
+  root: {
+    padding: "0 24px 24px",
+  },
+  paper: {
+    maxWidth: "100%",
+    width: "100%",
+  },
+  container: {
+    padding: "0",
+  },
+});
 
 function MobileSearchDialog(props) {
+  const classes = useStayles();
   const {
     onClose,
     open,
@@ -23,46 +35,70 @@ function MobileSearchDialog(props) {
   };
 
   return (
-    <Dialog aria-labelledby="simple-dialog-title" open={open}>
-      <DialogContent>
-        <Label htmlFor="location">
-          <SearchInput
-            id="location"
-            value={searchInput}
-            placeholder="Filter by location..."
-            onChange={inputFilterHandler}
+    <Dialog
+      classes={classes}
+      aria-labelledby="simple-dialog-title"
+      open={open}
+      style={{ padding: "0" }}
+    >
+      <DialogWrapper>
+        <Container classes={classes} maxWidth="lg">
+          <Label htmlFor="location">
+            <IconWrapperLeft>
+              <LocationIcon />
+            </IconWrapperLeft>
+            <SearchInput
+              id="location"
+              value={searchInput}
+              placeholder="Filter by location..."
+              onChange={inputFilterHandler}
+            />
+          </Label>
+          <div style={{ marginLeft: "10px", marginBottom: "13px" }}>
+            <FilterCheckbox
+              label="Full Time Only"
+              checked={filterchecked}
+              handler={checkboxhandler}
+            />
+          </div>
+
+          <DialogSearchButton
+            clickHandle={handleListItemClick}
+            color="primary"
+            buttonText={"Search"}
           />
-        </Label>
-        <FilterCheckbox
-          label="Full Time Only"
-          checked={filterchecked}
-          handler={checkboxhandler}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleListItemClick} color="primary">
-          Subscribe
-        </Button>
-      </DialogActions>
+        </Container>
+      </DialogWrapper>
     </Dialog>
   );
 }
 export default MobileSearchDialog;
-const SearchInput = styled.input`
+
+const DialogWrapper = styled.div`
+  border-radius: 6px;
   background: ${({ theme }) => theme.jobcards};
-  height: 80px;
-  width: 100%;
-  border: none;
-  resize: none;
-  outline: none;
-  padding: 23px;
-  padding-left: 60px;
+`;
+
+const SearchInput = styled.input`
   @media screen and (max-width: 600px) {
-    padding-left: 24px;
+    background: ${({ theme }) => theme.jobcards};
+    height: 80px;
+    width: 100%;
+    border: none;
+    resize: none;
+    outline: none;
+    padding-left: 44px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid ${({ theme }) => theme.stroke};
   }
 `;
 const Label = styled.label`
-  background-color: #fff;
+  background: ${({ theme }) => theme.jobcards};
   height: 80px;
   position: relative;
+`;
+const IconWrapperLeft = styled.div`
+  position: absolute;
+  top: -5px;
+  left: 10px;
 `;

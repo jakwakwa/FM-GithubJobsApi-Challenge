@@ -50,8 +50,7 @@ const SearchParams = () => {
     handleSubmit();
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     setCounter(0);
     setLocationProp(locationInput);
     setDescriptionProp(descriptionInput);
@@ -217,8 +216,8 @@ const IconWrapperLeft = styled.div`
 `;
 const IconWrapperRight = styled.div`
   position: absolute;
-  top: -5px;
-  right: 24px;
+  top: -9px;
+  right: 4px;
 `;
 
 const Label = styled.label`

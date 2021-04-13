@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import styled from "styled-components";
-import { Container, Grid, Hidden } from "@material-ui/core/";
+import { Container, Grid, Hidden, Button } from "@material-ui/core/";
 
 import { PrimaryButton } from "../Buttons/Buttons";
 import { FilterIcon, LocationIcon, SearchIcon } from "./Icons/Icons";
@@ -10,6 +10,7 @@ import LoadMoreButton from "../Buttons/LoadMoreButton";
 import MobileSearchButton from "../Buttons/MobileSearchButton";
 
 import JobContainer from "../Jobs/JobContainer";
+import MobileFilterDialog from "./MobileFilterDialog";
 
 const SearchParams = () => {
   const [locationInput, setLocationInput] = useState("");
@@ -19,6 +20,18 @@ const SearchParams = () => {
   const [fullTimeInput, setFullTimeInput] = React.useState({
     checkedA: false,
   });
+
+  const [open, setOpen] = useState(false);
+  //  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    handleSubmit();
+  };
 
   const [fullTimeProp, setFullTimeProp] = useState("");
   let [counter, setCounter] = useState(0);
@@ -38,9 +51,10 @@ const SearchParams = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    //e.preventDefault();
     setCounter(0);
+    //setSelectedValue("sf");
     setLocationProp(locationInput);
     setDescriptionProp(descriptionInput);
     setFullTimeProp(fullTimeInput.checkedA);
@@ -84,7 +98,9 @@ const SearchParams = () => {
                       onChange={handleDescriptionFilter}
                     />
                     <IconWrapperRight>
-                      <FilterIcon />
+                      <Button color="primary" onClick={handleClickOpen}>
+                        <FilterIcon />
+                      </Button>
                     </IconWrapperRight>
                   </Hidden>
                 </Label>
@@ -152,6 +168,15 @@ const SearchParams = () => {
               <Hidden smUp>
                 <MobileSearchButton type={"Submit"} value={"Submit"} />
               </Hidden>
+
+              <MobileFilterDialog
+                open={open}
+                onClose={handleClose}
+                SearchInput={locationInput}
+                inputFilterHandler={handleLocationFilter}
+                checked={fullTimeInput.checkedA}
+                checkboxhandler={handleFullTimeFilter}
+              />
             </Grid>
           </form>
         </Wrapper>

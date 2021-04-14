@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "regenerator-runtime/runtime";
-import Jobs from "./Jobs";
-import LoadMoreButton from "../Buttons/LoadMoreButton";
+import JobCard from "../../components/JobCard/JobCard";
+import LoadMoreButton from "../../components/Buttons/LoadMoreButton";
 import { Grid } from "@material-ui/core/";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import JobSkeletons from "./JobSkeletons";
+import JobCardSkeletons from "../../components/JobCard/JobCardSkeletons";
 import { urlUpdater } from "./utils/utils";
 import { Link } from "@reach/router";
 
-const JobContainer = ({
+const JobCardContainer = ({
   description,
   location,
   fullTime,
@@ -56,27 +56,27 @@ const JobContainer = ({
       <Grid
         container
         direction="row"
-        justify="space-between"
+        justify="flex-start"
         alignItems="flex-start"
         spacing={4}
       >
         {positions.length === 0 ? (
           <>
             <Grid item xs={12} sm={6} md={4}>
-              <JobSkeletons />
+              <JobCardSkeletons />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <JobSkeletons />
+              <JobCardSkeletons />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <JobSkeletons />
+              <JobCardSkeletons />
             </Grid>
           </>
         ) : null}
         {positions.map((pos) => (
           <Grid key={pos.id} item xs={12} sm={6} md={4}>
             <Link to={`/details/${pos.id}`}>
-              <Jobs
+              <JobCard
                 typePos={pos.type}
                 date={pos.created_at}
                 jobtitle={pos.title}
@@ -93,4 +93,4 @@ const JobContainer = ({
   );
 };
 
-export default JobContainer;
+export default JobCardContainer;

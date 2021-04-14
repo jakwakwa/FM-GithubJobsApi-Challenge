@@ -1,14 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { Container, Grid } from "@material-ui/core/";
-import JobLogo from "../../assets/jobdetailslogo.svg";
+import JobLogo from ".././assets/jobdetailslogo.svg";
 import { SecondaryButton } from "../components/Buttons/Buttons";
 import DescriptionButton from "../components/Buttons/ApplyNowButton";
-import Oval from "../../assets/oval.svg";
+import Oval from ".././assets/oval.svg";
 import Moment from "react-moment";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import JobSkeletons from "../components/Jobs/JobSkeletons";
+import JobSkeletons from "../components/JobCard/JobCardSkeletons";
 import JobDetailFooter from "./Components/JobDetailFooter";
+import { themeColors } from "./../styles/theme/ThemeStyled";
+import HowToBg from "../assets/desktop/bg-pattern-detail-footer.svg";
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -103,13 +105,17 @@ class JobDetails extends React.Component {
 
                 <CompanyInfoWrapper>
                   <CompanyTitle>{company}</CompanyTitle>
-                  <CompanySiteUrl>{companyUrl}</CompanySiteUrl>
+                  <CompanySiteUrl>
+                    {companyUrl.replace(/https:\/\/|http:\/\//gm, "")}
+                  </CompanySiteUrl>
                 </CompanyInfoWrapper>
 
                 <CompanyButtonWrapper>
-                  <SecondaryButton color="secondary" variant="contained">
-                    Company Site
-                  </SecondaryButton>
+                  <a href={companyUrl} target="popup">
+                    <SecondaryButton color="secondary" variant="contained">
+                      Company Site
+                    </SecondaryButton>
+                  </a>
                 </CompanyButtonWrapper>
               </div>
             </CompanyDetailsSection>
@@ -125,14 +131,17 @@ class JobDetails extends React.Component {
                   <JobTime>
                     <Moment fromNow>{dateToFormat}</Moment>
                     <OvalIcon></OvalIcon>
-                    <p>{type}</p>
+                    <span>{type}</span>
                   </JobTime>
                   <h1>{title}</h1>
                   <JobType>
                     {type}, {location}
                   </JobType>
                 </TitleWrapper>
-                <DescriptionButton buttonText={"Apply Now"} />
+                <DescriptionButton
+                  linkUrl={companyUrl}
+                  buttonText={"Apply Now"}
+                />
               </Grid>
 
               <HtmlWrapper
@@ -149,12 +158,16 @@ class JobDetails extends React.Component {
                 felis, adipiscing varius, adipiscing in, lacinia vel, tellus.
               </p>
 
-              <span>https://examplelink.com/how-to-apply</span>
+              <a href="/">https://examplelink.com/how-to-apply</a>
             </HowToSection>
           </div>
         </Container>
 
-        <JobDetailFooter title={company} weblink={companyUrl} />
+        <JobDetailFooter
+          title={company}
+          companySite={companyUrl.replace(/https:\/\/|http:\/\//gm, "")}
+          weblink={companyUrl}
+        />
       </>
     );
   }
@@ -192,7 +205,6 @@ const CompanyLogo = styled.div`
   height: 140px;
   border-top-left-radius: 6px;
   @media screen and (max-width: 600px) {
-
     width: 50px;
     height: 50px;
     margin: 0 auto;
@@ -201,10 +213,6 @@ const CompanyLogo = styled.div`
     position: relative;
     border-radius: 15px;
   }
-    
-  }
-  /*border: none;
-  outline: none;*/
 `;
 const CompanyInfoWrapper = styled.div`
   display: inline-block;
@@ -272,15 +280,19 @@ const JobTime = styled.p`
   margin-bottom: 5px;
 `;
 
-const JobType = styled.div`
+const JobType = styled.span`
   color: #5964e0;
   font-weight: 700;
   margin-top: 13px;
+  display: inline-block;
 `;
 const HowToSection = styled.div`
+  background: url(${HowToBg}) no-repeat top center;
+  background-color: ${themeColors.primary.violet};
+  width: 100%;
+  /*height: 162px;*/
   margin-top: 50px;
   padding: 41px;
-  background-color: #5964e0;
   margin-bottom: 92px;
   border-radius: 6px;
   & h3,
@@ -294,9 +306,18 @@ const HowToSection = styled.div`
     font-weight: 700;
     margin-bottom: 164px;
   }
+  & a {
+    color: ${themeColors.secondary.white};
+    font-weight: 700;
+    text-decoration: underline;
+    &:hover {
+      color: ${themeColors.secondary.white};
+      opacity: 0.6;
+    }
+  }
 `;
 
-const OvalIcon = styled.div`
+const OvalIcon = styled.span`
   position: relative;
   background: url(${Oval}) no-repeat;
   width: 4px;

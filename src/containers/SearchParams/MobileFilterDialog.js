@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Dialog, Container } from "@material-ui/core/";
 import { LocationIcon } from "./Icons/Icons";
-import { PrimaryButton } from "../Buttons/Buttons";
-import FilterCheckbox from "../Checkbox/CustomCheckbox";
+import { PrimaryButton } from "../../components/Buttons/Buttons";
+import FilterCheckbox from "../../components/Checkbox/CustomCheckbox";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStayles = makeStyles({

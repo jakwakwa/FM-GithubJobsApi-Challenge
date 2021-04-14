@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
-import JobLogo from "../../../assets/joblogo.svg";
-import Oval from "../../../assets/oval.svg";
-//import { darkTheme } from "./styles/theme/themetest/ThemeStyled";
+import JobLogo from "../.././assets/joblogo.svg";
+import Oval from "../.././assets/oval.svg";
 import Moment from "react-moment";
-// TODO: add id from parent
-const Jobs = ({ jobtitle, company, country, typePos, date }) => {
+
+const JobCard = ({ jobtitle, company, country, typePos, date }) => {
   const dateToFormat = date;
   return (
     <Wrapper>
@@ -18,15 +17,15 @@ const Jobs = ({ jobtitle, company, country, typePos, date }) => {
         alignItems="flex-end"
       >
         <Grid item>
-          <span>
+          <JobTimeDetails>
             <Moment fromNow>{dateToFormat}</Moment>
-          </span>
+          </JobTimeDetails>
         </Grid>
         <Grid item>
           <OvalIcon></OvalIcon>
         </Grid>
         <Grid item>
-          <span>{typePos}</span>
+          <JobTimeDetails>{typePos}</JobTimeDetails>
         </Grid>
       </Grid>
       <JobTitle>{jobtitle}</JobTitle>
@@ -36,17 +35,19 @@ const Jobs = ({ jobtitle, company, country, typePos, date }) => {
   );
 };
 
-export default Jobs;
+export default JobCard;
 
 const Wrapper = styled.div`
   position: relative;
   background: ${({ theme }) => theme.jobcards};
-  /*width: 350px;*/
   height: 228px;
   border-radius: 6px;
   padding: 30px;
   padding-top: 50px;
   margin-top: 50px;
+  & > span {
+    color: color: ${({ theme }) => theme.jobText};
+  }
 `;
 
 const Logo = styled.div`
@@ -88,4 +89,8 @@ const CountryTitle = styled.h4`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const JobTimeDetails = styled.div`
+  color: ${({ theme }) => theme.jobText};
 `;

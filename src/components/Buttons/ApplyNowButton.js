@@ -4,10 +4,16 @@ import styled from "styled-components";
 
 import { PrimaryButton } from "../Buttons/Buttons";
 
-const DetailsButton = ({ buttonText }) => {
+const DetailsButton = ({ buttonText, linkUrl }) => {
   return (
     <ApplyNowButtonWrapper>
-      <PrimaryButton variant="contained">{buttonText}</PrimaryButton>
+      {linkUrl ? (
+        <a href={linkUrl} target="popup">
+          <PrimaryButton variant="contained">{buttonText}</PrimaryButton>
+        </a>
+      ) : (
+        <PrimaryButton variant="contained">{buttonText}</PrimaryButton>
+      )}
     </ApplyNowButtonWrapper>
   );
 };

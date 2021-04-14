@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Skeleton from "@material-ui/lab/Skeleton";
 
 // TODO: add id from parent
-const JobSkeleton = ({ variant, widthPerc, height }) => {
+const JobCardSkeletons = ({ variant, widthPerc, height }) => {
   return (
     <Wrapper style={{ width: widthPerc }}>
       <Skeleton variant={variant} width={widthPerc} height={height} />
@@ -11,7 +11,7 @@ const JobSkeleton = ({ variant, widthPerc, height }) => {
   );
 };
 
-export default JobSkeleton;
+export default JobCardSkeletons;
 
 const Wrapper = styled.div`
   position: relative;

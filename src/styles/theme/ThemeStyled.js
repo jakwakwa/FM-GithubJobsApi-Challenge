@@ -9,7 +9,7 @@ export const themeColors = {
     white: "#ffffff",
     lightGrey: "#F4F6F8",
     gray: "#9DAEC2",
-    darkGray: "#6E8098",
+    darkGrey: "#6E8098",
     darkStroke: "#2A3342",
     secondaryButton: "#EEEFFC",
     secondaryButtonHover: "#C5C9F4",

@@ -4,7 +4,7 @@ import { Container, Grid } from "@material-ui/core/";
 
 import DescriptionButton from "../../components/Buttons/ApplyNowButton";
 
-const JobDetailFooter = ({ title, weblink }) => {
+const JobDetailFooter = ({ title, companySite, weblink }) => {
   return (
     <ApplyNowSection>
       <Container maxWidth="lg">
@@ -16,9 +16,9 @@ const JobDetailFooter = ({ title, weblink }) => {
         >
           <FooterTextWrapper>
             <CompanyTitle>{title}</CompanyTitle>
-            <CompanySiteUrl>{weblink}</CompanySiteUrl>
+            <CompanySiteUrl>{companySite}</CompanySiteUrl>
           </FooterTextWrapper>
-          <DescriptionButton buttonText={"Apply Now"} />
+          <DescriptionButton linkUrl={weblink} buttonText={"Apply Now"} />
         </Grid>
       </Container>
     </ApplyNowSection>

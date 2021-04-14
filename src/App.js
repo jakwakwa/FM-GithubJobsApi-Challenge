@@ -7,7 +7,7 @@ import Switch from "./components/Switch/Switch";
 import { lightTheme, darkTheme } from "./styles/theme/ThemeStyled";
 
 import Layout from "./components/Layout/Layout";
-import SearchParams from "./components/SearchParams/SearchParams";
+import SearchParams from "./containers/SearchParams/SearchParams";
 import JobDetails from "./pages/JobDetails";
 
 const App = () => {

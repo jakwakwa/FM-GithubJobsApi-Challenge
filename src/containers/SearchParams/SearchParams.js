@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Container, Grid, Hidden, Button } from "@material-ui/core/";
 
-import { PrimaryButton } from "../Buttons/Buttons";
+import { PrimaryButton } from "../../components/Buttons/Buttons";
 import { FilterIcon, LocationIcon, SearchIcon } from "./Icons/Icons";
-import FilterCheckbox from "../Checkbox/CustomCheckbox";
-import MobileSearchButton from "../Buttons/MobileSearchButton";
+import FilterCheckbox from "../../components/Checkbox/CustomCheckbox";
+import MobileSearchButton from "../../components/Buttons/MobileSearchButton";
 
-import JobContainer from "../Jobs/JobContainer";
+import JobCardContainer from "../JobCardContainer/JobCardContainer";
 import MobileFilterDialog from "./MobileFilterDialog";
 
 const SearchParams = () => {
@@ -176,7 +176,7 @@ const SearchParams = () => {
           </form>
         </Wrapper>
 
-        <JobContainer
+        <JobCardContainer
           description={descriptionProp}
           location={locationProp}
           fullTime={fullTimeProp}

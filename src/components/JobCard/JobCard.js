@@ -4,9 +4,24 @@ import Grid from "@material-ui/core/Grid";
 import JobLogo from "../.././assets/joblogo.svg";
 import Oval from "../.././assets/oval.svg";
 import Moment from "react-moment";
+//import moment from "moment/min/moment-with-locales";
 
 const JobCard = ({ jobtitle, company, country, typePos, date }) => {
-  const dateToFormat = <Moment unix>{date}</Moment>;
+  const dateToFormat = date;
+  //  // Sets the moment instance to use.
+  //  Moment.globalMoment = moment;
+
+  // Set the locale for every react-moment instance to French.
+  //  Moment.globalLocale = "en";
+
+  //  // Set the output format for every react-moment instance.
+  //  Moment.globalFormat = "D MMM YYYY";
+
+  // Set the timezone for every instance.
+  //  Moment.globalTimezone = "America/Los_Angeles";
+
+  //  Moment.globalFormat = "D MMM YYYY";
+
   return (
     <Wrapper>
       <Logo></Logo>
@@ -18,7 +33,9 @@ const JobCard = ({ jobtitle, company, country, typePos, date }) => {
       >
         <Grid item>
           <JobTimeDetails>
-            <Moment fromNow={"dd"}>{dateToFormat}</Moment>
+            <Moment fromNow locale="en">
+              {dateToFormat}
+            </Moment>
           </JobTimeDetails>
         </Grid>
         <Grid item>

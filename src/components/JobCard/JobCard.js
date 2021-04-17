@@ -47,7 +47,7 @@ const Wrapper = styled.div`
   border-radius: 6px;
   padding: 30px;
   padding-top: 50px;
-  margin-top: 40px;
+  margin-bottom: 40px;
   & > span {
     color: color: ${({ theme }) => theme.jobText};
   }

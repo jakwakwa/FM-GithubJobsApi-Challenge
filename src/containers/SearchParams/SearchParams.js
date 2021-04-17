@@ -198,7 +198,7 @@ const Wrapper = styled.div`
   height: 80px;
   overflow: hidden;
   border-radius: 6px;
-  margin-bottom: 25px;
+  margin-bottom: 75px;
 
   & input:first-of-type {
     border-right: 1px solid ${({ theme }) => theme.stroke};

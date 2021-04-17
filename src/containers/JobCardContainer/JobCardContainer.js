@@ -59,6 +59,7 @@ const JobCardContainer = ({
         justify="flex-start"
         alignItems="flex-start"
         spacing={4}
+        styles={{ paddingTop: "-16px" }}
       >
         {positions.length === 0 ? (
           <>

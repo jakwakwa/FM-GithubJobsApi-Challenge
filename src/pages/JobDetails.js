@@ -129,7 +129,7 @@ class JobDetails extends React.Component {
               >
                 <TitleWrapper>
                   <JobTime>
-                    <Moment fromNow>{dateToFormat}</Moment>
+                    <Moment fromNow={"dd"}>{dateToFormat}</Moment>
                     <OvalIcon></OvalIcon>
                     <span>{type}</span>
                   </JobTime>

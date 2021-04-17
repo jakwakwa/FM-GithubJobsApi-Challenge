@@ -192,7 +192,7 @@ export default SearchParams;
 
 const Wrapper = styled.div`
   position: relative;
-  top: -38px;
+  top: -42px;
   background: ${({ theme }) => theme.jobcards};
   width: 100%;
   height: 80px;

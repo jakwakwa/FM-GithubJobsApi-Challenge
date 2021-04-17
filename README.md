@@ -8,7 +8,7 @@ run local dev host: `npm run dev`
 
 ## Welcome! 👋
 
-I built this project was a solution from the [Frontend Mentor](https://www.frontendmentor.io) GITHUB API challenge. 
+I built this project as a solution from the [Frontend Mentor](https://www.frontendmentor.io) - [GITHUB API challenge.](https://www.frontendmentor.io/challenges/github-jobs-api-93L-NL6rP) 
 
 ## Noteworthy Frontend Technology Used
 

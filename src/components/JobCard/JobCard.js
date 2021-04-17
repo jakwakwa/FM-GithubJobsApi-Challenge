@@ -58,7 +58,7 @@ const Logo = styled.div`
   background: url(${JobLogo}) no-repeat;
   width: 50px;
   height: 50px;
-  top: -22px;
+  top: -26px;
 `;
 
 const OvalIcon = styled.div`
@@ -66,15 +66,15 @@ const OvalIcon = styled.div`
   background: url(${Oval}) no-repeat;
   width: 4px;
   height: 4px;
-  bottom: 9px;
+  bottom: 7px;
   margin-left: 10px;
   margin-right: 10px;
 `;
 
 const JobTitle = styled.h3`
   color: ${({ theme }) => theme.jobcardTitle};
-  padding-top: 12px;
-  padding-bottom: 9px;
+  padding-top: 14px;
+  padding-bottom: 7px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -88,12 +88,13 @@ const CompanyName = styled.p`
 
 const CountryTitle = styled.h4`
   color: #5964e0;
-  padding-top: 35px;
+  padding-top: 36px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
 const JobTimeDetails = styled.div`
+  margin-top: -5px;
   color: ${({ theme }) => theme.jobText};
 `;

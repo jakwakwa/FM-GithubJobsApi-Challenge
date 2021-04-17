@@ -9,10 +9,11 @@ export const PrimaryButton = withStyles(() => ({
     fontWeight: "700",
     textTransform: "capitalize",
     backgroundColor: themeColors.primary.violet,
-    padding: "10px 27px",
+    padding: "10px 32px",
     width: "100%",
     minWidth: "100%",
     "&:hover": {
+      color: "#ffffff",
       backgroundColor: themeColors.primary.lightViolet,
     },
   },
@@ -40,6 +41,7 @@ export const SecondaryButton = withStyles(() => ({
     backgroundColor: themeColors.secondary.secondaryButton,
     padding: "10px 27px",
     "&:hover": {
+      color: themeColors.primary.violet,
       backgroundColor: themeColors.secondary.secondaryButtonHover,
     },
   },

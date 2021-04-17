@@ -204,21 +204,29 @@ const JobDescription = styled.div`
 const CompanyLogoWrapper = styled.div`
   float: left;
   width: 140px;
+
+  /*padding: 25px;*/
   @media screen and (max-width: 600px) {
     width: 100%;
     float: initial;
   }
 `;
 const CompanyLogo = styled.div`
+  padding: 20px;
   background: url(${(props) => props.logod}) no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-color: #fff;
   background-repeat: no-repeat;
   background-position: center center;
+  background-origin: content-box;
   width: 100%;
   height: 140px;
   border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border-right: 2px solid ${themeColors.secondary.checkBoxBgLight};
+  border-bottom: 3px solid ${themeColors.secondary.checkBoxBgLight};
   @media screen and (max-width: 600px) {
+    padding: 0;
     width: 50px;
     height: 50px;
     margin: 0 auto;

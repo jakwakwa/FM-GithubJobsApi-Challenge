@@ -113,11 +113,13 @@ class JobDetails extends React.Component {
                 </CompanyInfoWrapper>
 
                 <CompanyButtonWrapper>
-                  <a href={companyUrl} target="popup">
-                    <SecondaryButton color="secondary" variant="contained">
-                      Company Site
-                    </SecondaryButton>
-                  </a>
+                  <SecondaryButton
+                    href={companyUrl}
+                    color="secondary"
+                    variant="contained"
+                  >
+                    Company Site
+                  </SecondaryButton>
                 </CompanyButtonWrapper>
               </div>
             </CompanyDetailsSection>

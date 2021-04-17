@@ -91,6 +91,9 @@ const CheckBoxStyled = styled.div`
     margin-left: 7px;
     font-size: 15px;
   }
+  & .MuiFormControlLabel-root {
+    height: 80px;
+  }
 `;
 
 const CheckBoxIcon = styled.span`

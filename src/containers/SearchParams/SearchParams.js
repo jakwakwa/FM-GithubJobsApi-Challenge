@@ -129,7 +129,6 @@ const SearchParams = () => {
                   xs
                   sm={6}
                   md={4}
-                  style={{ height: "80px" }}
                 >
                   {/* Fulltime Checkebox Desktop */}
                   <Hidden smDown>

@@ -8,9 +8,9 @@ const DetailsButton = ({ buttonText, linkUrl }) => {
   return (
     <ApplyNowButtonWrapper>
       {linkUrl ? (
-        <a href={linkUrl} target="popup">
-          <PrimaryButton variant="contained">{buttonText}</PrimaryButton>
-        </a>
+        <PrimaryButton href={linkUrl} variant="contained">
+          {buttonText}
+        </PrimaryButton>
       ) : (
         <PrimaryButton variant="contained">{buttonText}</PrimaryButton>
       )}

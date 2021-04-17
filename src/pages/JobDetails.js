@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Container, Grid } from "@material-ui/core/";
-import JobLogo from ".././assets/jobdetailslogo.svg";
+//import JobLogo from ".././assets/jobdetailslogo.svg";
 import { SecondaryButton } from "../components/Buttons/Buttons";
 import DescriptionButton from "../components/Buttons/ApplyNowButton";
 import Oval from ".././assets/oval.svg";
@@ -45,6 +45,7 @@ class JobDetails extends React.Component {
           location: jsonData.location,
           description: jsonData.description,
           created_at: jsonData.created_at,
+          logo: jsonData.company_logo,
           loading: false,
         });
       } catch (error) {
@@ -87,6 +88,7 @@ class JobDetails extends React.Component {
       location,
       description,
       created_at,
+      logo,
     } = this.state;
 
     return (
@@ -100,7 +102,7 @@ class JobDetails extends React.Component {
                 }}
               >
                 <CompanyLogoWrapper>
-                  <CompanyLogo />
+                  <CompanyLogo logod={logo} />
                 </CompanyLogoWrapper>
 
                 <CompanyInfoWrapper>
@@ -208,7 +210,11 @@ const CompanyLogoWrapper = styled.div`
   }
 `;
 const CompanyLogo = styled.div`
-  background: url(${JobLogo}) no-repeat;
+  background: url(${(props) => props.logod}) no-repeat;
+  background-size: cover;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center center;
   width: 100%;
   height: 140px;
   border-top-left-radius: 6px;

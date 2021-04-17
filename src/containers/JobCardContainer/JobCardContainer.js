@@ -83,6 +83,7 @@ const JobCardContainer = ({
                 jobtitle={pos.title}
                 company={pos.company}
                 country={pos.location}
+                logo={pos.company_logo}
                 id={pos.id}
               />
             </Link>

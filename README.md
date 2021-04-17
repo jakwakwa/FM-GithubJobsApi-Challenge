@@ -12,7 +12,11 @@ This project is created as a solution from the [Frontend Mentor](https://www.fro
 
 **To do this challenge, you need a solid understanding of HTML, CSS, and JavaScript.**
 
-## The challenge
+## Live Solution of completed challenge:
+
+[view here - hosted with Netlify](https://loving-panini-64028a.netlify.app/)
+
+## The challenge Brief I received
 
 Your challenge is to build out this jobs board using the [GitHub Jobs API](https://jobs.github.com/api) data and get it looking as close to the design as possible.
 
@@ -35,22 +39,6 @@ fetch(
   .then((res) => res.json())
   .then((data) => console.log(data));
 ```
-
-Want some support on the challenge? [Join our Slack community](https://www.frontendmentor.io/slack) and ask questions in the **#help** channel.
-
-## Where to find everything
-
-All the required assets for this project are in the `/assets` folder. The assets are already exported for the correct screen size and optimized. Some images can be re-used at multiple screen sizes. So if you don't see an image in a specific folder, it will typically be in another folder for that page.
-
-The design system in the Sketch file will give you more information about the various colors, fonts, and styles used in this project.
-
-## Deploying your project
-
-As mentioned above, there are a number of ways to host your project for free. We recommend using [Vercel](https://bit.ly/fem-vercel) as it's an amazing service and extremely simple to get set up with. If you'd like to use Vercel, here are some steps to follow to get started:
-
-1. [Sign up to Vercel](https://bit.ly/fem-vercel-signup) and go through the onboarding flow, ensuring your GitHub account is connected by using their [Vercel for GitHub](https://vercel.com/docs/v2/git-integrations/vercel-for-github) integration.
-2. Connect your project to Vercel from the ["Import project" page](https://vercel.com/import), using the "From Git Repository" button and selecting the project you want to deploy.
-3. Once connected, every time you `git push`, Vercel will create a new [deployment](https://vercel.com/docs/v2/platform/deployments) and the deployment URL will be shown on your [Dashboard](https://vercel.com/dashboard). You will also receive an email for each deployment with the URL.
 
 ## Community Sponsors
 

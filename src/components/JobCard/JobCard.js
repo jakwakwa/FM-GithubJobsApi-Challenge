@@ -46,7 +46,7 @@ const Wrapper = styled.div`
   height: 228px;
   border-radius: 6px;
   padding: 30px;
-  padding-top: 50px;
+  padding-top: 53px;
   margin-bottom: 33px;
   & > span {
     color: color: ${({ theme }) => theme.jobText};
@@ -95,6 +95,6 @@ const CountryTitle = styled.h4`
 `;
 
 const JobTimeDetails = styled.div`
-  margin-top: -5px;
+  margin-top: -6px;
   color: ${({ theme }) => theme.jobText};
 `;

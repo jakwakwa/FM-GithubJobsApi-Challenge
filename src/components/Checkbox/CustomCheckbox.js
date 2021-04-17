@@ -18,13 +18,13 @@ const useStyles = makeStyles({
     borderRadius: 3,
     width: 24,
     height: 24,
-    backgroundColor: themeColors.secondary.checkBoxBg,
     "$root.Mui-focusVisible &": {
       outline: "2px auto rgba(19,124,189,.6)",
       outlineOffset: 2,
     },
     "input:hover ~ &": {
-      backgroundColor: themeColors.secondary.checkBoxHover,
+      backgroundColor: themeColors.primary.violet,
+      opacity: "0.25",
     },
     "input:disabled ~ &": {
       boxShadow: "none",
@@ -32,9 +32,6 @@ const useStyles = makeStyles({
     },
   },
   checkedIcon: {
-    backgroundColor: themeColors.primary.violet,
-    backgroundImage:
-      "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
     "&:before": {
       display: "block",
       width: 24,
@@ -47,7 +44,7 @@ const useStyles = makeStyles({
     },
     "input:hover ~ &": {
       backgroundColor: themeColors.primary.violet,
-      opacity: "0.9",
+      opacity: "0.7",
     },
   },
 });
@@ -56,18 +53,18 @@ function CustomCheckbox(props) {
   const classes = useStyles();
 
   return (
-    <CheckboxTest>
-      <Checkbox
-        className={classes.root}
-        color="default"
-        checkedIcon={
-          <span className={clsx(classes.icon, classes.checkedIcon)} />
-        }
-        icon={<span className={classes.icon} />}
-        inputProps={{ "aria-label": "decorative checkbox" }}
-        {...props}
-      />
-    </CheckboxTest>
+    <Checkbox
+      className={classes.root}
+      color="default"
+      checkedIcon={
+        <CheckBoxIconChecked
+          className={clsx(classes.icon, classes.checkedIcon)}
+        />
+      }
+      icon={<CheckBoxIcon className={classes.icon} />}
+      inputProps={{ "aria-label": "decorative checkbox" }}
+      {...props}
+    />
   );
 }
 
@@ -98,13 +95,12 @@ const CheckBoxStyled = styled.div`
     margin-left: 7px;
     font-size: 15px;
   }
-  & .MuiCheckbox-colorPrimary {
-    background-color: red;
-  }
 `;
 
-const CheckboxTest = styled.div`
-  & span span span {
-    background: ${({ theme }) => theme.checkBoxBg};
-  }
+const CheckBoxIcon = styled.span`
+  background: ${({ theme }) => theme.checkBoxBg};
+`;
+
+const CheckBoxIconChecked = styled.span`
+  background: ${({ theme }) => theme.bullets};
 `;

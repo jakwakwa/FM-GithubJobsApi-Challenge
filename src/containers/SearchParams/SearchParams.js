@@ -207,12 +207,12 @@ const Wrapper = styled.div`
   }
 `;
 
-const IconWrapperLeft = styled.div`
+const IconWrapperLeft = styled.span`
   position: absolute;
   top: -5px;
   left: 23px;
 `;
-const IconWrapperRight = styled.div`
+const IconWrapperRight = styled.span`
   position: absolute;
   top: -9px;
   right: 4px;

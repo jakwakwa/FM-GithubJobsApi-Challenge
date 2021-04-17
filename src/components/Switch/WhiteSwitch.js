@@ -11,7 +11,6 @@ const WhiteSwitch = withStyles({
     color: "#5964E0",
     top: "8px",
     left: "8px",
-
     "&$checked": {
       color: "#5964E0",
     },
@@ -24,26 +23,20 @@ const WhiteSwitch = withStyles({
       opacity: "1",
     },
   },
-
   checked: {
     width: "33px",
     opacity: "1",
-    track: {
-      opacity: "1",
-    },
   },
   track: {
     color: "#ffffff",
     backgroundColor: "#ffffff",
     opacity: "1",
     height: "24px",
-
     top: "-7px",
     borderRadius: "12px",
   },
   thumb: {
     boxShadow: "none",
-
     width: "14px",
     height: "14px",
   },

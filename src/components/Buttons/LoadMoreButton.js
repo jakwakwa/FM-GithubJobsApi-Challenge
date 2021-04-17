@@ -20,7 +20,7 @@ const LoadMoreButton = ({ handleLoader }) => {
 
 export default LoadMoreButton;
 
-const LoadMoreJobs = styled.div`
+const LoadMoreJobs = styled.button`
   margin: 50px 0;
   display: flex;
   justify-content: center;

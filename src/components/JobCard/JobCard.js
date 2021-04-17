@@ -18,7 +18,7 @@ const JobCard = ({ jobtitle, company, country, typePos, date }) => {
       >
         <Grid item>
           <JobTimeDetails>
-            <Moment fromNow>{dateToFormat}</Moment>
+            <Moment fromNow={"dd"}>{dateToFormat}</Moment>
           </JobTimeDetails>
         </Grid>
         <Grid item>

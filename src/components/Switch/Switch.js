@@ -54,7 +54,7 @@ export default Switch;
 //  top: 69px;
 //`;
 
-const SwitchWrapper = styled.button`
+const SwitchWrapper = styled.div`
   position: relative;
   float: right;
   top: 52px;

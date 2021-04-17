@@ -73,8 +73,8 @@ const OvalIcon = styled.div`
 
 const JobTitle = styled.h3`
   color: ${({ theme }) => theme.jobcardTitle};
-  padding-top: 14px;
-  padding-bottom: 7px;
+  padding-top: 16px;
+  padding-bottom: 8px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -95,6 +95,6 @@ const CountryTitle = styled.h4`
 `;
 
 const JobTimeDetails = styled.div`
-  margin-top: -6px;
+  margin-top: -4px;
   color: ${({ theme }) => theme.jobText};
 `;

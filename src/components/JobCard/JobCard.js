@@ -60,7 +60,7 @@ const Logo = styled.div`
   background-color: #fff;
   background-repeat: no-repeat;
   background-position: center center;
-  border-radius: 6px;
+  border-radius: 15px;
   border: 2.5px solid ${({ theme }) => theme.jobLogoBorder};
   box-shadow: 0 2px 2px rgb(0 0 0 / 6%), 0 3px 5px rgb(0 0 0 / 23%);
   width: 50px;

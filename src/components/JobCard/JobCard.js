@@ -6,7 +6,7 @@ import Oval from "../.././assets/oval.svg";
 import Moment from "react-moment";
 
 const JobCard = ({ jobtitle, company, country, typePos, date }) => {
-  const dateToFormat = date;
+  const dateToFormat = <Moment unix>{date}</Moment>;
   return (
     <Wrapper>
       <Logo></Logo>

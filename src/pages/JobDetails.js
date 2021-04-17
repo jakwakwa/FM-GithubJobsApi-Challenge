@@ -87,7 +87,7 @@ class JobDetails extends React.Component {
       created_at,
     } = this.state;
 
-    const dateToFormat = created_at;
+    const dateToFormat = <Moment unix>{created_at}</Moment>;
 
     return (
       <>

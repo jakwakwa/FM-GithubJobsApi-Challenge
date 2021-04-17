@@ -12,6 +12,7 @@ const Header = () => {
     <Wrapper>
       <Container>
         <Link to="/">
+          <span style={{ visibility: "hidden", display: "none" }}>DevJobs</span>
           <Logo></Logo>
         </Link>
       </Container>

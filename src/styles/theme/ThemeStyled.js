@@ -34,6 +34,7 @@ export const lightTheme = {
   stroke: themeColors.secondary.lightGrey,
   gradient: "linear-gradient(#39598A, #79D7ED)",
   checkBoxBg: themeColors.secondary.checkBoxBgLight,
+  jobLogoBorder: themeColors.primary.violet,
 };
 export const darkTheme = {
   body: themeColors.primary.midnight,
@@ -48,4 +49,5 @@ export const darkTheme = {
   stroke: themeColors.secondary.darkStroke,
   gradient: "linear-gradient(#091236, #1E215D)",
   checkBoxBg: themeColors.secondary.checkBoxBgDark,
+  jobLogoBorder: themeColors.primary.violet,
 };

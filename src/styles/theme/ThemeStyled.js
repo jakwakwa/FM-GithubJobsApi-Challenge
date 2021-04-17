@@ -27,7 +27,7 @@ export const lightTheme = {
   textHeadings: themeColors.primary.veryDarkBlue,
   toggleBorder: themeColors.secondary.white,
   jobcards: themeColors.secondary.white,
-  jobcardTitle: themeColors.veryDarkBlue,
+  jobcardTitle: themeColors.primary.veryDarkBlue,
   jobText: themeColors.secondary.darkGrey,
   background: themeColors.secondary.lightGrey,
   bullets: themeColors.primary.violet,

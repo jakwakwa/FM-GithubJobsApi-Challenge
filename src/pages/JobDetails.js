@@ -168,7 +168,9 @@ class JobDetails extends React.Component {
                 felis, adipiscing varius, adipiscing in, lacinia vel, tellus.
               </p>
 
-              <a href="/">https://examplelink.com/how-to-apply</a>
+              <a aria-current="page" href={companyUrl}>
+                https://examplelink.com/how-to-apply
+              </a>
             </HowToSection>
           </div>
         </Container>

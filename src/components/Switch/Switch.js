@@ -13,8 +13,10 @@ const Switch = ({ theme, toggleTheme }) => {
           <DayIcon style={{ color: "#fff", marginTop: "5px" }} />
           <WhiteSwitch
             checked={isLight ? false : true}
+            disableRipple
             onChange={toggleTheme}
             name="themeswitcher"
+            inputProps={{ "aria-label": "Theme Switcher" }}
           />
           )
           <NightIcon style={{ color: "#fff", marginTop: "9px" }} />
@@ -24,35 +26,6 @@ const Switch = ({ theme, toggleTheme }) => {
   );
 };
 export default Switch;
-
-//const Toggle = ({ theme, toggleTheme }) => {
-//  const isLight = theme === "light";
-//
-//  return (
-//    <ToggleContainer lightTheme={isLight} onClick={toggleTheme}>
-//      <img
-//        src="https://image.flaticon.com/icons/svg/1164/1164954.svg"
-//        width="224"
-//        height="224"
-//        alt="Sun free icon"
-//        title="Sun free icon"
-//      />
-//      <img
-//        src="https://image.flaticon.com/icons/svg/2033/2033921.svg"
-//        width="224"
-//        height="224"
-//        alt="Moon free icon"
-//        title="Moon free icon"
-//      />
-//    </ToggleContainer>
-//  );
-//};
-
-//const SwitchWrapper = styled.div`
-//  position: relative;
-//  float: right;
-//  top: 69px;
-//`;
 
 const SwitchWrapper = styled.div`
   position: relative;

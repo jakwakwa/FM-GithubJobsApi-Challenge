@@ -26,10 +26,6 @@ const useStyles = makeStyles({
       backgroundColor: themeColors.primary.violet,
       opacity: "0.25",
     },
-    "input:disabled ~ &": {
-      boxShadow: "none",
-      background: "rgba(206,217,224,.5)",
-    },
   },
   checkedIcon: {
     "&:before": {
@@ -55,7 +51,7 @@ function CustomCheckbox(props) {
   return (
     <Checkbox
       className={classes.root}
-      color="default"
+      disableRipple
       checkedIcon={
         <CheckBoxIconChecked
           className={clsx(classes.icon, classes.checkedIcon)}

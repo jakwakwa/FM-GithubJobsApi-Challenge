@@ -8,9 +8,13 @@ run local dev host: `npm run dev`
 
 ## Welcome! 👋
 
-This project is created as a solution from the [Frontend Mentor](https://www.frontendmentor.io) GITHUB API challenge.
+This project was created as a solution from the [Frontend Mentor](https://www.frontendmentor.io) GITHUB API challenge. 
 
-**To do this challenge, you need a solid understanding of HTML, CSS, and JavaScript.**
+## Noteworthy Frontend Technology Used
+
+ReactJS
+Material UI
+Styled Components
 
 ## Live Solution of completed challenge:
 

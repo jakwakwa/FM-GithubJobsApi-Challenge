@@ -58,7 +58,7 @@ const Logo = styled.div`
   background: url(${JobLogo}) no-repeat;
   width: 50px;
   height: 50px;
-  top: -32px;
+  top: -22px;
 `;
 
 const OvalIcon = styled.div`

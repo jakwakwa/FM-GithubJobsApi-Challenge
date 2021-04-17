@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import JobLogo from "../.././assets/joblogo.svg";
 import Oval from "../.././assets/oval.svg";
 import { formatDistance, subDays } from "date-fns";
-//import moment from "moment/min/moment-with-locales";
 
 const JobCard = ({ jobtitle, company, country, typePos, date }) => {
   const dateToFormat = formatDistance(subDays(new Date(date), 1), new Date(), {

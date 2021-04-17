@@ -5,12 +5,13 @@ import JobLogo from ".././assets/jobdetailslogo.svg";
 import { SecondaryButton } from "../components/Buttons/Buttons";
 import DescriptionButton from "../components/Buttons/ApplyNowButton";
 import Oval from ".././assets/oval.svg";
-import Moment from "react-moment";
+
 import LinearProgress from "@material-ui/core/LinearProgress";
 import JobSkeletons from "../components/JobCard/JobCardSkeletons";
 import JobDetailFooter from "./Components/JobDetailFooter";
 import { themeColors } from "./../styles/theme/ThemeStyled";
 import HowToBg from "../assets/desktop/bg-pattern-detail-footer.svg";
+import { formatDistance, subDays } from "date-fns";
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class JobDetails extends React.Component {
           companyUrl: jsonData.company_url,
           location: jsonData.location,
           description: jsonData.description,
+          created_at: jsonData.created_at,
           loading: false,
         });
       } catch (error) {
@@ -87,8 +89,6 @@ class JobDetails extends React.Component {
       created_at,
     } = this.state;
 
-    const dateToFormat = <Moment unix>{created_at}</Moment>;
-
     return (
       <>
         <Container maxWidth="lg">
@@ -129,7 +129,15 @@ class JobDetails extends React.Component {
               >
                 <TitleWrapper>
                   <JobTime>
-                    <Moment fromNow={"dd"}>{dateToFormat}</Moment>
+                    <span>
+                      {formatDistance(
+                        subDays(new Date(created_at), 1),
+                        new Date(),
+                        {
+                          addSuffix: true,
+                        }
+                      )}
+                    </span>
                     <OvalIcon></OvalIcon>
                     <span>{type}</span>
                   </JobTime>

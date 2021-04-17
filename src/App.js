@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Router } from "@reach/router";
 import { ThemeProvider } from "styled-components";
@@ -10,18 +10,42 @@ import Layout from "./components/Layout/Layout";
 import SearchParams from "./containers/SearchParams/SearchParams";
 import JobDetails from "./pages/JobDetails";
 
-const App = () => {
+const useDarkMode = () => {
   const [theme, setTheme] = useState("light");
+  const [componentMounted, setComponentMounted] = useState(false);
 
-  const themeToggler = () => {
-    theme === "light" ? setTheme("dark") : setTheme("light");
+  const setMode = (mode) => {
+    window.localStorage.setItem("theme", mode);
+    setTheme(mode);
   };
+  const toggleTheme = () => {
+    if (theme === "light") {
+      setMode("dark");
+    } else {
+      setMode("light");
+    }
+  };
+  useEffect(() => {
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? setMode("dark")
+      : setMode("light");
+    setComponentMounted(true);
+  }, []);
+
+  return [theme, toggleTheme, componentMounted];
+};
+
+const App = () => {
+  const [theme, toggleTheme] = useDarkMode();
+  const themeMode = theme === "light" ? lightTheme : darkTheme;
+
   return (
     <React.StrictMode>
-      <Switch handler={themeToggler} />
+      <Switch theme={theme} toggleTheme={toggleTheme} />
       <Layout />
       <div>
-        <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <ThemeProvider theme={themeMode}>
           <GlobalStyles />
           <Router>
             <SearchParams path="/" />

@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "@reach/router";
-
 import { Container } from "@material-ui/core";
-
 import styled from "styled-components";
+
 import headerBg from "../.././assets/desktop/bg-pattern-header.svg";
 import logo from "../.././assets/desktop/logo.svg";
 import { themeColors } from "../../styles/theme/ThemeStyled";
@@ -28,7 +27,6 @@ const Wrapper = styled.header`
   width: 100%;
   height: 162px;
   border-bottom-left-radius: 100px;
-  overflow: hidden;
   padding-top: 45px;
   padding: 45px 0px 0 0px;
 `;

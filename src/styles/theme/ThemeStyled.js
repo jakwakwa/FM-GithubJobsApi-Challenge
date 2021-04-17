@@ -15,7 +15,8 @@ export const themeColors = {
     secondaryButtonHover: "#C5C9F4",
     darkButton: "#303642",
     darkButtonHover: "#303642",
-    checkBoxBg: "#E7E8E9",
+    checkBoxBgLight: "#E7E8E9",
+    checkBoxBgDark: "#303642",
     checkBoxHover: "#D5D8F7",
   },
 };
@@ -31,6 +32,8 @@ export const lightTheme = {
   background: themeColors.secondary.lightGrey,
   bullets: themeColors.primary.violet,
   stroke: themeColors.secondary.lightGrey,
+  gradient: "linear-gradient(#39598A, #79D7ED)",
+  checkBoxBg: themeColors.secondary.checkBoxBgLight,
 };
 export const darkTheme = {
   body: themeColors.primary.midnight,
@@ -43,4 +46,6 @@ export const darkTheme = {
   background: themeColors.primary.midnight,
   bullets: themeColors.primary.violet,
   stroke: themeColors.secondary.darkStroke,
+  gradient: "linear-gradient(#091236, #1E215D)",
+  checkBoxBg: themeColors.secondary.checkBoxBgDark,
 };

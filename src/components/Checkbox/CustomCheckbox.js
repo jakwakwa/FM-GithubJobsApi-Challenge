@@ -56,14 +56,18 @@ function CustomCheckbox(props) {
   const classes = useStyles();
 
   return (
-    <Checkbox
-      className={classes.root}
-      color="default"
-      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-      icon={<span className={classes.icon} />}
-      inputProps={{ "aria-label": "decorative checkbox" }}
-      {...props}
-    />
+    <CheckboxTest>
+      <Checkbox
+        className={classes.root}
+        color="default"
+        checkedIcon={
+          <span className={clsx(classes.icon, classes.checkedIcon)} />
+        }
+        icon={<span className={classes.icon} />}
+        inputProps={{ "aria-label": "decorative checkbox" }}
+        {...props}
+      />
+    </CheckboxTest>
   );
 }
 
@@ -93,5 +97,14 @@ const CheckBoxStyled = styled.div`
     margin-top: 4px;
     margin-left: 7px;
     font-size: 15px;
+  }
+  & .MuiCheckbox-colorPrimary {
+    background-color: red;
+  }
+`;
+
+const CheckboxTest = styled.div`
+  & span span span {
+    background: ${({ theme }) => theme.checkBoxBg};
   }
 `;

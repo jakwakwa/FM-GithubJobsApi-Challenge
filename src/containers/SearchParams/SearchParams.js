@@ -192,13 +192,13 @@ export default SearchParams;
 
 const Wrapper = styled.div`
   position: relative;
-  top: -40px;
+  top: -38px;
   background: ${({ theme }) => theme.jobcards};
   width: 100%;
   height: 80px;
   overflow: hidden;
   border-radius: 6px;
-  margin-bottom: 63px;
+  margin-bottom: 65px;
 
   & input:first-of-type {
     border-right: 1px solid ${({ theme }) => theme.stroke};

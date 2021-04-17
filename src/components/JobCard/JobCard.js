@@ -73,7 +73,7 @@ const OvalIcon = styled.div`
 
 const JobTitle = styled.h3`
   color: ${({ theme }) => theme.jobcardTitle};
-  padding-top: 10px;
+  padding-top: 13px;
   padding-bottom: 10px;
   white-space: nowrap;
   overflow: hidden;
@@ -88,7 +88,7 @@ const CompanyName = styled.p`
 
 const CountryTitle = styled.h4`
   color: #5964e0;
-  padding-top: 40px;
+  padding-top: 38px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

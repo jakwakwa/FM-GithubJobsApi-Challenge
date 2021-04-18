@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 //import JobLogo from "../.././assets/joblogo.svg";
 import Oval from "../.././assets/oval.svg";
+import NoImage from "../../assets/no-image.png";
 import { formatDistance, subDays } from "date-fns";
 
 const JobCard = ({ jobtitle, company, country, typePos, logo, date }) => {
@@ -55,7 +56,9 @@ const Wrapper = styled.div`
 
 const Logo = styled.div`
   position: absolute;
-  background: url(${(props) => props.logod}) no-repeat;
+  background: url(${NoImage}) no-repeat;
+  background: url(${(props) => (props.logod === null ? NoImage : props.logod)})
+    no-repeat;
   background-size: cover;
   background-color: #fff;
   background-repeat: no-repeat;

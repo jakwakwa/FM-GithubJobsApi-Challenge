@@ -13,7 +13,7 @@ const useStayles = makeStyles({
   paper: {
     maxWidth: "100%",
     width: "100%",
-    backgroundColor: "none",
+    backgroundColor: "rgba(0,0,0,0)",
   },
   container: {
     padding: "0",

@@ -26,7 +26,7 @@ const LoadMoreButton = ({ handleLoader, disabled }) => {
 export default LoadMoreButton;
 
 const LoadMoreJobs = styled.div`
-  margin: 26px 0;
+  margin: 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;

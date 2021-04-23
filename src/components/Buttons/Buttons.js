@@ -16,12 +16,6 @@ export const PrimaryButton = withStyles(() => ({
       color: "#ffffff",
       backgroundColor: themeColors.primary.lightViolet,
     },
-    palette: {
-      action: {
-        disabledBackground: "set color of red",
-        disabled: "set color of white",
-      },
-    },
   },
 }))(Button);
 

@@ -7,11 +7,14 @@ import headerBg from "../.././assets/desktop/bg-pattern-header.svg";
 import logo from "../.././assets/desktop/logo.svg";
 import { themeColors } from "../../styles/theme/ThemeStyled";
 
-const Header = () => {
+const Header = ({ handleRender }) => {
+  const setcounterback = () => {
+    handleRender(1);
+  };
   return (
     <Wrapper>
       <Container>
-        <Link to="/">
+        <Link to="/" onClick={setcounterback}>
           <span style={{ visibility: "hidden", display: "none" }}>DevJobs</span>
           <Logo></Logo>
         </Link>

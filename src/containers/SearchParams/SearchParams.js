@@ -11,7 +11,7 @@ import MobileSearchButton from "../../components/Buttons/MobileSearchButton";
 import JobCardContainer from "../JobCardContainer/JobCardContainer";
 import MobileFilterDialog from "./MobileFilterDialog";
 
-const SearchParams = () => {
+const SearchParams = ({ counterFromParent, handleChange }) => {
   const [open, setOpen] = useState(false);
   const [locationInput, setLocationInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
@@ -22,7 +22,6 @@ const SearchParams = () => {
     checkedA: false,
   });
   const [fullTimeProp, setFullTimeProp] = useState("");
-  let [counter, setCounter] = useState(1);
 
   const handleLocationFilter = (e) => {
     setLocationInput(e.target.value);
@@ -58,12 +57,12 @@ const SearchParams = () => {
 
     window.scrollTo(0, 0);
     setLimitTo(12);
-    setCounter(counter + 1);
+    handleChange(counterFromParent + 1);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCounter(1);
+    handleChange(1);
     setLocationProp(locationInput);
     setDescriptionProp(descriptionInput);
     setFullTimeProp(fullTimeInput.checkedA);
@@ -187,7 +186,7 @@ const SearchParams = () => {
           description={descriptionProp}
           location={locationProp}
           fullTime={fullTimeProp}
-          counter={counter}
+          counter={counterFromParent}
           limit={limitTo}
           nextPageHandler={handleLoadNextPage}
           currentPageHandler={handleOnLoadMoreCurrent}

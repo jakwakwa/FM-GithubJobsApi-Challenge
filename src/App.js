@@ -38,17 +38,23 @@ const useDarkMode = () => {
 
 const App = () => {
   const [theme, toggleTheme] = useDarkMode();
+  let [counter, setCounter] = useState(1);
+
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
   return (
     <React.StrictMode>
       <Switch theme={theme} toggleTheme={toggleTheme} />
-      <Layout />
+      <Layout handleRender={setCounter} />
       <div>
         <ThemeProvider theme={themeMode}>
           <GlobalStyles />
           <Router>
-            <SearchParams path="/" />
+            <SearchParams
+              path="/"
+              counterFromParent={counter}
+              handleChange={setCounter}
+            />
             <JobDetails path="/details/:id" />
           </Router>
         </ThemeProvider>

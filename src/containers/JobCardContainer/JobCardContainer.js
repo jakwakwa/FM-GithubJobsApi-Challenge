@@ -18,9 +18,29 @@ const JobCardContainer = ({
   currentPageHandler,
 }) => {
   const [positions, setPositions] = useState([]);
-  let urlNow = urlUpdater(location, description, fullTime);
 
+  let urlNow = urlUpdater(location, description, fullTime);
   const loadmorejobsUrl = `${urlNow}?&page=${counter}`;
+
+  const LoadButtonState = () => {
+    if (positions.length < 48) {
+      if (positions.length > 12) {
+        if (limit > positions.length) {
+          return <LoadMoreButton handleLoader={null} disabled={true} />;
+        } else {
+          return <LoadMoreButton handleLoader={currentPageHandler} />;
+        }
+      } else if (positions.length < 12) {
+        return <LoadMoreButton handleLoader={null} disabled={true} />;
+      }
+    } else if (positions.length > 47) {
+      if (limit > positions.length) {
+        return <LoadMoreButton handleLoader={nextPageHandler} />;
+      } else {
+        return <LoadMoreButton handleLoader={currentPageHandler} />;
+      }
+    }
+  };
 
   useEffect(() => {
     const getDataFromApi = async () => {
@@ -92,11 +112,7 @@ const JobCardContainer = ({
           </Grid>
         ))}
       </Grid>
-      {limit < 50 ? (
-        <LoadMoreButton handleLoader={currentPageHandler} />
-      ) : (
-        <LoadMoreButton handleLoader={nextPageHandler} />
-      )}
+      {positions.length > 0 ? <LoadButtonState /> : null}
     </>
   );
 };

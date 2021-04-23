@@ -55,6 +55,7 @@ const SearchParams = () => {
 
   const handleLoadNextPage = (e) => {
     e.preventDefault();
+
     window.scrollTo(0, 0);
     setLimitTo(12);
     setCounter(counter + 1);

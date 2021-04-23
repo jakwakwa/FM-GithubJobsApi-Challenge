@@ -24,8 +24,6 @@ const SearchParams = () => {
   const [fullTimeProp, setFullTimeProp] = useState("");
   let [counter, setCounter] = useState(1);
 
-  //  const [selectedValue, setSelectedValue] = useState("");
-
   const handleLocationFilter = (e) => {
     setLocationInput(e.target.value);
   };
@@ -48,17 +46,26 @@ const SearchParams = () => {
     setOpen(value);
   };
 
+  const [limitTo, setLimitTo] = useState(12);
+
+  const handleOnLoadMoreCurrent = (e) => {
+    e.preventDefault();
+    setLimitTo(limitTo + 12);
+  };
+
+  const handleLoadNextPage = (e) => {
+    e.preventDefault();
+    window.scrollTo(0, 0);
+    setLimitTo(12);
+    setCounter(counter + 1);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setCounter(1);
     setLocationProp(locationInput);
     setDescriptionProp(descriptionInput);
     setFullTimeProp(fullTimeInput.checkedA);
-  };
-
-  const handleLoadMoreSubmit = (e) => {
-    e.preventDefault();
-    setCounter(counter + 1);
   };
 
   return (
@@ -180,7 +187,9 @@ const SearchParams = () => {
           location={locationProp}
           fullTime={fullTimeProp}
           counter={counter}
-          handler={handleLoadMoreSubmit}
+          limit={limitTo}
+          nextPageHandler={handleLoadNextPage}
+          currentPageHandler={handleOnLoadMoreCurrent}
         />
       </Container>
     </>

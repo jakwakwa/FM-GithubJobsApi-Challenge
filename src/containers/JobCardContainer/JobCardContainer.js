@@ -13,10 +13,12 @@ const JobCardContainer = ({
   location,
   fullTime,
   counter,
-  handler,
+  limit,
+  nextPageHandler,
+  currentPageHandler,
 }) => {
-  let urlNow = urlUpdater(location, description, fullTime);
   const [positions, setPositions] = useState([]);
+  let urlNow = urlUpdater(location, description, fullTime);
 
   const loadmorejobsUrl = `${urlNow}?&page=${counter}`;
 
@@ -73,7 +75,8 @@ const JobCardContainer = ({
             </Grid>
           </>
         ) : null}
-        {positions.map((pos) => (
+
+        {positions.slice(0, limit).map((pos) => (
           <Grid key={pos.id} item xs={12} sm={6} md={4}>
             <Link to={`/details/${pos.id}`}>
               <JobCard
@@ -89,7 +92,11 @@ const JobCardContainer = ({
           </Grid>
         ))}
       </Grid>
-      {positions.length < 46 ? null : <LoadMoreButton handleLoader={handler} />}
+      {limit < 50 ? (
+        <LoadMoreButton handleLoader={currentPageHandler} />
+      ) : (
+        <LoadMoreButton handleLoader={nextPageHandler} />
+      )}
     </>
   );
 };

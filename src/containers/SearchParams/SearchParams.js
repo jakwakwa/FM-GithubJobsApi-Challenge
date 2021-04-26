@@ -60,6 +60,10 @@ const SearchParams = ({ counterFromParent, handleChange }) => {
     handleChange(counterFromParent + 1);
   };
 
+  const errorCounterReset = () => {
+    handleChange(1);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     handleChange(1);
@@ -67,6 +71,7 @@ const SearchParams = ({ counterFromParent, handleChange }) => {
     setDescriptionProp(descriptionInput);
     setFullTimeProp(fullTimeInput.checkedA);
   };
+  //
 
   return (
     <>
@@ -190,6 +195,7 @@ const SearchParams = ({ counterFromParent, handleChange }) => {
           limit={limitTo}
           nextPageHandler={handleLoadNextPage}
           currentPageHandler={handleOnLoadMoreCurrent}
+          errorCounterReset={errorCounterReset}
         />
       </Container>
     </>

@@ -18,9 +18,16 @@ const JobCardContainer = ({
   currentPageHandler,
 }) => {
   const [positions, setPositions] = useState([]);
+  //  const backupPositions = [...positions];
+  let loadmorejobsUrl;
 
-  let urlNow = urlUpdater(location, description, fullTime);
-  const loadmorejobsUrl = `${urlNow}?&page=${counter}`;
+  let urlNow = urlUpdater(location, description, fullTime, counter);
+
+  if (description === "") {
+    loadmorejobsUrl = `${urlNow}?&page=${counter}`;
+  } else {
+    loadmorejobsUrl = `${urlNow}&page=${counter}`;
+  }
 
   const LoadButtonState = () => {
     if (positions.length < 48) {
@@ -41,20 +48,35 @@ const JobCardContainer = ({
       }
     }
   };
-
+  //  console.log(counter);
+  //  console.log(loadmorejobsUrl);
+  //  console.log(urlNow);
+  console.log(description);
   useEffect(() => {
     const getDataFromApi = async () => {
       try {
-        const response = await fetch(counter > 0 ? loadmorejobsUrl : urlNow, {
+        const response = await fetch(counter > 1 ? loadmorejobsUrl : urlNow, {
           method: "GET",
           mode: "cors",
         });
         const jsonData = await response.json();
-        setPositions(jsonData || []);
+
+        //setPositions(jsonData || backupPositions);
+        if (jsonData.length === 0) {
+          throw Error;
+        } else {
+          setPositions(jsonData || []);
+        }
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log("Fetch error: ", error);
-        alert("Fetch error: ", error);
+        alert(
+          "Fetch error: No Job Listings found with your search query, try another one?",
+          error
+        );
+        //console.log(backupPositions);
+        //errorCounterReset;
+        //setPositions(backupPositions);
       }
     };
     setPositions([]);

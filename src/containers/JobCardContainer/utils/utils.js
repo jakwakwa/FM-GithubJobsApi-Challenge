@@ -21,7 +21,7 @@ export const urlUpdater = (
     if (descriptionPropVal.length === 0 && locationPropVal.length > 0) {
       url = `${PROXY}/https://jobs.github.com/positions.json?&location=${locationPropVal}`;
     } else if (locationPropVal.length === 0 && descriptionPropVal.length > 0) {
-      url = `${PROXY}/https://jobs.github.com/positions.json?description=${descriptionPropVal}`;
+      url = `${PROXY}/https://jobs.github.com/positions.json?&description=${descriptionPropVal}`;
     } else if (descriptionPropVal.length > 0 && locationPropVal.length > 0) {
       url = `${PROXY}/https://jobs.github.com/positions.json?description=${descriptionPropVal}&location=${locationPropVal}`;
     }

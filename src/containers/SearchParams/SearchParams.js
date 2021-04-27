@@ -11,17 +11,33 @@ import MobileSearchButton from "../../components/Buttons/MobileSearchButton";
 import JobCardContainer from "../JobCardContainer/JobCardContainer";
 import MobileFilterDialog from "./MobileFilterDialog";
 
-const SearchParams = ({ counterFromParent, handleChange }) => {
+import { navigate } from "@reach/router";
+
+const SearchParams = () => {
   const [open, setOpen] = useState(false);
   const [locationInput, setLocationInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
   const [locationProp, setLocationProp] = useState("");
   const [descriptionProp, setDescriptionProp] = useState("");
+  const [counter, setCounter] = useState(1);
 
   const [fullTimeInput, setFullTimeInput] = React.useState({
     checkedA: false,
   });
   const [fullTimeProp, setFullTimeProp] = useState("");
+  let persistDescr = "";
+  if (locationProp !== "" && location.pathname === "/def") {
+    setLocationProp("");
+    setCounter(1);
+  } else if (descriptionProp !== "" && location.pathname === "/def") {
+    setDescriptionProp("");
+    setCounter(1);
+  }
+  if (descriptionProp.length > 0) {
+    persistDescr += `${descriptionProp}`;
+  } else {
+    persistDescr = "";
+  }
 
   const handleLocationFilter = (e) => {
     setLocationInput(e.target.value);
@@ -54,24 +70,25 @@ const SearchParams = ({ counterFromParent, handleChange }) => {
 
   const handleLoadNextPage = (e) => {
     e.preventDefault();
-
     window.scrollTo(0, 0);
     setLimitTo(12);
-    handleChange(counterFromParent + 1);
-  };
-
-  const errorCounterReset = () => {
-    handleChange(1);
+    setCounter(counter + 1);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleChange(1);
-    setLocationProp(locationInput);
-    setDescriptionProp(descriptionInput);
+    setCounter(1);
+    setLocationInput("");
+    setDescriptionInput("");
+    if (locationInput.length > 0) {
+      setLocationProp(locationInput);
+      navigate(`/${locationInput}`);
+    } else if (descriptionInput.length > 0) {
+      setDescriptionProp(descriptionInput);
+      navigate(`/${descriptionInput}`);
+    }
     setFullTimeProp(fullTimeInput.checkedA);
   };
-  //
 
   return (
     <>
@@ -191,11 +208,11 @@ const SearchParams = ({ counterFromParent, handleChange }) => {
           description={descriptionProp}
           location={locationProp}
           fullTime={fullTimeProp}
-          counter={counterFromParent}
+          counter={counter}
           limit={limitTo}
           nextPageHandler={handleLoadNextPage}
           currentPageHandler={handleOnLoadMoreCurrent}
-          errorCounterReset={errorCounterReset}
+          descriptionInit={persistDescr}
         />
       </Container>
     </>

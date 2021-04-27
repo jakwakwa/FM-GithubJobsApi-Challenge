@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { Router } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./styles/theme/GlobalStyles";
 import Switch from "./components/Switch/Switch";
@@ -38,23 +38,19 @@ const useDarkMode = () => {
 
 const App = () => {
   const [theme, toggleTheme] = useDarkMode();
-  let [counter, setCounter] = useState(1);
-
   const themeMode = theme === "light" ? lightTheme : darkTheme;
+
+  navigate("/def");
 
   return (
     <React.StrictMode>
       <Switch theme={theme} toggleTheme={toggleTheme} />
-      <Layout handleRender={setCounter} />
+      <Layout />
       <div>
         <ThemeProvider theme={themeMode}>
           <GlobalStyles />
           <Router>
-            <SearchParams
-              path="/"
-              counterFromParent={counter}
-              handleChange={setCounter}
-            />
+            <SearchParams path="/:loc" />
             <JobDetails path="/details/:id" />
           </Router>
         </ThemeProvider>

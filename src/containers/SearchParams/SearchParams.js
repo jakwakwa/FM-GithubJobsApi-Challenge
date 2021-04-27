@@ -22,7 +22,7 @@ const SearchParams = () => {
   const [fullTimeInput, setFullTimeInput] = React.useState({
     checkedA: false,
   });
-  const [fullTimeProp, setFullTimeProp] = useState("");
+  //  const [fullTimeProp, setFullTimeProp] = useState("");
   let inval;
   let descInval;
 
@@ -31,9 +31,17 @@ const SearchParams = () => {
   if (locationInput !== "" && location.pathname === "/home") {
     setLocationInput("");
     setCounter(1);
+    setFullTimeInput({
+      ...fullTimeInput,
+      checkedA: false,
+    });
   } else if (descriptionInput !== "" && location.pathname === "/home") {
     setDescriptionInput("");
     setCounter(1);
+    setFullTimeInput({
+      ...fullTimeInput,
+      checkedA: false,
+    });
   }
   if (descriptionInput.length > 0) {
     persistDescr += `${descriptionInput}`;
@@ -90,7 +98,10 @@ const SearchParams = () => {
       e.target.elements.locationFormInput.value = "";
       e.target.elements.descFormInput.value = "";
     }
-    setFullTimeProp(fullTimeInput.checkedA);
+    setFullTimeInput({
+      ...fullTimeInput,
+      checkedA: false,
+    });
   };
 
   return (
@@ -200,7 +211,7 @@ const SearchParams = () => {
         <JobCardContainer
           description={descriptionInput}
           location={locationInput}
-          fullTime={fullTimeProp}
+          fullTime={fullTimeInput}
           counter={counter}
           limit={limitTo}
           nextPageHandler={handleLoadNextPage}

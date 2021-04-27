@@ -46,27 +46,20 @@ const LoadDer = () => {
 const JobCardContainer = ({
   description,
   location,
-  fullTime,
+  fullTimeCb,
   counter,
   limit,
   nextPageHandler,
   currentPageHandler,
-  descriptionInit,
 }) => {
   const [positions, setPositions] = useState([]);
   const [error, setError] = useState(false);
 
   let loadmorejobsUrl;
 
-  let urlNow = urlUpdater(
-    location,
-    description,
-    descriptionInit,
-    fullTime,
-    counter
-  );
+  let urlNow = urlUpdater(location, description, fullTimeCb);
 
-  if (descriptionInit === "") {
+  if (description === "") {
     loadmorejobsUrl = `${urlNow}?&page=${counter}`;
   } else {
     loadmorejobsUrl = `${urlNow}&page=${counter}`;

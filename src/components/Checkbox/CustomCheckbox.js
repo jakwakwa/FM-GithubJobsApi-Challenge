@@ -72,7 +72,7 @@ const FilterCheckbox = ({ label, checked, handler }) => {
           <CustomCheckbox
             checked={checked}
             onChange={handler}
-            name="checkedA"
+            name="checkedState"
           />
         }
         label={label}

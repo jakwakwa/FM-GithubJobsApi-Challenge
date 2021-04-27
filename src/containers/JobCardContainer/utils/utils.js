@@ -1,7 +1,6 @@
 export const urlUpdater = (
   locationPropVal,
   descriptionPropVal,
-  descriptoinInit,
   fullTimePropVal
 ) => {
   const PROXY =

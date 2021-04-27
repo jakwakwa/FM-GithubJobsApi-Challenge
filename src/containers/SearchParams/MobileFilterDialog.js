@@ -2,7 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { Dialog, Container } from "@material-ui/core/";
 import { LocationIcon } from "./Icons/Icons";
-import { PrimaryButton } from "../../components/Buttons/Buttons";
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from "../../components/Buttons/Buttons";
 import FilterCheckbox from "../../components/Checkbox/CustomCheckbox";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -22,14 +25,7 @@ const useStayles = makeStyles({
 
 function MobileSearchDialog(props) {
   const classes = useStayles();
-  const {
-    open,
-    onClose,
-    searchInput,
-    inputFilterHandler,
-    filterchecked,
-    checkboxhandler,
-  } = props;
+  const { open, onClose, filterchecked, checkboxhandler } = props;
 
   return (
     <Dialog
@@ -53,10 +49,8 @@ function MobileSearchDialog(props) {
                 <LocationIcon />
               </IconWrapperLeft>
               <SearchInput
-                id="location"
-                value={searchInput}
+                id="locationFormInput"
                 placeholder="Filter by location..."
-                onChange={inputFilterHandler}
               />
             </Label>
             <div style={{ marginLeft: "10px", marginBottom: "13px" }}>
@@ -71,9 +65,14 @@ function MobileSearchDialog(props) {
                 Search
               </PrimaryButton>
             </div>
-            {/*<Button type="submit" value="Submit">
-              Search
-            </Button>*/}
+            <div>
+              <SecondaryButton
+                onClick={() => onClose(true)}
+                variant="contained"
+              >
+                Cancel
+              </SecondaryButton>
+            </div>
           </form>
         </Container>
       </DialogWrapper>

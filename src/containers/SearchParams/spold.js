@@ -13,29 +13,20 @@ import MobileFilterDialog from "./MobileFilterDialog";
 
 import { navigate } from "@reach/router";
 
-const LOCATION_INPUT_ID = "locationFormInput";
-const DESCRIPTION_INPUT_ID = "descFormInput";
-
 const SearchParams = () => {
-  let initialCountVal = 1;
-  let initialCheckboxState = false;
-
-  const [counter, setCounter] = useState(initialCountVal);
   const [open, setOpen] = useState(false);
-  const [limitTo, setLimitTo] = useState(12);
-
   const [locationInput, setLocationInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
+  const [counter, setCounter] = useState(1);
+
   const [fullTimeInput, setFullTimeInput] = React.useState({
-    checkedState: initialCheckboxState,
+    checkedA: false,
   });
-  const [fullTimeProp, setFullTimeProp] = useState(false);
+  const [fullTimeProp, setFullTimeProp] = useState("");
+  let inval;
+  let descInval;
 
-  let locationInputSubmitted;
-  let descriptionInputSubmitted;
-
-  //  // TODO do i need this
-  //  let persistDescr = "";
+  let persistDescr = "";
 
   if (locationInput !== "" && location.pathname === "/home") {
     setLocationInput("");
@@ -44,11 +35,11 @@ const SearchParams = () => {
     setDescriptionInput("");
     setCounter(1);
   }
-  //  if (descriptionInput.length > 0) {
-  //    persistDescr += `${descriptionInput}`;
-  //  } else {
-  //    persistDescr = "";
-  //  }
+  if (descriptionInput.length > 0) {
+    persistDescr += `${descriptionInput}`;
+  } else {
+    persistDescr = "";
+  }
 
   const handleFullTimeFilter = (event) => {
     setFullTimeInput({
@@ -56,7 +47,6 @@ const SearchParams = () => {
       [event.target.name]: event.target.checked,
     });
   };
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -64,6 +54,8 @@ const SearchParams = () => {
   const handleClose = (value) => {
     setOpen(value);
   };
+
+  const [limitTo, setLimitTo] = useState(12);
 
   const handleOnLoadMoreCurrent = (e) => {
     e.preventDefault();
@@ -76,64 +68,29 @@ const SearchParams = () => {
     setLimitTo(12);
     setCounter(counter + 1);
   };
-  // TODO refactor extract? or DRY
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const setInputAfterSubmit = (
-      setter,
-      inputQuery,
-      elIdName,
-      optionalQuery = "",
-      optionalSetter = "",
-      optionalElIdName = ""
-    ) => {
-      if (optionalQuery.length > 0) {
-        optionalSetter(optionalQuery);
-      }
-      setter(inputQuery);
-      navigate(`/${inputQuery}${optionalQuery}`);
-      e.target.elements[elIdName].value = "";
-      if (optionalQuery.length > 0) {
-        e.target.elements[optionalElIdName].value = "";
-      }
-    };
-
     setCounter(1);
-    locationInputSubmitted = e.target.elements.locationFormInput.value;
-    descriptionInputSubmitted = e.target.elements.descFormInput.value;
+    inval = e.target.elements.locationFormInput.value;
+    descInval = e.target.elements.descFormInput.value;
 
-    if (
-      locationInputSubmitted.length > 0 &&
-      descriptionInputSubmitted.length === 0
-    ) {
-      setInputAfterSubmit(
-        setLocationInput,
-        locationInputSubmitted,
-        LOCATION_INPUT_ID
-      );
-    } else if (
-      descriptionInputSubmitted.length > 0 &&
-      locationInputSubmitted.length === 0
-    ) {
-      setInputAfterSubmit(
-        setDescriptionInput,
-        descriptionInputSubmitted,
-        DESCRIPTION_INPUT_ID
-      );
-    } else if (
-      descriptionInputSubmitted.length > 0 &&
-      locationInputSubmitted.length > 0
-    ) {
-      setInputAfterSubmit(
-        setDescriptionInput,
-        descriptionInputSubmitted,
-        DESCRIPTION_INPUT_ID,
-        setLocationInput,
-        locationInputSubmitted,
-        LOCATION_INPUT_ID
-      );
+    if (inval.length > 0 && descInval.length === 0) {
+      setLocationInput(inval);
+      navigate(`/${inval}`);
+      e.target.elements.locationFormInput.value = "";
+    } else if (descInval.length > 0 && inval.length === 0) {
+      setDescriptionInput(descInval);
+      navigate(`/${descInval}`);
+      e.target.elements.descFormInput.value = "";
+    } else if (descInval.length > 0 && inval.length > 0) {
+      setLocationInput(inval);
+      setDescriptionInput(descInval);
+      navigate(`/${descInval}+${inval}`);
+      e.target.elements.locationFormInput.value = "";
+      e.target.elements.descFormInput.value = "";
     }
-    setFullTimeProp(fullTimeInput.checkedState);
+    setFullTimeProp(fullTimeInput.checkedA);
   };
 
   return (
@@ -148,22 +105,19 @@ const SearchParams = () => {
               alignItems="flex-start"
             >
               <Grid item xs sm={3} md={4}>
-                <Label htmlFor={DESCRIPTION_INPUT_ID}>
+                <Label htmlFor="descFormInput">
                   <Hidden xsDown>
                     <IconWrapperLeft>
                       <SearchIcon />
                     </IconWrapperLeft>
                     <SearchInput
-                      id={DESCRIPTION_INPUT_ID}
+                      id="descFormInput"
                       placeholder="Filter by description, companies, expertise..."
                     />
                   </Hidden>
 
                   <Hidden smUp>
-                    <SearchInput
-                      id={DESCRIPTION_INPUT_ID}
-                      placeholder="Filter by title..."
-                    />
+                    <SearchInput id="filter" placeholder="Filter by title..." />
                     <IconWrapperRight>
                       <Button color="primary" onClick={handleClickOpen}>
                         <FilterIcon />
@@ -174,13 +128,13 @@ const SearchParams = () => {
               </Grid>
               <Hidden xsDown>
                 <Grid item xs sm={3} md={4}>
-                  <Label htmlFor={LOCATION_INPUT_ID}>
+                  <Label htmlFor="locationFormInput">
                     <IconWrapperLeft>
                       <LocationIcon />
                     </IconWrapperLeft>
 
                     <SearchInput
-                      id={LOCATION_INPUT_ID}
+                      id="locationFormInput"
                       placeholder="Filter by location..."
                     />
                   </Label>
@@ -203,7 +157,7 @@ const SearchParams = () => {
                   <Hidden smDown>
                     <FilterCheckbox
                       label="Full Time Only"
-                      checked={fullTimeInput.checkedState}
+                      checked={fullTimeInput.checkedA}
                       handler={handleFullTimeFilter}
                     />
                   </Hidden>
@@ -211,7 +165,7 @@ const SearchParams = () => {
                   <Hidden mdUp>
                     <FilterCheckbox
                       label="Full Time"
-                      checked={fullTimeInput.checkedState}
+                      checked={fullTimeInput.checkedA}
                       handler={handleFullTimeFilter}
                     />
                   </Hidden>
@@ -235,7 +189,7 @@ const SearchParams = () => {
                   open={open}
                   onClose={handleClose}
                   SearchInput={locationInput}
-                  filterchecked={fullTimeInput.checkedState}
+                  filterchecked={fullTimeInput.checkedA}
                   checkboxhandler={handleFullTimeFilter}
                 />
               </Hidden>
@@ -246,11 +200,12 @@ const SearchParams = () => {
         <JobCardContainer
           description={descriptionInput}
           location={locationInput}
-          fullTimeCb={fullTimeProp}
+          fullTime={fullTimeProp}
           counter={counter}
           limit={limitTo}
           nextPageHandler={handleLoadNextPage}
           currentPageHandler={handleOnLoadMoreCurrent}
+          descriptionInit={persistDescr}
         />
       </Container>
     </>

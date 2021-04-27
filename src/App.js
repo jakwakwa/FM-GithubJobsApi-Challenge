@@ -41,7 +41,7 @@ const App = () => {
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
   if (location.pathname === "/") {
-    navigate("/home");
+    navigate("/devjob_search");
   }
 
   return (
@@ -52,7 +52,7 @@ const App = () => {
         <ThemeProvider theme={themeMode}>
           <GlobalStyles />
           <Router>
-            <SearchParams path="/:loc" />
+            <SearchParams path="/:query" />
             <JobDetails path="/details/:id" />
           </Router>
         </ThemeProvider>

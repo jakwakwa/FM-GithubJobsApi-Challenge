@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <Wrapper>
       <Container>
-        <Link to="/home">
+        <Link to="/devjob_search">
           <span style={{ visibility: "hidden", display: "none" }}>DevJobs</span>
           <Logo></Logo>
         </Link>

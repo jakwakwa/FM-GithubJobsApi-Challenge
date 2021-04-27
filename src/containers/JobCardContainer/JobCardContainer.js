@@ -8,6 +8,41 @@ import JobCardSkeletons from "../../components/JobCard/JobCardSkeletons";
 import { urlUpdater } from "./utils/utils";
 import { Link } from "@reach/router";
 
+const ErrorMessage = () => {
+  return (
+    <div>
+      Sorry! We couldnt find what you were looking for. Try another filter query
+      instead.
+    </div>
+  );
+};
+
+const LoadDer = () => {
+  return (
+    <>
+      <LinearProgress
+        color="secondary"
+        style={{
+          position: "fixed",
+          top: "0px",
+          left: "0px",
+          zIndex: "200",
+          width: "100vw",
+        }}
+      />
+      <Grid item xs={12} sm={6} md={4}>
+        <JobCardSkeletons />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <JobCardSkeletons />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <JobCardSkeletons />
+      </Grid>
+    </>
+  );
+};
+
 const JobCardContainer = ({
   description,
   location,
@@ -19,6 +54,7 @@ const JobCardContainer = ({
   descriptionInit,
 }) => {
   const [positions, setPositions] = useState([]);
+  const [error, setError] = useState(false);
 
   let loadmorejobsUrl;
 
@@ -64,10 +100,12 @@ const JobCardContainer = ({
           mode: "cors",
         });
         const jsonData = await response.json();
-
+        if (jsonData.length === 0) {
+          throw Error;
+        }
         setPositions(jsonData || []);
       } catch (error) {
-        alert("Fetch error: ?", error);
+        setError(true);
       }
     };
     setPositions([]);
@@ -77,54 +115,34 @@ const JobCardContainer = ({
   return (
     <>
       {positions.length === 0 ? (
-        <LinearProgress
-          color="secondary"
-          style={{
-            position: "fixed",
-            top: "0px",
-            left: "0px",
-            zIndex: "200",
-            width: "100vw",
-          }}
-        />
-      ) : null}
-      <Grid
-        container
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-        spacing={4}
-      >
-        {positions.length === 0 ? (
-          <>
-            <Grid item xs={12} sm={6} md={4}>
-              <JobCardSkeletons />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <JobCardSkeletons />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <JobCardSkeletons />
-            </Grid>
-          </>
-        ) : null}
-
-        {positions.slice(0, limit).map((pos) => (
-          <Grid key={pos.id} item xs={12} sm={6} md={4}>
-            <Link to={`/details/${pos.id}`}>
-              <JobCard
-                typePos={pos.type}
-                date={pos.created_at}
-                jobtitle={pos.title}
-                company={pos.company}
-                country={pos.location}
-                logo={pos.company_logo}
-                id={pos.id}
-              />
-            </Link>
+        <>{error ? <ErrorMessage /> : <LoadDer />}</>
+      ) : (
+        <>
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+            spacing={4}
+          >
+            {positions.slice(0, limit).map((pos) => (
+              <Grid key={pos.id} item xs={12} sm={6} md={4}>
+                <Link to={`/details/${pos.id}`}>
+                  <JobCard
+                    typePos={pos.type}
+                    date={pos.created_at}
+                    jobtitle={pos.title}
+                    company={pos.company}
+                    country={pos.location}
+                    logo={pos.company_logo}
+                    id={pos.id}
+                  />
+                </Link>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </>
+      )}
       {positions.length > 0 ? <LoadButtonState /> : null}
     </>
   );

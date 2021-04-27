@@ -80,12 +80,16 @@ const SearchParams = () => {
     setCounter(1);
     setLocationInput("");
     setDescriptionInput("");
-    if (locationInput.length > 0) {
+    if (locationInput.length > 0 && descriptionInput.lenght === 0) {
       setLocationProp(locationInput);
       navigate(`/${locationInput}`);
-    } else if (descriptionInput.length > 0) {
+    } else if (descriptionInput.length > 0 && locationInput.lenght === 0) {
       setDescriptionProp(descriptionInput);
       navigate(`/${descriptionInput}`);
+    } else if (descriptionInput.length > 0 && locationInput.length > 0) {
+      setDescriptionProp(descriptionInput);
+      setLocationProp(locationInput);
+      navigate(`/${descriptionInput}+${locationInput}`);
     }
     setFullTimeProp(fullTimeInput.checkedA);
   };

@@ -66,10 +66,7 @@ const JobCardContainer = ({
         const jsonData = await response.json();
 
         setPositions(jsonData || []);
-        //locationProp.navigate(`/${location}/${counter}`);
       } catch (error) {
-        // eslint-disable-next-line no-console
-
         alert("Fetch error: ?", error);
       }
     };

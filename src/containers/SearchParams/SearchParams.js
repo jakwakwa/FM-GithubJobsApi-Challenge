@@ -17,35 +17,29 @@ const SearchParams = () => {
   const [open, setOpen] = useState(false);
   const [locationInput, setLocationInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
-  const [locationProp, setLocationProp] = useState("");
-  const [descriptionProp, setDescriptionProp] = useState("");
   const [counter, setCounter] = useState(1);
 
   const [fullTimeInput, setFullTimeInput] = React.useState({
     checkedA: false,
   });
   const [fullTimeProp, setFullTimeProp] = useState("");
+  let inval;
+  let descInval;
+
   let persistDescr = "";
-  if (locationProp !== "" && location.pathname === "/home") {
-    setLocationProp("");
+
+  if (locationInput !== "" && location.pathname === "/home") {
+    setLocationInput("");
     setCounter(1);
-  } else if (descriptionProp !== "" && location.pathname === "/home") {
-    setDescriptionProp("");
+  } else if (descriptionInput !== "" && location.pathname === "/home") {
+    setDescriptionInput("");
     setCounter(1);
   }
-  if (descriptionProp.length > 0) {
-    persistDescr += `${descriptionProp}`;
+  if (descriptionInput.length > 0) {
+    persistDescr += `${descriptionInput}`;
   } else {
     persistDescr = "";
   }
-
-  const handleLocationFilter = (e) => {
-    setLocationInput(e.target.value);
-  };
-
-  const handleDescriptionFilter = (e) => {
-    setDescriptionInput(e.target.value);
-  };
 
   const handleFullTimeFilter = (event) => {
     setFullTimeInput({
@@ -78,18 +72,23 @@ const SearchParams = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setCounter(1);
-    setLocationInput("");
-    setDescriptionInput("");
-    if (locationInput.length > 0 && descriptionInput.length === 0) {
-      setLocationProp(locationInput);
-      navigate(`/${locationInput}`);
-    } else if (descriptionInput.length > 0 && locationInput.length === 0) {
-      setDescriptionProp(descriptionInput);
-      navigate(`/${descriptionInput}`);
-    } else if (descriptionInput.length > 0 && locationInput.length > 0) {
-      setDescriptionProp(descriptionInput);
-      setLocationProp(locationInput);
-      navigate(`/${descriptionInput}+${locationInput}`);
+    inval = e.target.elements.locationFormInput.value;
+    descInval = e.target.elements.descFormInput.value;
+
+    if (inval.length > 0 && descInval.length === 0) {
+      setLocationInput(inval);
+      navigate(`/${inval}`);
+      e.target.elements.locationFormInput.value = "";
+    } else if (descInval.length > 0 && inval.length === 0) {
+      setDescriptionInput(descInval);
+      navigate(`/${descInval}`);
+      e.target.elements.descFormInput.value = "";
+    } else if (descInval.length > 0 && inval.length > 0) {
+      setLocationInput(inval);
+      setDescriptionInput(descInval);
+      navigate(`/${descInval}+${inval}`);
+      e.target.elements.locationFormInput.value = "";
+      e.target.elements.descFormInput.value = "";
     }
     setFullTimeProp(fullTimeInput.checkedA);
   };
@@ -106,26 +105,19 @@ const SearchParams = () => {
               alignItems="flex-start"
             >
               <Grid item xs sm={3} md={4}>
-                <Label htmlFor="filter">
+                <Label htmlFor="descFormInput">
                   <Hidden xsDown>
                     <IconWrapperLeft>
                       <SearchIcon />
                     </IconWrapperLeft>
                     <SearchInput
-                      id="filter"
-                      value={descriptionInput}
+                      id="descFormInput"
                       placeholder="Filter by description, companies, expertise..."
-                      onChange={handleDescriptionFilter}
                     />
                   </Hidden>
 
                   <Hidden smUp>
-                    <SearchInput
-                      id="filter"
-                      value={descriptionInput}
-                      placeholder="Filter by title..."
-                      onChange={handleDescriptionFilter}
-                    />
+                    <SearchInput id="filter" placeholder="Filter by title..." />
                     <IconWrapperRight>
                       <Button color="primary" onClick={handleClickOpen}>
                         <FilterIcon />
@@ -136,16 +128,14 @@ const SearchParams = () => {
               </Grid>
               <Hidden xsDown>
                 <Grid item xs sm={3} md={4}>
-                  <Label htmlFor="location">
+                  <Label htmlFor="locationFormInput">
                     <IconWrapperLeft>
                       <LocationIcon />
                     </IconWrapperLeft>
 
                     <SearchInput
-                      id="location"
-                      value={locationInput}
+                      id="locationFormInput"
                       placeholder="Filter by location..."
-                      onChange={handleLocationFilter}
                     />
                   </Label>
                 </Grid>
@@ -199,7 +189,6 @@ const SearchParams = () => {
                   open={open}
                   onClose={handleClose}
                   SearchInput={locationInput}
-                  inputFilterHandler={handleLocationFilter}
                   filterchecked={fullTimeInput.checkedA}
                   checkboxhandler={handleFullTimeFilter}
                 />
@@ -209,8 +198,8 @@ const SearchParams = () => {
         </Wrapper>
 
         <JobCardContainer
-          description={descriptionProp}
-          location={locationProp}
+          description={descriptionInput}
+          location={locationInput}
           fullTime={fullTimeProp}
           counter={counter}
           limit={limitTo}

@@ -57,6 +57,7 @@ const JobCardContainer = ({
   };
 
   useEffect(() => {
+    console.log("calling useeffect");
     const getDataFromApi = async () => {
       try {
         const response = await fetch(counter > 1 ? loadmorejobsUrl : urlNow, {

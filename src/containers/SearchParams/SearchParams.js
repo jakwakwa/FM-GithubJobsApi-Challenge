@@ -26,10 +26,10 @@ const SearchParams = () => {
   });
   const [fullTimeProp, setFullTimeProp] = useState("");
   let persistDescr = "";
-  if (locationProp !== "" && location.pathname === "/def") {
+  if (locationProp !== "" && location.pathname === "/home") {
     setLocationProp("");
     setCounter(1);
-  } else if (descriptionProp !== "" && location.pathname === "/def") {
+  } else if (descriptionProp !== "" && location.pathname === "/home") {
     setDescriptionProp("");
     setCounter(1);
   }

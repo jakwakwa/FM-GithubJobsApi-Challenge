@@ -40,7 +40,9 @@ const App = () => {
   const [theme, toggleTheme] = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
-  navigate("/home");
+  if (location.pathname === "/") {
+    navigate("/home");
+  }
 
   return (
     <React.StrictMode>

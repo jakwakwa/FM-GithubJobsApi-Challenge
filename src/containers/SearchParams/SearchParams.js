@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { navigate } from "@reach/router";
+/* eslint-disable no-console */
+import React, { useState, useEffect } from "react";
+//import { navigate } from "@reach/router";
 import { Container, Grid } from "@material-ui/core/";
 import styled from "styled-components";
 import { PrimaryButton } from "../../components/Buttons/Buttons";
@@ -8,35 +9,44 @@ import FilterCheckbox from "../../components/Checkbox/CustomCheckbox";
 // Child Component
 import JobCardContainer from "../JobCardContainer/JobCardContainer";
 // CONSTANTS
-const LOCATION_INPUT_ID = "locationFormInput";
-const DESCRIPTION_INPUT_ID = "descFormInput";
+const LOCATION_INPUT_ID = "location";
+const DESCRIPTION_INPUT_ID = "description";
+import { initialJobsQuery, setQueryDataForJobs } from "../../utils/jobQuery";
 
 const SearchParams = () => {
-  let initialCountVal = 1;
-  let initialCheckboxState = false;
-  let locationInputSubmitted;
-  let descriptionInputSubmitted;
-
-  const [counter, setCounter] = useState(initialCountVal);
-  const [limitTo, setLimitTo] = useState(12);
-  const [locationInput, setLocationInput] = useState("");
-  const [descriptionInput, setDescriptionInput] = useState("");
+  const [descriptionQuery, setDescriptionQuery] = useState("");
+  const [locationQuery, setLocationQuery] = useState("");
+  const [queried, setQueried] = useState(false);
+  const [data, setData] = useState([]);
   const [fullTimeInput, setFullTimeInput] = React.useState({
-    checkedState: initialCheckboxState,
+    checkedState: false,
   });
-  const [fullTimeProp, setFullTimeProp] = useState(false);
 
-  // For Routing
-  if (locationInput !== "" && location.pathname === "/devjob_search") {
-    setLocationInput("");
-    setCounter(1);
-  } else if (
-    descriptionInput !== "" &&
-    location.pathname === "/devjob_search"
-  ) {
-    setDescriptionInput("");
-    setCounter(1);
+  const pageLimit = 12;
+  //  const isLoading = false;
+  //  const isSuccess = false;
+
+  //  if (description === "") {
+  //    loadmorejobsUrl = `${urlNow}?&page=${counter}`;
+  //  } else {
+  //    loadmorejobsUrl = `${urlNow}&page=${counter}`;
+  //  }
+  //  console.log(queried);
+  let query;
+  if (!queried) {
+    query = initialJobsQuery();
+  } else {
+    query = setQueryDataForJobs(descriptionQuery, locationQuery, fullTimeInput);
   }
+
+  useEffect(() => {
+    window
+      .fetch(query)
+      .then((response) => response.json())
+      .then((responseData) => {
+        setData(responseData);
+      });
+  }, [query]);
 
   const handleFullTimeFilter = (event) => {
     setFullTimeInput({
@@ -45,90 +55,24 @@ const SearchParams = () => {
     });
   };
 
-  const handleOnLoadMoreCurrent = (e) => {
-    e.preventDefault();
-    setLimitTo(limitTo + 12);
-  };
+  function handleSearchClick(event) {
+    event.preventDefault();
+    setLocationQuery(event.target.elements.location.value);
+    setDescriptionQuery(event.target.elements.description.value);
 
-  const handleLoadNextPage = (e) => {
-    e.preventDefault();
-    window.scrollTo(0, 0);
-    setLimitTo(12);
-    setCounter(counter + 1);
-  };
+    setFullTimeInput({
+      ...fullTimeInput,
+      [event.target.name]: event.target.checked,
+    });
 
-  const handleSubmit = (e) => {
-    //  TODO Object destructuring for more elegant code
-    e.preventDefault();
-
-    const setInputAfterSubmit = (locationObj, descriptionObj) => {
-      if (locationObj.queried === true && !descriptionObj.queried) {
-        setLocationInput(locationObj.inputQuerySubmitted);
-        e.target.elements[locationObj.inputId].value = "";
-        //
-      } else if (!locationObj.queried && descriptionObj.queried === true) {
-        setDescriptionInput(descriptionObj.inputQuerySubmitted);
-        e.target.elements[descriptionObj.inputId].value = "";
-        //
-      } else if (
-        locationObj.queried === true &&
-        descriptionObj.queried === true
-      ) {
-        setDescriptionInput(descriptionObj.inputQuerySubmitted);
-        setLocationInput(locationObj.inputQuerySubmitted);
-        e.target.elements[locationObj.inputId].value = "";
-        e.target.elements[descriptionObj.inputId].value = "";
-        //
-      } else {
-        // eslint-disable-next-line no-console
-        console.log("error: no query logged");
-      }
-      navigate(
-        `/devjob_search=${locationObj.inputQuerySubmitted}${descriptionObj.inputQuerySubmitted}`
-      );
-    };
-
-    setCounter(1);
-    locationInputSubmitted = e.target.elements.locationFormInput.value;
-    descriptionInputSubmitted = e.target.elements.descFormInput.value;
-
-    const queryObject = {
-      location: {
-        queried: true,
-        inputId: LOCATION_INPUT_ID,
-        inputQuerySubmitted: locationInputSubmitted,
-      },
-      description: {
-        queried: true,
-        inputId: DESCRIPTION_INPUT_ID,
-        inputQuerySubmitted: descriptionInputSubmitted,
-      },
-    };
-
-    if (
-      locationInputSubmitted.length > 0 &&
-      descriptionInputSubmitted.length === 0
-    ) {
-      setInputAfterSubmit(queryObject.location, queryObject.description);
-    } else if (
-      descriptionInputSubmitted.length > 0 &&
-      locationInputSubmitted.length === 0
-    ) {
-      setInputAfterSubmit(queryObject.location, queryObject.description);
-    } else if (
-      descriptionInputSubmitted.length > 0 &&
-      locationInputSubmitted.length > 0
-    ) {
-      setInputAfterSubmit(queryObject.location, queryObject.description);
-    }
-    setFullTimeProp(fullTimeInput.checkedState);
-  };
+    setQueried(true);
+  }
 
   return (
     <>
       <Container maxWidth="lg" style={{ marginBottom: "100px" }}>
         <Wrapper>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSearchClick}>
             <Grid
               container
               direction="row"
@@ -193,15 +137,7 @@ const SearchParams = () => {
           </form>
         </Wrapper>
 
-        <JobCardContainer
-          description={descriptionInput}
-          location={locationInput}
-          fullTimeCb={fullTimeProp}
-          counter={counter}
-          limit={limitTo}
-          nextPageHandler={handleLoadNextPage}
-          currentPageHandler={handleOnLoadMoreCurrent}
-        />
+        <JobCardContainer pageLimit={pageLimit} data={data} />
       </Container>
     </>
   );

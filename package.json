@@ -36,16 +36,21 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@reach/router": "^1.3.4",
     "@types/react": "^16.8.6 || ^17.0.0",
+    "assets": "^3.0.1",
+    "components": "^0.1.0",
+    "context": "^1.1.3",
     "date-fns": "^2.21.1",
     "javascript-time-ago": "^2.3.4",
     "moment": "^2.29.0",
     "prop-types": "^15.7.0",
-    "react": ">=0.16.8",
+    "react": "^16.8.0 || ^17.0.0",
     "react-dom": ">=0.16.8",
     "react-helmet": "^6.1.0",
     "react-moment": "^1.1.1",
+    "react-query": "^3.13.12",
     "react-time-ago": "^6.2.2",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "utils": "^0.3.1"
   },
   "browserslist": [
     "last 2 Chrome versions"

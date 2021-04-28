@@ -6,14 +6,20 @@ import Oval from "../.././assets/oval.svg";
 import NoImage from "../../assets/no-image.png";
 import { formatDistance, subDays } from "date-fns";
 
-const JobCard = ({ jobtitle, company, country, typePos, logo, date }) => {
-  const dateToFormat = formatDistance(subDays(new Date(date), 1), new Date(), {
-    addSuffix: true,
-  });
+const JobCard = ({ job }) => {
+  const { company, company_logo, created_at, location, type, title } = job;
+
+  const dateToFormat = formatDistance(
+    subDays(new Date(created_at), 1),
+    new Date(),
+    {
+      addSuffix: true,
+    }
+  );
 
   return (
     <Wrapper>
-      <Logo logod={logo}></Logo>
+      <Logo logod={company_logo}></Logo>
       <Grid
         container
         direction="row"
@@ -29,12 +35,12 @@ const JobCard = ({ jobtitle, company, country, typePos, logo, date }) => {
           <OvalIcon></OvalIcon>
         </Grid>
         <Grid item>
-          <JobTimeDetails>{typePos}</JobTimeDetails>
+          <JobTimeDetails>{type}</JobTimeDetails>
         </Grid>
       </Grid>
-      <JobTitle>{jobtitle}</JobTitle>
+      <JobTitle>{title}</JobTitle>
       <CompanyName>{company}</CompanyName>
-      <CountryTitle>{country}</CountryTitle>
+      <CountryTitle>{location}</CountryTitle>
     </Wrapper>
   );
 };

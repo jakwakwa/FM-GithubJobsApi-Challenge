@@ -1,51 +1,143 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from "react";
-//import { navigate } from "@reach/router";
-import { Container, Grid } from "@material-ui/core/";
+import { navigate } from "@reach/router";
 import styled from "styled-components";
-import { PrimaryButton } from "../../components/Buttons/Buttons";
-import { LocationIcon, SearchIcon } from "./Icons/Icons";
-import FilterCheckbox from "../../components/Checkbox/CustomCheckbox";
+import { Container } from "@material-ui/core/";
+
+import LinearProgress from "@material-ui/core/LinearProgress";
+
 // Child Component
+import SearchForm from "../SearchParams/SearchForm";
 import JobCardContainer from "../JobCardContainer/JobCardContainer";
+import { PrimaryButton } from "../../components/Buttons/Buttons";
+//import JobCardFallback from "../../components/JobCard/JobCardFallback";
 // CONSTANTS
-const LOCATION_INPUT_ID = "location";
-const DESCRIPTION_INPUT_ID = "description";
+
 import { initialJobsQuery, setQueryDataForJobs } from "../../utils/jobQuery";
 
+// 🐨 you'll want the following additional things from '../pokemon':
+// fetchPokemon: the function we call to get the pokemon info
+// PokemonInfoFallback: the thing we show while we're loading the pokemon info
+// PokemonDataView: the stuff we use to display the pokemon info
+//import { JobForm } from "../pokemon";
+
+//function JobInfo({ jobName }) {
+// 🐨 Have state for the pokemon (null)
+// 🐨 use React.useEffect where the callback should be called whenever the
+// pokemon name changes.
+// 💰 DON'T FORGET THE DEPENDENCIES ARRAY!
+// 💰 if the pokemonName is falsy (an empty string) then don't bother making the request (exit early).
+// 🐨 before calling `fetchPokemon`, clear the current pokemon state by setting it to null
+// 💰 Use the `fetchPokemon` function to fetch a pokemon by its name:
+//   fetchPokemon('Pikachu').then(
+//     pokemonData => { /* update all the state here */},
+//   )
+// 🐨 return the following things based on the `pokemon` state and `pokemonName` prop:
+//   1. no pokemonName: 'Submit a pokemon'
+//   2. pokemonName but no pokemon: <PokemonInfoFallback name={pokemonName} />
+//   3. pokemon: <PokemonDataView pokemon={pokemon} />
+
+// 💣 remove this
+//  return "TODO";
+//}
+function Jobs({ pageLimit, status, data, handleLoader, disabled }) {
+  if (status === "loading") {
+    return (
+      <LinearProgress
+        color="secondary"
+        style={{
+          position: "fixed",
+          top: "0px",
+          left: "0px",
+          zIndex: "200",
+          width: "100vw",
+        }}
+      />
+    );
+  } else if (status === "rejected") {
+    return (
+      <div role="alert">
+        There was an error: <pre>error</pre>
+      </div>
+    );
+  } else if (status === "resolved") {
+    return (
+      <div>
+        <JobCardContainer pageLimit={pageLimit} data={data} />
+        <form onSubmit={handleLoader}>
+          <LoadMoreJobs>
+            <div>
+              <PrimaryButton
+                type="Submit"
+                variant="contained"
+                value="Submit"
+                disabled={disabled}
+              >
+                Load More
+              </PrimaryButton>
+            </div>
+          </LoadMoreJobs>
+        </form>
+      </div>
+    );
+  } else {
+    return null;
+  }
+}
 const SearchParams = () => {
+  const initialCountVal = 1;
+  const pageLimit = 12;
+  let query;
+
+  const [counter, setCounter] = useState(initialCountVal);
+  const [status, setStatus] = useState("loading");
   const [descriptionQuery, setDescriptionQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
   const [queried, setQueried] = useState(false);
   const [data, setData] = useState([]);
-  const [fullTimeInput, setFullTimeInput] = React.useState({
+  const [fullTimeInput, setFullTimeInput] = useState({
     checkedState: false,
   });
+  const [disabled, setDisabled] = useState(false);
 
-  const pageLimit = 12;
-  //  const isLoading = false;
-  //  const isSuccess = false;
-
-  //  if (description === "") {
-  //    loadmorejobsUrl = `${urlNow}?&page=${counter}`;
-  //  } else {
-  //    loadmorejobsUrl = `${urlNow}&page=${counter}`;
-  //  }
-  //  console.log(queried);
-  let query;
-  if (!queried) {
-    query = initialJobsQuery();
-  } else {
-    query = setQueryDataForJobs(descriptionQuery, locationQuery, fullTimeInput);
+  if (!queried || location.pathname === "/devjob_search") {
+    window.scrollTo(0, 0);
+    query = initialJobsQuery(counter);
+  } else if (queried && counter === 1) {
+    query = setQueryDataForJobs(
+      descriptionQuery,
+      locationQuery,
+      fullTimeInput,
+      counter
+    );
+  } else if (queried && counter > 1) {
+    query = setQueryDataForJobs(
+      descriptionQuery,
+      locationQuery,
+      fullTimeInput,
+      counter
+    );
   }
 
   useEffect(() => {
     window
       .fetch(query)
       .then((response) => response.json())
-      .then((responseData) => {
-        setData(responseData);
-      });
+      .then(
+        (responseData) => {
+          setData(responseData);
+          if (responseData.length > 0 && responseData.length < 12) {
+            setDisabled(true);
+          } else {
+            setDisabled(false);
+          }
+          setStatus("resolved");
+        },
+        (error) => {
+          console.log(error);
+          setStatus("rejected");
+        }
+      );
   }, [query]);
 
   const handleFullTimeFilter = (event) => {
@@ -57,9 +149,14 @@ const SearchParams = () => {
 
   function handleSearchClick(event) {
     event.preventDefault();
+    setCounter(initialCountVal);
     setLocationQuery(event.target.elements.location.value);
     setDescriptionQuery(event.target.elements.description.value);
-
+    navigate(
+      `${event.target.elements.location.value}${event.target.elements.description.value}`
+    );
+    event.target.elements.location.value = "";
+    event.target.elements.description.value = "";
     setFullTimeInput({
       ...fullTimeInput,
       [event.target.name]: event.target.checked,
@@ -68,76 +165,28 @@ const SearchParams = () => {
     setQueried(true);
   }
 
+  function handleLoader(event) {
+    event.preventDefault();
+    window.scrollTo(0, 0);
+    setStatus("loading");
+    setCounter(counter + 1);
+  }
+
   return (
     <>
       <Container maxWidth="lg" style={{ marginBottom: "100px" }}>
-        <Wrapper>
-          <form onSubmit={handleSearchClick}>
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="flex-start"
-            >
-              {/* DESCRIPTION */}
-              <Grid item xs sm={3} md={4}>
-                <Label htmlFor={DESCRIPTION_INPUT_ID}>
-                  <IconWrapperLeft>
-                    <SearchIcon />
-                  </IconWrapperLeft>
-                  <SearchInput
-                    id={DESCRIPTION_INPUT_ID}
-                    placeholder="Filter by description, companies, expertise..."
-                  />
-                </Label>
-              </Grid>
-
-              {/* LOCATION */}
-              <Grid item xs sm={3} md={4}>
-                <Label htmlFor={LOCATION_INPUT_ID}>
-                  <IconWrapperLeft>
-                    <LocationIcon />
-                  </IconWrapperLeft>
-
-                  <SearchInput
-                    id={LOCATION_INPUT_ID}
-                    placeholder="Filter by location..."
-                  />
-                </Label>
-              </Grid>
-
-              {/* CHECKBOX  and SEARCH */}
-              <Grid
-                container
-                direction="row"
-                justify="space-around"
-                alignItems="center"
-                item
-                xs
-                sm={6}
-                md={4}
-              >
-                <FilterCheckbox
-                  label="Full Time Only"
-                  checked={fullTimeInput.checkedState}
-                  handler={handleFullTimeFilter}
-                />
-
-                <div>
-                  <PrimaryButton
-                    type="Submit"
-                    value="Submit"
-                    variant="contained"
-                  >
-                    Search
-                  </PrimaryButton>
-                </div>
-              </Grid>
-            </Grid>
-          </form>
-        </Wrapper>
-
-        <JobCardContainer pageLimit={pageLimit} data={data} />
+        <SearchForm
+          queryHandler={handleSearchClick}
+          fulltimeHandler={handleFullTimeFilter}
+          fulltimeInput={fullTimeInput.checkedState}
+        />
+        <Jobs
+          pageLimit={pageLimit}
+          status={status}
+          data={data}
+          handleLoader={handleLoader}
+          disabled={disabled}
+        />
       </Container>
     </>
   );
@@ -145,46 +194,20 @@ const SearchParams = () => {
 
 export default SearchParams;
 
-const Wrapper = styled.div`
-  position: relative;
-  top: -42px;
-  background: ${({ theme }) => theme.jobcards};
-  width: 100%;
-  height: 80px;
-  overflow: hidden;
-  border-radius: 6px;
-  margin-bottom: 65px;
-
-  & input:first-of-type {
-    border-right: 1px solid ${({ theme }) => theme.stroke};
-    @media screen and (max-width: 600px) {
-      border-right: none;
+const LoadMoreJobs = styled.div`
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100px;
+  & .Mui-disabled {
+    background-color: #2d2d2d;
+    color: #4a4a4a;
+    pointer-events: auto !important;
+    cursor: not-allowed !important;
+    &:hover {
+      background-color: #2d2d2d;
+      color: #4a4a4a;
     }
-  }
-`;
-
-const IconWrapperLeft = styled.span`
-  position: absolute;
-  top: -5px;
-  left: 23px;
-`;
-
-const Label = styled.label`
-  background-color: #fff;
-  height: 80px;
-  position: relative;
-`;
-
-const SearchInput = styled.input`
-  background: ${({ theme }) => theme.jobcards};
-  height: 80px;
-  width: 100%;
-  border: none;
-  resize: none;
-  outline: none;
-  padding: 23px;
-  padding-left: 60px;
-  @media screen and (max-width: 600px) {
-    padding-left: 24px;
   }
 `;

@@ -63,7 +63,7 @@ import { Link } from "@reach/router";
 //  );
 //};
 
-const JobCardContainer = ({ limit, data }) => {
+const JobCardContainer = ({ pageLimit, data }) => {
   const jobs = [...data];
 
   return (
@@ -79,7 +79,7 @@ const JobCardContainer = ({ limit, data }) => {
         alignItems="flex-start"
         spacing={4}
       >
-        {jobs.slice(0, limit).map((job) => (
+        {jobs.slice(0, pageLimit).map((job) => (
           <Grid key={job.id} item xs={12} sm={6} md={4}>
             <Link to={`/details/${job.id}`}>
               <JobCard job={job} />

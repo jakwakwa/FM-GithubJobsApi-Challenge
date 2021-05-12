@@ -39,6 +39,8 @@ const useDarkMode = () => {
 const App = () => {
   const [theme, toggleTheme] = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
+  //  const [queryReset, setQueryReset] = useState(false);
+  //  setQueryReset(false);
 
   if (location.pathname === "/") {
     navigate("/devjob_search");

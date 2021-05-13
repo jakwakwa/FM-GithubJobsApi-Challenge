@@ -86,7 +86,7 @@ function Jobs({ pageLimit, status, data, handleLoader, disabled }) {
 }
 const SearchParams = () => {
   const initialCountVal = 1;
-  const pageLimit = 12;
+  const pageLimitInit = 12;
   let query;
 
   const [counter, setCounter] = useState(initialCountVal);
@@ -98,11 +98,23 @@ const SearchParams = () => {
   const [fullTimeInput, setFullTimeInput] = useState({
     checkedState: false,
   });
+  const [pageLimit, setPageLimit] = useState(pageLimitInit);
   const [disabled, setDisabled] = useState(false);
 
-  if (!queried || location.pathname === "/devjob_search") {
-    window.scrollTo(0, 0);
+  if (!queried && location.pathname === "/devjob_search") {
+    //setQueried(false);
+    if (counter > 1) {
+      setStatus("loading");
+      setCounter(initialCountVal);
+    }
     query = initialJobsQuery(counter);
+  } else if (!queried && location.pathname === `/next_page`) {
+    query = initialJobsQuery(counter);
+  } else if (queried && location.pathname === "/devjob_search") {
+    setStatus("loading");
+    setCounter(initialCountVal);
+    setQueried(false);
+    setPageLimit(pageLimitInit);
   } else if (queried && counter === 1) {
     query = setQueryDataForJobs(
       descriptionQuery,
@@ -119,27 +131,6 @@ const SearchParams = () => {
     );
   }
 
-  useEffect(() => {
-    window
-      .fetch(query)
-      .then((response) => response.json())
-      .then(
-        (responseData) => {
-          setData(responseData);
-          if (responseData.length > 0 && responseData.length < 12) {
-            setDisabled(true);
-          } else {
-            setDisabled(false);
-          }
-          setStatus("resolved");
-        },
-        (error) => {
-          console.log(error);
-          setStatus("rejected");
-        }
-      );
-  }, [query]);
-
   const handleFullTimeFilter = (event) => {
     setFullTimeInput({
       ...fullTimeInput,
@@ -149,14 +140,17 @@ const SearchParams = () => {
 
   function handleSearchClick(event) {
     event.preventDefault();
+    setStatus("loading");
     setCounter(initialCountVal);
     setLocationQuery(event.target.elements.location.value);
     setDescriptionQuery(event.target.elements.description.value);
     navigate(
       `${event.target.elements.location.value}${event.target.elements.description.value}`
     );
+
     event.target.elements.location.value = "";
     event.target.elements.description.value = "";
+
     setFullTimeInput({
       ...fullTimeInput,
       [event.target.name]: event.target.checked,
@@ -167,11 +161,37 @@ const SearchParams = () => {
 
   function handleLoader(event) {
     event.preventDefault();
-    window.scrollTo(0, 0);
-    setStatus("loading");
-    setCounter(counter + 1);
+    setPageLimit(pageLimit + 12);
+    if (pageLimit > 36 && data.length === 50) {
+      setCounter(counter + 1);
+      setPageLimit(pageLimitInit);
+      setStatus("loading");
+      navigate(`next_page`);
+      //  window.scrollTo(0, 0);
+    } else if (pageLimit === 36 && data.length !== 50) {
+      setDisabled(true);
+    }
   }
-
+  useEffect(() => {
+    window
+      .fetch(query)
+      .then((response) => response.json())
+      .then(
+        (responseData) => {
+          setData(responseData);
+          if (responseData.length > 12) {
+            setDisabled(false);
+          } else {
+            setDisabled(true);
+          }
+          setStatus("resolved");
+        },
+        (error) => {
+          console.log(error);
+          setStatus("rejected");
+        }
+      );
+  }, [query, counter]);
   return (
     <>
       <Container maxWidth="lg" style={{ marginBottom: "100px" }}>

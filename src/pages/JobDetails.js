@@ -1,60 +1,43 @@
 import React from "react";
 import styled from "styled-components";
 import { Container, Grid } from "@material-ui/core/";
-//import JobLogo from ".././assets/jobdetailslogo.svg";
+// import JobLogo from ".././assets/jobdetailslogo.svg";
 import { SecondaryButton } from "../components/Buttons/Buttons";
 import DescriptionButton from "../components/Buttons/ApplyNowButton";
 import Oval from ".././assets/oval.svg";
-
+import Data from ".././data/data.json";
+import NoImage from ".././assets/no-image.png";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import JobSkeletons from "../components/JobCard/JobCardSkeletons";
 import JobDetailFooter from "./Components/JobDetailFooter";
 import { themeColors } from "./../styles/theme/ThemeStyled";
 import HowToBg from "../assets/desktop/bg-pattern-detail-footer.svg";
-import { formatDistance, subDays } from "date-fns";
+// import { formatDistance, subDays } from "date-fns";
 
 class JobDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loading: true,
-    };
+    this.state = {};
   }
 
   componentDidMount() {
-    const getDataFromApi = async () => {
-      const PROXY =
-        window.location.hostname === "localhost"
-          ? "https://cors-anywhere.herokuapp.com"
-          : "/cors-proxy";
-      try {
-        const response = await fetch(
-          `${PROXY}/https://jobs.github.com/positions/${this.props.id}.json`,
-          {
-            method: "GET",
-            mode: "cors",
-          }
-        );
-        const jsonData = await response.json();
-
-        this.setState({
-          title: jsonData.title,
-          type: jsonData.type,
-          company: jsonData.company,
-          companyUrl: jsonData.company_url,
-          location: jsonData.location,
-          description: jsonData.description,
-          created_at: jsonData.created_at,
-          logo: jsonData.company_logo,
-          loading: false,
-        });
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log("Fetch error: ", error);
-      }
+    const getDataFromApi = () => {
+      const jsonData = Data[this.props.id - 1];
+      this.setState({
+        position: jsonData.position,
+        contract: jsonData.contract,
+        company: jsonData.company,
+        website: jsonData.website,
+        location: jsonData.location,
+        postedAt: jsonData.postedAt,
+        logo: jsonData.logo,
+        description: jsonData.description,
+      });
     };
+
     getDataFromApi();
   }
+
   render() {
     if (this.state.loading) {
       return (
@@ -81,14 +64,13 @@ class JobDetails extends React.Component {
     }
 
     const {
-      title,
-      type,
+      position,
+      contract,
       company,
-      companyUrl,
+      website,
       location,
       description,
-      created_at,
-      logo,
+      postedAt,
     } = this.state;
 
     return (
@@ -102,19 +84,17 @@ class JobDetails extends React.Component {
                 }}
               >
                 <CompanyLogoWrapper>
-                  <CompanyLogo logod={logo} />
+                  <CompanyLogo logo={""} />
                 </CompanyLogoWrapper>
 
                 <CompanyInfoWrapper>
                   <CompanyTitle>{company}</CompanyTitle>
-                  <CompanySiteUrl>
-                    {companyUrl.replace(/https:\/\/|http:\/\//gm, "")}
-                  </CompanySiteUrl>
+                  <CompanySiteUrl>{website}</CompanySiteUrl>
                 </CompanyInfoWrapper>
 
                 <CompanyButtonWrapper>
                   <SecondaryButton
-                    href={companyUrl}
+                    href={website}
                     color="secondary"
                     variant="contained"
                   >
@@ -133,32 +113,21 @@ class JobDetails extends React.Component {
               >
                 <TitleWrapper>
                   <JobTime>
-                    <span>
-                      {formatDistance(
-                        subDays(new Date(created_at), 1),
-                        new Date(),
-                        {
-                          addSuffix: true,
-                        }
-                      )}
-                    </span>
+                    <span>{postedAt}</span>
                     <OvalIcon></OvalIcon>
-                    <span>{type}</span>
+                    <span>{contract}</span>
                   </JobTime>
-                  <h1>{title}</h1>
+                  <h1>{position}</h1>
                   <JobType>
-                    {type}, {location}
+                    {contract}, {location}
                   </JobType>
                 </TitleWrapper>
-                <DescriptionButton
-                  linkUrl={companyUrl}
-                  buttonText={"Apply Now"}
-                />
+                <DescriptionButton linkUrl={website} buttonText={"Apply Now"} />
               </Grid>
 
-              <HtmlWrapper
-                dangerouslySetInnerHTML={{ __html: description }}
-              ></HtmlWrapper>
+              <HtmlWrapper>
+                <p> {description}</p>
+              </HtmlWrapper>
             </JobDescription>
 
             <HowToSection>
@@ -170,7 +139,7 @@ class JobDetails extends React.Component {
                 felis, adipiscing varius, adipiscing in, lacinia vel, tellus.
               </p>
 
-              <a aria-current="page" href={companyUrl}>
+              <a aria-current="page" href={website}>
                 https://examplelink.com/how-to-apply
               </a>
             </HowToSection>
@@ -179,8 +148,8 @@ class JobDetails extends React.Component {
 
         <JobDetailFooter
           title={company}
-          companySite={companyUrl.replace(/https:\/\/|http:\/\//gm, "")}
-          weblink={companyUrl}
+          companySite={website}
+          weblink={website}
         />
       </>
     );
@@ -217,7 +186,7 @@ const CompanyLogoWrapper = styled.div`
 `;
 const CompanyLogo = styled.div`
   padding: 20px;
-  background: url(${(props) => props.logod}) no-repeat;
+  background: url(${NoImage}) no-repeat;
   background-size: contain;
   background-color: #fff;
   background-repeat: no-repeat;

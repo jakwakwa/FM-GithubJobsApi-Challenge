@@ -3,23 +3,14 @@ import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 //import JobLogo from "../.././assets/joblogo.svg";
 import Oval from "../.././assets/oval.svg";
-import NoImage from "../../assets/no-image.png";
-import { formatDistance, subDays } from "date-fns";
+import NoImage from "../.././assets/no-image.png";
 
 const JobCard = ({ job }) => {
-  const { company, company_logo, created_at, location, type, title } = job;
-
-  const dateToFormat = formatDistance(
-    subDays(new Date(created_at), 1),
-    new Date(),
-    {
-      addSuffix: true,
-    }
-  );
+  const { company, postedAt, location, contract, position } = job;
 
   return (
     <Wrapper>
-      <Logo logod={company_logo}></Logo>
+      <Logo logod={""}></Logo>
       <Grid
         container
         direction="row"
@@ -28,17 +19,17 @@ const JobCard = ({ job }) => {
       >
         <Grid item>
           <JobTimeDetails>
-            <span>{dateToFormat}</span>
+            <span>{postedAt}</span>
           </JobTimeDetails>
         </Grid>
         <Grid item>
           <OvalIcon></OvalIcon>
         </Grid>
         <Grid item>
-          <JobTimeDetails>{type}</JobTimeDetails>
+          <JobTimeDetails>{contract}</JobTimeDetails>
         </Grid>
       </Grid>
-      <JobTitle>{title}</JobTitle>
+      <JobTitle>{position}</JobTitle>
       <CompanyName>{company}</CompanyName>
       <CountryTitle>{location}</CountryTitle>
     </Wrapper>
@@ -63,8 +54,7 @@ const Wrapper = styled.div`
 const Logo = styled.div`
   position: absolute;
   background: url(${NoImage}) no-repeat;
-  background: url(${(props) => (props.logod === null ? NoImage : props.logod)})
-    no-repeat;
+  /* background: url(${(props) => props.logod}) no-repeat; */
   background-size: cover;
   background-color: #fff;
   background-repeat: no-repeat;

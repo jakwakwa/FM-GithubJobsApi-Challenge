@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 import { navigate } from "@reach/router";
 import styled from "styled-components";
 import { Container } from "@material-ui/core/";
-
+import Data from "../../data/data.json";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 // Child Component
 import SearchForm from "../SearchParams/SearchForm";
 import JobCardContainer from "../JobCardContainer/JobCardContainer";
 import { PrimaryButton } from "../../components/Buttons/Buttons";
-import { initialJobsQuery, setQueryDataForJobs } from "../../utils/jobQuery";
+// import { initialJobsQuery, setQueryDataForJobs } from "../../utils/jobQuery";
 
 function Jobs({ pageLimit, status, data, handleLoader, disabled }) {
   if (status === "loading") {
@@ -59,77 +59,77 @@ function Jobs({ pageLimit, status, data, handleLoader, disabled }) {
 const SearchParams = () => {
   const initialCountVal = 1;
   const pageLimitInit = 12;
-  let query;
+  // let query;
 
   const [counter, setCounter] = useState(initialCountVal);
   const [status, setStatus] = useState("loading");
-  const [descriptionQuery, setDescriptionQuery] = useState("");
-  const [locationQuery, setLocationQuery] = useState("");
-  const [queried, setQueried] = useState(false);
-  const [data, setData] = useState([]);
-  const [fullTimeInput, setFullTimeInput] = useState({
-    checkedState: false,
-  });
+  // const [descriptionQuery, setDescriptionQuery] = useState("");
+  // const [locationQuery, setLocationQuery] = useState("");
+  // const [queried, setQueried] = useState(false);
+  const [data] = useState([]);
+  // const [fullTimeInput] = useState({
+  //   checkedState: false,
+  // });
   const [pageLimit, setPageLimit] = useState(pageLimitInit);
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
 
-  if (!queried && location.pathname === "/devjob_search") {
-    //setQueried(false);
-    if (counter > 1) {
-      setStatus("loading");
-      setCounter(initialCountVal);
-    }
-    query = initialJobsQuery(counter);
-  } else if (!queried && location.pathname === `/next_page`) {
-    query = initialJobsQuery(counter);
-  } else if (queried && location.pathname === "/devjob_search") {
-    setStatus("loading");
-    setCounter(initialCountVal);
-    setQueried(false);
-    setPageLimit(pageLimitInit);
-  } else if (queried && counter === 1) {
-    query = setQueryDataForJobs(
-      descriptionQuery,
-      locationQuery,
-      fullTimeInput,
-      counter
-    );
-  } else if (queried && counter > 1) {
-    query = setQueryDataForJobs(
-      descriptionQuery,
-      locationQuery,
-      fullTimeInput,
-      counter
-    );
-  }
+  // if (!queried && location.pathname === "/devjob_search") {
+  //   //setQueried(false);
+  //   if (counter > 1) {
+  //     setStatus("loading");
+  //     setCounter(initialCountVal);
+  //   }
+  //   query = initialJobsQuery(counter);
+  // } else if (!queried && location.pathname === `/next_page`) {
+  //   query = initialJobsQuery(counter);
+  // } else if (queried && location.pathname === "/devjob_search") {
+  //   setStatus("loading");
+  //   setCounter(initialCountVal);
+  //   setQueried(false);
+  //   setPageLimit(pageLimitInit);
+  // } else if (queried && counter === 1) {
+  //   query = setQueryDataForJobs(
+  //     descriptionQuery,
+  //     locationQuery,
+  //     fullTimeInput,
+  //     counter
+  //   );
+  // } else if (queried && counter > 1) {
+  //   query = setQueryDataForJobs(
+  //     descriptionQuery,
+  //     locationQuery,
+  //     fullTimeInput,
+  //     counter
+  //   );
+  // }
 
-  const handleFullTimeFilter = (event) => {
-    setFullTimeInput({
-      ...fullTimeInput,
-      [event.target.name]: event.target.checked,
-    });
-  };
+  // const handleFullTimeFilter = (event) => {
+  //   setFullTimeInput({
+  //     ...fullTimeInput,
+  //     [event.target.name]: event.target.checked,
+  //   });
+  // };
 
-  function handleSearchClick(event) {
-    event.preventDefault();
-    setStatus("loading");
-    setCounter(initialCountVal);
-    setLocationQuery(event.target.elements.location.value);
-    setDescriptionQuery(event.target.elements.description.value);
-    navigate(
-      `${event.target.elements.location.value}${event.target.elements.description.value}`
-    );
+  // function handleSearchClick(event) {
+  //   event.preventDefault();
+  //   setStatus("loading");
+  //   setCounter(initialCountVal);
+  //   setLocationQuery(event.target.elements.location.value);
+  //   setDescriptionQuery(event.target.elements.description.value);
+  //   navigate(
+  //     `${event.target.elements.location.value}${event.target.elements.description.value}`
+  //   );
 
-    event.target.elements.location.value = "";
-    event.target.elements.description.value = "";
+  //   event.target.elements.location.value = "";
+  //   event.target.elements.description.value = "";
 
-    setFullTimeInput({
-      ...fullTimeInput,
-      [event.target.name]: event.target.checked,
-    });
+  //   setFullTimeInput({
+  //     ...fullTimeInput,
+  //     [event.target.name]: event.target.checked,
+  //   });
 
-    setQueried(true);
-  }
+  //   setQueried(true);
+  // }
 
   function handleLoader(event) {
     event.preventDefault();
@@ -141,41 +141,29 @@ const SearchParams = () => {
       navigate(`next_page`);
       //  window.scrollTo(0, 0);
     } else if (pageLimit === 36 && data.length !== 50) {
-      setDisabled(true);
+      setDisabled(false);
     }
   }
   useEffect(() => {
-    window
-      .fetch(query)
-      .then((response) => response.json())
-      .then(
-        (responseData) => {
-          setData(responseData);
-          if (responseData.length > 12) {
-            setDisabled(false);
-          } else {
-            setDisabled(true);
-          }
-          setStatus("resolved");
-        },
-        (error) => {
-          console.log(error);
-          setStatus("rejected");
-        }
-      );
-  }, [query, counter]);
+    if (data.length > 12) {
+      setDisabled(false);
+    } else {
+      setDisabled(false);
+    }
+    setStatus("resolved");
+  }, [data.length]);
   return (
     <>
       <Container maxWidth="lg" style={{ marginBottom: "100px" }}>
         <SearchForm
-          queryHandler={handleSearchClick}
-          fulltimeHandler={handleFullTimeFilter}
-          fulltimeInput={fullTimeInput.checkedState}
+          queryHandler={() => console.log("hello")}
+          fulltimeHandler={() => console.log("hello")}
+          fulltimeInput={false}
         />
         <Jobs
           pageLimit={pageLimit}
           status={status}
-          data={data}
+          data={Data}
           handleLoader={handleLoader}
           disabled={disabled}
         />

@@ -57,7 +57,6 @@ const App = () => {
 
           <Router>
             <SearchParams path="/:query" />
-            {/* <ScrollTop /> */}
             <JobDetails path="/details/:id" />
           </Router>
         </ThemeProvider>

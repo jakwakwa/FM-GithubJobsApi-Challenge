@@ -160,7 +160,7 @@ const SearchParams = () => {
       }
     });
 
-    // console.log(searchQuery);
+    console.log(searchQuery);
     setData(jobsFilter);
     if (jobsFilter.length > 0) {
       setTimeout(() => {
@@ -227,7 +227,7 @@ const SearchParams = () => {
     setTimeout(() => {
       setStatus("resolved");
     }, 1000);
-  }, [count, pageLimit]);
+  }, [count, data.length, pageLimit, status]);
   return (
     <>
       <Container maxWidth="lg" style={{ marginBottom: "100px" }}>

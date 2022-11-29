@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { IconButton } from "../Buttons/Buttons";
 
-import SearchIc from "./../../public/assets/desktop/icon-search.svg";
+import SearchIc from "../../../public/icon-search.svg";
 
 const MobileSearchButton = ({ type, value }) => {
   return (

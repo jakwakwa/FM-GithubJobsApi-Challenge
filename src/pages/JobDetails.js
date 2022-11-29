@@ -1,17 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { Container, Grid } from "@material-ui/core/";
-// import JobLogo from ".././assets/jobdetailslogo.svg";
 import { SecondaryButton } from "../components/Buttons/Buttons";
 import DescriptionButton from "../components/Buttons/ApplyNowButton";
-import Oval from "./../public/assets/oval.svg";
+import Oval from "../../public/oval.svg";
 import Data from "../../public/data/data.json";
-import NoImage from "./../public/assets/no-image.png";
+import NoImage from "../../public/no-image.png";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import JobSkeletons from "../components/JobCard/JobCardSkeletons";
 import JobDetailFooter from "./Components/JobDetailFooter";
 import { themeColors } from "./../styles/theme/ThemeStyled";
-import HowToBg from "./../public/assets/desktop/bg-pattern-detail-footer.svg";
+import HowToBg from "../../public/bg-pattern-detail-footer.svg";
 // import { formatDistance, subDays } from "date-fns";
 
 class JobDetails extends React.Component {

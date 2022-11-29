@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
-import Oval from "../../public/assets/oval.svg";
-import NoImage from "../../public/assets/no-image.png";
+import Oval from "../../../public/oval.svg";
+import NoImage from "../../../public/no-image.png";
 
 // import LogoDD from "../.././assets/blogr.svg";
 

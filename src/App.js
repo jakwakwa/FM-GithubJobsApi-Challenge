@@ -5,16 +5,18 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./styles/theme/GlobalStyles";
 import Switch from "./components/Switch/Switch";
 import { lightTheme, darkTheme } from "./styles/theme/ThemeStyled";
-
+// import Data from "../public/data/data.json";
 import Layout from "./components/Layout/Layout";
 import SearchParams from "./containers/SearchParams/SearchParams";
 import JobDetails from "./pages/JobDetails";
+// import { ScrollTop } from "./containers/SearchParams/ScrollTop";
 
 const useDarkMode = () => {
   const [theme, setTheme] = useState("light");
   const [componentMounted, setComponentMounted] = useState(false);
 
   const setMode = (mode) => {
+    window.scrollTo(0, 0);
     window.localStorage.setItem("theme", mode);
     setTheme(mode);
   };
@@ -39,8 +41,6 @@ const useDarkMode = () => {
 const App = () => {
   const [theme, toggleTheme] = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
-  //  const [queryReset, setQueryReset] = useState(false);
-  //  setQueryReset(false);
 
   if (location.pathname === "/") {
     navigate("/devjob_search");
@@ -49,12 +49,15 @@ const App = () => {
   return (
     <React.StrictMode>
       <Switch theme={theme} toggleTheme={toggleTheme} />
+
       <Layout />
       <div>
         <ThemeProvider theme={themeMode}>
           <GlobalStyles />
+
           <Router>
             <SearchParams path="/:query" />
+            {/* <ScrollTop /> */}
             <JobDetails path="/details/:id" />
           </Router>
         </ThemeProvider>

@@ -17,7 +17,9 @@ const Wrapper = styled.div`
   position: relative;
   background: ${({ theme }) => theme.jobcards};
   height: 228px;
-  width: 100%;
+  gap: 5px;
+  width: 30%;
+  margin-right: 30px;
   border-radius: 6px;
   padding: 30px;
   padding-top: 50px;

@@ -1,16 +1,15 @@
 /* eslint-disable no-console */
-import React, { useState, useEffect } from "react";
-import { navigate } from "@reach/router";
+import React, { useState } from "react";
+// import { navigate } from "@reach/router";
 import styled from "styled-components";
 import { Container } from "@material-ui/core/";
-import Data from "../../data/data.json";
+import Data from "../../../public/data/data.json";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 // Child Component
 import SearchForm from "../SearchParams/SearchForm";
 import JobCardContainer from "../JobCardContainer/JobCardContainer";
 import { PrimaryButton } from "../../components/Buttons/Buttons";
-// import { initialJobsQuery, setQueryDataForJobs } from "../../utils/jobQuery";
 
 function Jobs({ pageLimit, status, data, handleLoader, disabled }) {
   if (status === "loading") {
@@ -57,113 +56,194 @@ function Jobs({ pageLimit, status, data, handleLoader, disabled }) {
   }
 }
 const SearchParams = () => {
-  const initialCountVal = 1;
-  const pageLimitInit = 12;
-  // let query;
-
-  const [counter, setCounter] = useState(initialCountVal);
   const [status, setStatus] = useState("loading");
-  // const [descriptionQuery, setDescriptionQuery] = useState("");
-  // const [locationQuery, setLocationQuery] = useState("");
-  // const [queried, setQueried] = useState(false);
-  const [data] = useState([]);
-  // const [fullTimeInput] = useState({
-  //   checkedState: false,
-  // });
-  const [pageLimit, setPageLimit] = useState(pageLimitInit);
-  const [disabled, setDisabled] = useState(true);
+  const [descriptionQuery, setDescriptionQuery] = useState("");
+  const [locationQuery, setLocationQuery] = useState("");
+  const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // if (!queried && location.pathname === "/devjob_search") {
-  //   //setQueried(false);
-  //   if (counter > 1) {
-  //     setStatus("loading");
-  //     setCounter(initialCountVal);
-  //   }
-  //   query = initialJobsQuery(counter);
-  // } else if (!queried && location.pathname === `/next_page`) {
-  //   query = initialJobsQuery(counter);
-  // } else if (queried && location.pathname === "/devjob_search") {
-  //   setStatus("loading");
-  //   setCounter(initialCountVal);
-  //   setQueried(false);
-  //   setPageLimit(pageLimitInit);
-  // } else if (queried && counter === 1) {
-  //   query = setQueryDataForJobs(
-  //     descriptionQuery,
-  //     locationQuery,
-  //     fullTimeInput,
-  //     counter
-  //   );
-  // } else if (queried && counter > 1) {
-  //   query = setQueryDataForJobs(
-  //     descriptionQuery,
-  //     locationQuery,
-  //     fullTimeInput,
-  //     counter
-  //   );
-  // }
+  const [pageLimit, setPageLimit] = useState(6);
+  const descriptionQueryHandler = (e) => {
+    setDescriptionQuery(e.target.value);
+  };
 
-  // const handleFullTimeFilter = (event) => {
-  //   setFullTimeInput({
-  //     ...fullTimeInput,
-  //     [event.target.name]: event.target.checked,
-  //   });
-  // };
+  const locationQueryHandler = (e) => {
+    // console.log(e.target.value);
+    setLocationQuery(e.target.value);
+  };
 
-  // function handleSearchClick(event) {
-  //   event.preventDefault();
-  //   setStatus("loading");
-  //   setCounter(initialCountVal);
-  //   setLocationQuery(event.target.elements.location.value);
-  //   setDescriptionQuery(event.target.elements.description.value);
-  //   navigate(
-  //     `${event.target.elements.location.value}${event.target.elements.description.value}`
-  //   );
+  const [fullTimeInput, setFullTimeInput] = useState({
+    checkedState: false,
+  });
 
-  //   event.target.elements.location.value = "";
-  //   event.target.elements.description.value = "";
+  const searchSubmitHandler = (e) => {
+    e.preventDefault();
 
-  //   setFullTimeInput({
-  //     ...fullTimeInput,
-  //     [event.target.name]: event.target.checked,
-  //   });
+    setSearchQuery({
+      description: descriptionQuery,
+      location: locationQuery,
+      fullTime: fullTimeInput.checkedState,
+    });
 
-  //   setQueried(true);
-  // }
+    // setCounter(1);
+    setStatus("loading");
 
-  function handleLoader(event) {
-    event.preventDefault();
-    setPageLimit(pageLimit + 12);
-    if (pageLimit > 36 && data.length === 50) {
-      setCounter(counter + 1);
-      setPageLimit(pageLimitInit);
-      setStatus("loading");
-      navigate(`next_page`);
-      //  window.scrollTo(0, 0);
-    } else if (pageLimit === 36 && data.length !== 50) {
-      setDisabled(false);
+    let jobsFilter = Data.filter((job) => {
+      if (
+        descriptionQuery !== "" &&
+        locationQuery === "" &&
+        !fullTimeInput.checkedState
+      ) {
+        return (
+          job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
+          job.contract.includes("Part Time")
+        );
+      } else if (
+        descriptionQuery === "" &&
+        locationQuery !== "" &&
+        !fullTimeInput.checkedState
+      ) {
+        return (
+          job.location.toLowerCase().includes(locationQuery.toLowerCase()) &&
+          job.contract.includes("Part Time")
+        );
+      } else if (
+        descriptionQuery !== "" &&
+        locationQuery !== "" &&
+        fullTimeInput.checkedState
+      ) {
+        return (
+          job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
+          job.location.toLowerCase().includes(locationQuery.toLowerCase()) &&
+          job.contract.includes("Full Time")
+        );
+      } else if (
+        descriptionQuery === "" &&
+        locationQuery !== "" &&
+        fullTimeInput.checkedState
+      ) {
+        return (
+          job.location.toLowerCase().includes(locationQuery.toLowerCase()) &&
+          job.contract.includes("Full Time")
+        );
+      } else if (
+        descriptionQuery !== "" &&
+        locationQuery === "" &&
+        fullTimeInput.checkedState
+      ) {
+        return (
+          job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
+          job.contract.includes("Full Time")
+        );
+      } else if (
+        descriptionQuery !== "" &&
+        locationQuery !== "" &&
+        !fullTimeInput.checkedState
+      ) {
+        return (
+          job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
+          job.location.toLowerCase().includes(locationQuery.toLowerCase()) &&
+          job.contract.includes("Part Time")
+        );
+      } else if (
+        descriptionQuery === "" &&
+        locationQuery === "" &&
+        fullTimeInput.checkedState
+      ) {
+        return job.contract.includes("Full Time");
+      } else if (
+        descriptionQuery === "" &&
+        locationQuery === "" &&
+        !fullTimeInput.checkedState
+      ) {
+        return job;
+      }
+    });
+
+    // console.log(searchQuery);
+    setData(jobsFilter);
+    if (jobsFilter.length > 0) {
+      setTimeout(() => {
+        setStatus("resolved");
+      }, 1000);
     }
-  }
-  useEffect(() => {
-    if (data.length > 12) {
-      setDisabled(false);
+  };
+
+  const [count, setCount] = useState(0);
+  const handleLoader = (e) => {
+    e.preventDefault();
+    const counter = count + 1;
+    setCount(counter);
+    setPageLimit(pageLimit + 3);
+  };
+
+  const handleFullTimeFilter = (event) => {
+    // console.log(event.target.checked);
+    setFullTimeInput({
+      ...fullTimeInput,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
+  const [disabled, setDisabled] = useState(false);
+  React.useEffect(() => {
+    // if (Data.length > 12) {
+    //   setDisabled(false);
+    // } else {
+    //   setDisabled(false);
+    // }
+
+    if (data.length > 0) {
+      if (data.length < pageLimit) {
+        setDisabled(true);
+      } else {
+        setDisabled(false);
+      }
     } else {
-      setDisabled(false);
+      if (Data.length < pageLimit) {
+        setDisabled(true);
+      } else {
+        setDisabled(false);
+      }
     }
-    setStatus("resolved");
-  }, [data.length]);
+
+    if (status !== "resolved") {
+      // console.log("loading");
+      // console.log(query);
+      // fetch(query)
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     // console.log(data);
+      //     setData(data);
+      //     setStatus("resolved");
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     setStatus("error");
+      //   });
+
+      setStatus("loading");
+    }
+    setTimeout(() => {
+      setStatus("resolved");
+    }, 1000);
+  }, [count, pageLimit]);
   return (
     <>
       <Container maxWidth="lg" style={{ marginBottom: "100px" }}>
         <SearchForm
-          queryHandler={() => console.log("hello")}
-          fulltimeHandler={() => console.log("hello")}
+          searchSubmitHandler={searchSubmitHandler}
+          fulltimeHandler={handleFullTimeFilter}
+          locationQueryHandler={locationQueryHandler}
+          descriptionQueryHandler={descriptionQueryHandler}
           fulltimeInput={false}
+          descriptionQuery={descriptionQuery}
         />
         <Jobs
           pageLimit={pageLimit}
           status={status}
-          data={Data}
+          // setStatus={setStatus}
+          data={data.length > 0 ? data : Data}
           handleLoader={handleLoader}
           disabled={disabled}
         />

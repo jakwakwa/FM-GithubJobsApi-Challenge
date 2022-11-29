@@ -3,8 +3,8 @@ import { Link } from "@reach/router";
 import { Container } from "@material-ui/core";
 import styled from "styled-components";
 
-import headerBg from "../.././assets/desktop/bg-pattern-header.svg";
-import logo from "../.././assets/desktop/logo.svg";
+import headerBg from "../../public/assets/desktop/bg-pattern-header.svg";
+import logo from "../../public/assets/desktop/logo.svg";
 import { themeColors } from "../../styles/theme/ThemeStyled";
 
 const Header = () => {

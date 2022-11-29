@@ -4,14 +4,14 @@ import { Container, Grid } from "@material-ui/core/";
 // import JobLogo from ".././assets/jobdetailslogo.svg";
 import { SecondaryButton } from "../components/Buttons/Buttons";
 import DescriptionButton from "../components/Buttons/ApplyNowButton";
-import Oval from ".././assets/oval.svg";
-import Data from ".././data/data.json";
-import NoImage from ".././assets/no-image.png";
+import Oval from "./../public/assets/oval.svg";
+import Data from "../../public/data/data.json";
+import NoImage from "./../public/assets/no-image.png";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import JobSkeletons from "../components/JobCard/JobCardSkeletons";
 import JobDetailFooter from "./Components/JobDetailFooter";
 import { themeColors } from "./../styles/theme/ThemeStyled";
-import HowToBg from "../assets/desktop/bg-pattern-detail-footer.svg";
+import HowToBg from "./../public/assets/desktop/bg-pattern-detail-footer.svg";
 // import { formatDistance, subDays } from "date-fns";
 
 class JobDetails extends React.Component {
@@ -71,6 +71,7 @@ class JobDetails extends React.Component {
       location,
       description,
       postedAt,
+      logo,
     } = this.state;
 
     return (
@@ -84,7 +85,7 @@ class JobDetails extends React.Component {
                 }}
               >
                 <CompanyLogoWrapper>
-                  <CompanyLogo logo={""} />
+                  <CompanyLogo logo={logo} />
                 </CompanyLogoWrapper>
 
                 <CompanyInfoWrapper>
@@ -186,9 +187,10 @@ const CompanyLogoWrapper = styled.div`
 `;
 const CompanyLogo = styled.div`
   padding: 20px;
-  background: url(${NoImage}) no-repeat;
+  background: url(${(props) => `/${props.logo}`});
+  /* background: url(${NoImage}) no-repeat; */
   background-size: contain;
-  background-color: #fff;
+  background-color: #000;
   background-repeat: no-repeat;
   background-position: center center;
   background-origin: content-box;

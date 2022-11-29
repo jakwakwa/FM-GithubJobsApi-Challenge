@@ -7,13 +7,17 @@ import FilterCheckbox from "../../components/Checkbox/CustomCheckbox";
 const LOCATION_INPUT_ID = "location";
 const DESCRIPTION_INPUT_ID = "description";
 export const SearchForm = ({
-  queryHandler,
+  // descriptionQuery,
+  descriptionQueryHandler,
+  locationQueryHandler,
+  // queryHandler,
+  searchSubmitHandler,
   fulltimeHandler,
   fullTimeInput,
 }) => {
   return (
     <Wrapper>
-      <form onSubmit={queryHandler}>
+      <form onSubmit={searchSubmitHandler}>
         <Grid
           container
           direction="row"
@@ -29,6 +33,7 @@ export const SearchForm = ({
               <SearchInput
                 id={DESCRIPTION_INPUT_ID}
                 placeholder="Filter by description, companies, expertise..."
+                onChange={descriptionQueryHandler}
               />
             </Label>
           </Grid>
@@ -43,6 +48,7 @@ export const SearchForm = ({
               <SearchInput
                 id={LOCATION_INPUT_ID}
                 placeholder="Filter by location..."
+                onChange={locationQueryHandler}
               />
             </Label>
           </Grid>
@@ -65,7 +71,7 @@ export const SearchForm = ({
             />
 
             <div>
-              <PrimaryButton type="Submit" value="Submit" variant="contained">
+              <PrimaryButton type="submit" variant="contained">
                 Search
               </PrimaryButton>
             </div>

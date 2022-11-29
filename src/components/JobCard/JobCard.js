@@ -1,16 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
-//import JobLogo from "../.././assets/joblogo.svg";
-import Oval from "../.././assets/oval.svg";
-import NoImage from "../.././assets/no-image.png";
+import Oval from "../../public/assets/oval.svg";
+import NoImage from "../../public/assets/no-image.png";
+
+// import LogoDD from "../.././assets/blogr.svg";
 
 const JobCard = ({ job }) => {
-  const { company, postedAt, location, contract, position } = job;
+  const { company, postedAt, location, contract, position, logo } = job;
+  const [logoImage, setLogoImage] = React.useState(null);
+
+  React.useEffect(() => {
+    setLogoImage(logo);
+  }, [logoImage, job, logo]);
 
   return (
     <Wrapper>
-      <Logo logod={""}></Logo>
+      <Logo logod={logoImage !== null ? logoImage : null}></Logo>
+
       <Grid
         container
         direction="row"
@@ -52,11 +59,15 @@ const Wrapper = styled.div`
 `;
 
 const Logo = styled.div`
+  ${(props) => {
+    return props.logod
+      ? `background: url(${props.logod});`
+      : `background: url(${NoImage});`;
+  }}
   position: absolute;
-  background: url(${NoImage}) no-repeat;
-  /* background: url(${(props) => props.logod}) no-repeat; */
+
   background-size: cover;
-  background-color: #fff;
+  background-color: #000;
   background-repeat: no-repeat;
   background-position: center center;
   border-radius: 15px;

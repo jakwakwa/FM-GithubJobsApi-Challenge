@@ -24,7 +24,7 @@ const Home = () => {
     fullTime: false,
   });
 
-  const [pageLimit, setPageLimit] = useState(6);
+  const [pageLimit, setPageLimit] = useState(12);
   const descriptionQueryHandler = (e) => {
     setDescriptionQuery(e.target.value);
   };
@@ -238,7 +238,11 @@ const Home = () => {
     return (
       <>
         <Header />
-        <Container role="main" maxWidth="lg" style={{ marginBottom: "100px" }}>
+        <Container
+          role="main"
+          maxWidth="lg"
+          style={{ padding: "0 80px", marginBottom: "100px" }}
+        >
           <SearchForm
             role="search"
             searchSubmitHandler={searchSubmitHandler}

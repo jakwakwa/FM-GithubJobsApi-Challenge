@@ -30,7 +30,8 @@ export default Switch;
 const SwitchWrapper = styled.div`
   position: relative;
   float: right;
-  top: 52px;
+  top: 50px;
+  right: 60px;
   background: none;
   border: none;
   color: transparent;

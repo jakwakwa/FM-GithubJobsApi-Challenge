@@ -9,12 +9,12 @@ import {
 import FilterCheckbox from "../../components/Checkbox/CustomCheckbox";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStayles = makeStyles({
+const useStyles = makeStyles({
   root: {
     padding: "0 24px 24px",
   },
   paper: {
-    maxWidth: "100%",
+    maxWidth: "90%",
     width: "100%",
     backgroundColor: "rgba(0,0,0,0)",
   },
@@ -24,7 +24,7 @@ const useStayles = makeStyles({
 });
 
 function MobileSearchDialog(props) {
-  const classes = useStayles();
+  const classes = useStyles();
   const { open, onClose, filterchecked, checkboxhandler } = props;
 
   return (
@@ -35,7 +35,7 @@ function MobileSearchDialog(props) {
       style={{ padding: "0" }}
     >
       <DialogWrapper>
-        <Container classes={classes} maxWidth="lg">
+        <Container classes={classes} maxWidth="md">
           <form
             action="/"
             onSubmit={(e) => {

@@ -7,7 +7,7 @@ import DescriptionButton from "../../components/Buttons/ApplyNowButton";
 const JobDetailFooter = ({ position, website }) => {
   return (
     <ApplyNowSection>
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <Grid
           container
           direction="row"

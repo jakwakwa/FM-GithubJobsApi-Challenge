@@ -66,7 +66,7 @@ const JobDetails = () => {
 
   if (!state) {
     return (
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <Grid container>
           <JobSkeletons variant="text" />
           <JobSkeletons variant="text" />
@@ -80,7 +80,7 @@ const JobDetails = () => {
     return (
       <>
         <Header />
-        <Container role="contentinfo" maxWidth="lg">
+        <Container role="contentinfo" maxWidth="md">
           <div>
             <CompanyDetailsSection>
               <div
@@ -163,7 +163,7 @@ const JobDetails = () => {
   if (state.position === "") {
     <>
       <Header />
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <div>
           <CompanyDetailsSection>
             <div

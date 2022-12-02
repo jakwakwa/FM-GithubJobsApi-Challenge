@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "@reach/router";
+
 import { Container } from "@material-ui/core";
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 import headerBg from "../../../public/bg-pattern-header.svg";
 import logo from "../../../public/logo.svg";
 import { themeColors } from "../../styles/theme/ThemeStyled";
@@ -11,9 +11,9 @@ const Header = () => {
   return (
     <Wrapper>
       <Container>
-        <Link to="/devjob_search">
-          <span style={{ visibility: "hidden", display: "none" }}>DevJobs</span>
-          <Logo></Logo>
+        <span style={{ visibility: "hidden", display: "none" }}>DevJobs</span>
+        <Link to="/">
+          <Logo />
         </Link>
       </Container>
     </Wrapper>

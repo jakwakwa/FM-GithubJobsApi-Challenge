@@ -51,6 +51,7 @@ function CustomCheckbox(props) {
   return (
     <Checkbox
       className={classes.root}
+      checked={props.fullTimeInput}
       disableRipple
       checkedIcon={
         <CheckBoxIconChecked
@@ -64,15 +65,15 @@ function CustomCheckbox(props) {
   );
 }
 
-const FilterCheckbox = ({ label, checked, handler }) => {
+const FilterCheckbox = ({ label, handler, fullTimeInput }) => {
   return (
     <CheckBoxStyled>
       <FormControlLabel
         control={
           <CustomCheckbox
-            checked={checked}
             onChange={handler}
-            name="checkedState"
+            name="contract"
+            fullTimeInput={fullTimeInput}
           />
         }
         label={label}

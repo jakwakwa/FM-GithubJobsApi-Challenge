@@ -1,61 +1,16 @@
 /* eslint-disable no-console */
 import React, { useState } from "react";
-// import { navigate } from "@reach/router";
+
 import styled from "styled-components";
 import { Container } from "@material-ui/core/";
-import Data from "../../../public/data/data.json";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import Data from "../../public/data/data.json";
 
+import Header from "../components/Header/Header";
 // Child Component
-import SearchForm from "../SearchParams/SearchForm";
-import JobCardContainer from "../JobCardContainer/JobCardContainer";
-import { PrimaryButton } from "../../components/Buttons/Buttons";
+import SearchForm from "../containers/SearchParams/SearchForm";
+import { Jobs } from "../components/Jobs/Jobs";
 
-function Jobs({ pageLimit, status, data, handleLoader, disabled }) {
-  if (status === "loading") {
-    return (
-      <LinearProgress
-        color="secondary"
-        style={{
-          position: "fixed",
-          top: "0px",
-          left: "0px",
-          zIndex: "200",
-          width: "100vw",
-        }}
-      />
-    );
-  } else if (status === "rejected") {
-    return (
-      <div role="alert">
-        There was an error: <pre>error</pre>
-      </div>
-    );
-  } else if (status === "resolved") {
-    return (
-      <div>
-        <JobCardContainer pageLimit={pageLimit} data={data} />
-        <form onSubmit={handleLoader}>
-          <LoadMoreJobs>
-            <div>
-              <PrimaryButton
-                type="Submit"
-                variant="contained"
-                value="Submit"
-                disabled={disabled}
-              >
-                Load More
-              </PrimaryButton>
-            </div>
-          </LoadMoreJobs>
-        </form>
-      </div>
-    );
-  } else {
-    return null;
-  }
-}
-const SearchParams = () => {
+const Home = () => {
   const [status, setStatus] = useState("loading");
   const [descriptionQuery, setDescriptionQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
@@ -68,31 +23,29 @@ const SearchParams = () => {
   };
 
   const locationQueryHandler = (e) => {
-    // console.log(e.target.value);
     setLocationQuery(e.target.value);
   };
 
   const [fullTimeInput, setFullTimeInput] = useState({
-    checkedState: false,
+    contract: false,
   });
 
   const searchSubmitHandler = (e) => {
     e.preventDefault();
-
+    console.log("searchQuery", searchQuery);
     setSearchQuery({
       description: descriptionQuery,
       location: locationQuery,
-      fullTime: fullTimeInput.checkedState,
+      fullTime: fullTimeInput.contract,
     });
 
-    // setCounter(1);
     setStatus("loading");
 
     let jobsFilter = Data.filter((job) => {
       if (
         descriptionQuery !== "" &&
         locationQuery === "" &&
-        !fullTimeInput.checkedState
+        !fullTimeInput.contract
       ) {
         return (
           job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
@@ -101,7 +54,7 @@ const SearchParams = () => {
       } else if (
         descriptionQuery === "" &&
         locationQuery !== "" &&
-        !fullTimeInput.checkedState
+        !fullTimeInput.contract
       ) {
         return (
           job.location.toLowerCase().includes(locationQuery.toLowerCase()) &&
@@ -110,7 +63,7 @@ const SearchParams = () => {
       } else if (
         descriptionQuery !== "" &&
         locationQuery !== "" &&
-        fullTimeInput.checkedState
+        fullTimeInput.contract
       ) {
         return (
           job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
@@ -120,7 +73,7 @@ const SearchParams = () => {
       } else if (
         descriptionQuery === "" &&
         locationQuery !== "" &&
-        fullTimeInput.checkedState
+        fullTimeInput.contract
       ) {
         return (
           job.location.toLowerCase().includes(locationQuery.toLowerCase()) &&
@@ -129,7 +82,7 @@ const SearchParams = () => {
       } else if (
         descriptionQuery !== "" &&
         locationQuery === "" &&
-        fullTimeInput.checkedState
+        fullTimeInput.contract
       ) {
         return (
           job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
@@ -138,7 +91,7 @@ const SearchParams = () => {
       } else if (
         descriptionQuery !== "" &&
         locationQuery !== "" &&
-        !fullTimeInput.checkedState
+        !fullTimeInput.contract
       ) {
         return (
           job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
@@ -148,24 +101,27 @@ const SearchParams = () => {
       } else if (
         descriptionQuery === "" &&
         locationQuery === "" &&
-        fullTimeInput.checkedState
+        fullTimeInput.contract
       ) {
         return job.contract.includes("Full Time");
       } else if (
         descriptionQuery === "" &&
         locationQuery === "" &&
-        !fullTimeInput.checkedState
+        !fullTimeInput.contract
       ) {
         return job;
       }
     });
 
-    console.log(searchQuery);
     setData(jobsFilter);
     if (jobsFilter.length > 0) {
       setTimeout(() => {
         setStatus("resolved");
       }, 1000);
+
+      // navigate(
+      //   `/search?description=${descriptionQuery}&location=${locationQuery}&full_time=${fullTimeInput.contract}`
+      // );
     }
   };
 
@@ -178,21 +134,16 @@ const SearchParams = () => {
   };
 
   const handleFullTimeFilter = (event) => {
-    // console.log(event.target.checked);
     setFullTimeInput({
       ...fullTimeInput,
-      [event.target.name]: event.target.checked,
+      contract: event.target.checked ? "checked" : "",
     });
+
+    console.log("fti", fullTimeInput);
   };
 
   const [disabled, setDisabled] = useState(false);
   React.useEffect(() => {
-    // if (Data.length > 12) {
-    //   setDisabled(false);
-    // } else {
-    //   setDisabled(false);
-    // }
-
     if (data.length > 0) {
       if (data.length < pageLimit) {
         setDisabled(true);
@@ -208,35 +159,22 @@ const SearchParams = () => {
     }
 
     if (status !== "resolved") {
-      // console.log("loading");
-      // console.log(query);
-      // fetch(query)
-      //   .then((res) => res.json())
-      //   .then((data) => {
-      //     // console.log(data);
-      //     setData(data);
-      //     setStatus("resolved");
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     setStatus("error");
-      //   });
-
       setStatus("loading");
     }
     setTimeout(() => {
       setStatus("resolved");
     }, 1000);
-  }, [count, data.length, pageLimit, status]);
+  }, [data, pageLimit, status]);
   return (
     <>
+      <Header />
       <Container maxWidth="lg" style={{ marginBottom: "100px" }}>
         <SearchForm
           searchSubmitHandler={searchSubmitHandler}
           fulltimeHandler={handleFullTimeFilter}
           locationQueryHandler={locationQueryHandler}
           descriptionQueryHandler={descriptionQueryHandler}
-          fulltimeInput={false}
+          fulltimeInput={fullTimeInput.contract}
           descriptionQuery={descriptionQuery}
         />
         <Jobs
@@ -252,9 +190,9 @@ const SearchParams = () => {
   );
 };
 
-export default SearchParams;
+export default Home;
 
-const LoadMoreJobs = styled.div`
+export const LoadMoreJobs = styled.div`
   margin: 20px 0;
   display: flex;
   justify-content: center;

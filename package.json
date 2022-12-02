@@ -44,10 +44,11 @@
     "javascript-time-ago": "^2.3.4",
     "moment": "^2.29.0",
     "prop-types": "^15.7.0",
-    "react": ">=0.16.8",
-    "react-dom": ">=0.16.8",
+    "react": ">=16.8",
+    "react-dom": ">=16.8",
     "react-helmet": "^6.1.0",
     "react-moment": "^1.1.1",
+    "react-router-dom": "^6.4.3",
     "react-time-ago": "^6.2.2",
     "styled-components": "^5.2.1"
   },

@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import { Router, navigate } from "@reach/router";
+
+import { createRoot } from "react-dom/client";
+import {
+  Route,
+  createBrowserRouter,
+  RouterProvider,
+  createRoutesFromElements,
+} from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./styles/theme/GlobalStyles";
 import Switch from "./components/Switch/Switch";
 import { lightTheme, darkTheme } from "./styles/theme/ThemeStyled";
-// import Data from "../public/data/data.json";
-import Layout from "./components/Layout/Layout";
-import SearchParams from "./containers/SearchParams/SearchParams";
+import Home from "./pages/Home";
 import JobDetails from "./pages/JobDetails";
-// import { ScrollTop } from "./containers/SearchParams/ScrollTop";
 
 const useDarkMode = () => {
   const [theme, setTheme] = useState("light");
@@ -42,27 +45,28 @@ const App = () => {
   const [theme, toggleTheme] = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
-  if (location.pathname === "/") {
-    navigate("/devjob_search");
-  }
-
   return (
     <React.StrictMode>
       <Switch theme={theme} toggleTheme={toggleTheme} />
-
-      <Layout />
+      {/* <Layout /> */}
       <div>
         <ThemeProvider theme={themeMode}>
           <GlobalStyles />
-
-          <Router>
-            <SearchParams path="/:query" />
-            <JobDetails path="/details/:id" />
-          </Router>
+          <RouterProvider router={router} />
         </ThemeProvider>
       </div>
     </React.StrictMode>
   );
 };
+const container = document.getElementById("root");
+const root = createRoot(container);
 
-ReactDOM.render(<App />, document.getElementById("root"));
+export const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path="/" element={<Home />} />,
+      <Route path="/details/:id" element={<JobDetails />} />
+    </Route>
+  )
+);
+root.render(<App />);

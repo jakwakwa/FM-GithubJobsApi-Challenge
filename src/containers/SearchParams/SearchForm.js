@@ -7,13 +7,12 @@ import FilterCheckbox from "../../components/Checkbox/CustomCheckbox";
 const LOCATION_INPUT_ID = "location";
 const DESCRIPTION_INPUT_ID = "description";
 export const SearchForm = ({
-  // descriptionQuery,
+  descriptionQuery,
   descriptionQueryHandler,
   locationQueryHandler,
-  // queryHandler,
+  fullTimeInput,
   searchSubmitHandler,
   fulltimeHandler,
-  fullTimeInput,
 }) => {
   return (
     <Wrapper>
@@ -32,8 +31,10 @@ export const SearchForm = ({
               </IconWrapperLeft>
               <SearchInput
                 id={DESCRIPTION_INPUT_ID}
+                name="description"
                 placeholder="Filter by description, companies, expertise..."
                 onChange={descriptionQueryHandler}
+                value={descriptionQuery}
               />
             </Label>
           </Grid>
@@ -47,8 +48,10 @@ export const SearchForm = ({
 
               <SearchInput
                 id={LOCATION_INPUT_ID}
+                name="location"
                 placeholder="Filter by location..."
                 onChange={locationQueryHandler}
+                // value={location}
               />
             </Label>
           </Grid>
@@ -66,7 +69,8 @@ export const SearchForm = ({
           >
             <FilterCheckbox
               label="Full Time Only"
-              checked={fullTimeInput}
+              name="contract"
+              fullTimeInput={fullTimeInput}
               handler={fulltimeHandler}
             />
 

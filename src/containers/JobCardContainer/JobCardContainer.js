@@ -3,10 +3,12 @@ import "regenerator-runtime/runtime";
 import JobCard from "../../components/JobCard/JobCard";
 import { Grid } from "@material-ui/core/";
 
-import { Link } from "@reach/router";
+import { Link } from "react-router-dom";
 
 const JobCardContainer = ({ pageLimit, data }) => {
   const jobs = [...data];
+
+  // console.log(jobs);
 
   return (
     <>
@@ -20,7 +22,7 @@ const JobCardContainer = ({ pageLimit, data }) => {
         {jobs.length > 0 ? (
           jobs.slice(0, pageLimit).map((j) => (
             <Grid key={j.id} item xs={12} sm={6} md={4}>
-              <Link to={`/details/${j.id}`}>
+              <Link to={`/details/${j.id} `}>
                 <JobCard job={j} jobId={j.id} />
               </Link>
             </Grid>

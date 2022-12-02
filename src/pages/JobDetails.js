@@ -1,80 +1,73 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Container, Grid } from "@material-ui/core/";
 import { SecondaryButton } from "../components/Buttons/Buttons";
 import DescriptionButton from "../components/Buttons/ApplyNowButton";
 import Oval from "../../public/oval.svg";
-import Data from "../../public/data/data.json";
+import Data from "./../data/data.json";
+import { useParams } from "react-router-dom";
 import NoImage from "../../public/no-image.png";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import Header from "../components/Header/Header";
+// import LinearProgress from "@material-ui/core/LinearProgress";
 import JobSkeletons from "../components/JobCard/JobCardSkeletons";
 import JobDetailFooter from "./Components/JobDetailFooter";
 import { themeColors } from "./../styles/theme/ThemeStyled";
 import HowToBg from "../../public/bg-pattern-detail-footer.svg";
-// import { formatDistance, subDays } from "date-fns";
 
-class JobDetails extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const JobDetails = () => {
+  const [state, setState] = React.useState([]);
+  // const [loading, setLoading] = React.useState(true);
+  let { id } = useParams();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getDataFromApi = () => {
+    const data = [...Data];
 
-  componentDidMount() {
-    const getDataFromApi = () => {
-      const jsonData = Data[this.props.id - 1];
-      this.setState({
-        position: jsonData.position,
-        contract: jsonData.contract,
-        company: jsonData.company,
-        website: jsonData.website,
-        location: jsonData.location,
-        postedAt: jsonData.postedAt,
-        logo: jsonData.logo,
-        description: jsonData.description,
-      });
-    };
+    const jsonData = data[id - 1];
 
+    setState({
+      position: jsonData.position,
+      contract: jsonData.contract,
+      company: jsonData.company,
+      website: jsonData.website,
+      location: jsonData.location,
+      postedAt: jsonData.postedAt,
+      logo: jsonData.logo,
+      description: jsonData.description,
+    });
+  };
+
+  useEffect(() => {
     getDataFromApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const {
+    position,
+    contract,
+    company,
+    website,
+    location,
+    description,
+    postedAt,
+    logo,
+  } = state;
+
+  if (state.position === "") {
+    return (
+      <Container maxWidth="lg">
+        <Grid container>
+          <JobSkeletons variant="text" />
+          <JobSkeletons variant="text" />
+          <JobSkeletons variant="text" />
+        </Grid>
+      </Container>
+    );
   }
 
-  render() {
-    if (this.state.loading) {
-      return (
-        <>
-          <LinearProgress
-            color="secondary"
-            style={{
-              position: "fixed",
-              top: "0px",
-              left: "0px",
-              zIndex: "200",
-              width: "100vw",
-            }}
-          />
-          <Container maxWidth="lg">
-            <Grid container>
-              <JobSkeletons variant="text" />
-              <JobSkeletons variant="text" />
-              <JobSkeletons variant="text" />
-            </Grid>
-          </Container>
-        </>
-      );
-    }
-
-    const {
-      position,
-      contract,
-      company,
-      website,
-      location,
-      description,
-      postedAt,
-      logo,
-    } = this.state;
-
+  if (state.position !== "") {
     return (
       <>
+        <Header />
         <Container maxWidth="lg">
           <div>
             <CompanyDetailsSection>
@@ -154,7 +147,7 @@ class JobDetails extends React.Component {
       </>
     );
   }
-}
+};
 
 export default JobDetails;
 

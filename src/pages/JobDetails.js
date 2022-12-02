@@ -80,7 +80,7 @@ const JobDetails = () => {
     return (
       <>
         <Header />
-        <Container maxWidth="lg">
+        <Container role="contentinfo" maxWidth="lg">
           <div>
             <CompanyDetailsSection>
               <div

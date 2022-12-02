@@ -9,9 +9,9 @@ import { themeColors } from "../../styles/theme/ThemeStyled";
 
 const Header = () => {
   return (
-    <Wrapper>
+    <Wrapper role={"banner"}>
       <Container>
-        <span style={{ visibility: "hidden", display: "none" }}>DevJobs</span>
+        <h1 style={{ visibility: "hidden", display: "none" }}>DevJobs</h1>
         <Link to="/">
           <Logo />
         </Link>

@@ -120,18 +120,15 @@ const Home = () => {
         setTimeout(async () => {
           await setStatus("loading");
           await setData(jobsFilter);
-        }, 1000);
+        }, 1);
 
-      // navigate(
-      //   `/search?description=${descriptionQuery}&location=${locationQuery}&full_time=${fullTimeInput.contract}`
-      // );
       setLoading();
     }
 
     if (jobsFilter.length === 0) {
       setTimeout(() => {
         setStatus("rejected");
-      }, 1000);
+      }, 1);
       setLocationQuery("");
       setDescriptionQuery("");
       setFullTimeInput({
@@ -176,7 +173,7 @@ const Home = () => {
       if (status !== "rejected") {
         setTimeout(() => {
           setStatus("resolved");
-        }, 1000);
+        }, 1);
       }
     } else if (status === "rejected") {
       setTimeout(() => {
@@ -187,11 +184,11 @@ const Home = () => {
 
   if (status === "rejected") {
     return (
-      <div>
+      <>
         <Header />
-        <Container>
-          {" "}
+        <Container role="contentinfo">
           <SearchForm
+            role="search"
             searchSubmitHandler={searchSubmitHandler}
             fulltimeHandler={handleFullTimeFilter}
             locationQueryHandler={locationQueryHandler}
@@ -235,14 +232,15 @@ const Home = () => {
             {""} type contacts
           </div>
         </Container>
-      </div>
+      </>
     );
   } else {
     return (
       <>
         <Header />
-        <Container maxWidth="lg" style={{ marginBottom: "100px" }}>
+        <Container role="main" maxWidth="lg" style={{ marginBottom: "100px" }}>
           <SearchForm
+            role="search"
             searchSubmitHandler={searchSubmitHandler}
             fulltimeHandler={handleFullTimeFilter}
             locationQueryHandler={locationQueryHandler}

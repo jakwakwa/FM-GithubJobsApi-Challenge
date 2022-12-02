@@ -1,4 +1,7 @@
 
 
 # A basic redirect rule
-
+[[redirects]]
+from    = "/details/*"
+to =    "index.html"
+status = 200

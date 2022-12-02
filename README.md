@@ -4,6 +4,8 @@
 
 ## Getting Started
 
+IMPORTANT: use node version: v15.14.0
+
 run local dev host: `npm run dev`
 
 ## Welcome! 👋

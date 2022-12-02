@@ -21,7 +21,7 @@ export const SearchForm = ({
         <Grid
           container
           direction="row"
-          justify="center"
+          justify="flex-start"
           alignItems="flex-start"
         >
           {/* DESCRIPTION */}
@@ -39,9 +39,8 @@ export const SearchForm = ({
               />
             </Label>
           </Grid>
-
           {/* LOCATION */}
-          <Grid item xs sm={3} md={3}>
+          <Grid item xs sm={3} md={3} style={{ minWidth: "310px" }}>
             <Label htmlFor={LOCATION_INPUT_ID}>
               <IconWrapperLeft>
                 <LocationIcon />
@@ -56,17 +55,17 @@ export const SearchForm = ({
               />
             </Label>
           </Grid>
-
           {/* CHECKBOX  and SEARCH */}
           <Grid
             container
             direction="row"
-            justify="space-around"
+            justify="flex-end"
             alignItems="center"
+            style={{ padding: "0 0px 0 0px", minWidth: "310px" }}
             item
             xs
             sm={6}
-            md={4}
+            md={3}
           >
             <FilterCheckbox
               label="Full Time Only"
@@ -74,7 +73,6 @@ export const SearchForm = ({
               fullTimeInput={fullTimeInput}
               handler={fulltimeHandler}
             />
-
             <div>
               <SearchButton type="submit">Search</SearchButton>
             </div>
@@ -137,11 +135,11 @@ const SearchButton = styled.button`
   border: 1px solid ${themeColors.primary.violet};
   border-radius: 6px;
   color: #fff;
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing  0.8px;
   background-color: ${themeColors.primary.violet};
-  padding: 15px 32px;
+  padding: 15px 27px;
   width: 100%;
   min-width: 100%;
 

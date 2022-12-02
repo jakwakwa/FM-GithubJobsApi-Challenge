@@ -88,9 +88,11 @@ const CheckBoxStyled = styled.div`
   & .MuiTypography-body1 {
     font-family: "Kumbh Sans", sans-serif;
     font-weight: 700;
-    margin-top: 4px;
-    margin-left: 7px;
-    font-size: 15px;
+    letter-spacing: 0px;
+    margin-top: 0px;
+    margin-left: 5px;
+    margin-right: 8px !important;
+    font-size: 15.5px;
   }
   & .MuiFormControlLabel-root {
     height: 80px;

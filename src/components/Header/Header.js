@@ -29,7 +29,7 @@ const Wrapper = styled.header`
   height: 162px;
   border-bottom-left-radius: 100px;
   padding-top: 45px;
-  padding: 42px 0px 110px 120px;
+  padding: 45px 0px 110px 132px;
 `;
 
 const Logo = styled.div`

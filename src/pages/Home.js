@@ -241,7 +241,7 @@ const Home = () => {
         <Container
           role="main"
           maxWidth="lg"
-          style={{ padding: "0 80px", marginBottom: "100px" }}
+          style={{ padding: "0 87px", marginBottom: "100px" }}
         >
           <SearchForm
             role="search"

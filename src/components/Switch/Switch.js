@@ -31,7 +31,7 @@ const SwitchWrapper = styled.div`
   position: relative;
   float: right;
   top: 50px;
-  right: 60px;
+  right: 67px;
   background: none;
   border: none;
   color: transparent;

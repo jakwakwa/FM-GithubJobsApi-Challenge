@@ -80,6 +80,10 @@ p a {
     text-decoration: underline;
 }
 
+input::placeholder {
+  color: #B6B6B8;
+}
+
 button span  {
 
     font-size: 14px !important;

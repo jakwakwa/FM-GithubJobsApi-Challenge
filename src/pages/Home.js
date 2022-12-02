@@ -250,7 +250,7 @@ const Home = () => {
             fulltimeInput={fullTimeInput.contract}
             descriptionQuery={descriptionQuery}
           />
-          {hasSearched && (
+          {hasSearched && status !== "loading" && (
             <div
               style={{
                 textAlign: "left",

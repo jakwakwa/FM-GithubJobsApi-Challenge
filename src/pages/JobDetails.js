@@ -19,12 +19,20 @@ const JobDetails = () => {
   // const [loading, setLoading] = React.useState(true);
   let { id } = useParams();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getDataFromApi = () => {
+
+  const setStore = (s) => {
+    // window.scrollTo(0, 0);
+    const job = JSON.stringify(s);
+
+    window.localStorage.setItem("jobDetail", job);
+  };
+
+  const getDataFromApi = async () => {
     const data = [...Data];
 
     const jsonData = data[id - 1];
 
-    setState({
+    await setState({
       position: jsonData.position,
       contract: jsonData.contract,
       company: jsonData.company,
@@ -34,12 +42,16 @@ const JobDetails = () => {
       logo: jsonData.logo,
       description: jsonData.description,
     });
+
+    setStore(jsonData);
   };
 
   useEffect(() => {
     getDataFromApi();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const jobFromStore = window.localStorage.key["jobDetail"];
 
   const {
     position,
@@ -52,7 +64,7 @@ const JobDetails = () => {
     logo,
   } = state;
 
-  if (state.position === "") {
+  if (!state) {
     return (
       <Container maxWidth="lg">
         <Grid container>
@@ -146,6 +158,91 @@ const JobDetails = () => {
         />
       </>
     );
+  }
+
+  if (state.position === "") {
+    <>
+      <Header />
+      <Container maxWidth="lg">
+        <div>
+          <CompanyDetailsSection>
+            <div
+              style={{
+                borderRadius: "6px",
+              }}
+            >
+              <CompanyLogoWrapper>
+                <CompanyLogo logo={logo} />
+              </CompanyLogoWrapper>
+
+              <CompanyInfoWrapper>
+                <CompanyTitle>{company}</CompanyTitle>
+                <CompanySiteUrl>{website}</CompanySiteUrl>
+              </CompanyInfoWrapper>
+
+              <CompanyButtonWrapper>
+                <SecondaryButton
+                  href={website}
+                  color="secondary"
+                  variant="contained"
+                >
+                  Company Site
+                </SecondaryButton>
+              </CompanyButtonWrapper>
+            </div>
+          </CompanyDetailsSection>
+
+          <JobDescription>
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
+            >
+              <TitleWrapper>
+                <JobTime>
+                  <span>{jobFromStore.postedAt}</span>
+                  <OvalIcon></OvalIcon>
+                  <span>{jobFromStore.contract}</span>
+                </JobTime>
+                <h1>{jobFromStore.position}</h1>
+                <JobType>
+                  {jobFromStore.contract}, {jobFromStore.location}
+                </JobType>
+              </TitleWrapper>
+              <DescriptionButton
+                linkUrl={jobFromStore.website}
+                buttonText={"Apply Now"}
+              />
+            </Grid>
+
+            <HtmlWrapper>
+              <p> {jobFromStore.description}</p>
+            </HtmlWrapper>
+          </JobDescription>
+
+          <HowToSection>
+            <h3>How to Apply</h3>
+            <p>
+              Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia,
+              magna a ullamcorper laoreet, lectus arcu pulvinar risus, vitae
+              facilisis libero dolor a purus. Sed vel lacus. Mauris nibh felis,
+              adipiscing varius, adipiscing in, lacinia vel, tellus.
+            </p>
+
+            <a aria-current="page" href={jobFromStore.website}>
+              https://examplelink.com/how-to-apply
+            </a>
+          </HowToSection>
+        </div>
+      </Container>
+
+      <JobDetailFooter
+        title={company}
+        companySite={website}
+        weblink={website}
+      />
+    </>;
   }
 };
 

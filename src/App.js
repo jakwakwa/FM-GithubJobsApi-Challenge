@@ -21,6 +21,7 @@ const useDarkMode = () => {
   const setMode = (mode) => {
     window.scrollTo(0, 0);
     window.localStorage.setItem("theme", mode);
+    window.localStorage.removeItem("jobDetail");
     setTheme(mode);
   };
   const toggleTheme = () => {

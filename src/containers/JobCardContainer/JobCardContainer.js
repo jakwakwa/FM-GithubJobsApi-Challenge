@@ -8,8 +8,6 @@ import { Link } from "react-router-dom";
 const JobCardContainer = ({ pageLimit, data }) => {
   const jobs = [...data];
 
-  // console.log(jobs);
-
   return (
     <>
       <Grid

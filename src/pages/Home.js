@@ -15,7 +15,14 @@ const Home = () => {
   const [descriptionQuery, setDescriptionQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
   const [data, setData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
+
+  // eslint-disable-next-line no-unused-vars
+  const [searchQuery, setSearchQuery] = useState({
+    description: "",
+    location: "",
+    fullTime: false,
+  });
 
   const [pageLimit, setPageLimit] = useState(6);
   const descriptionQueryHandler = (e) => {
@@ -27,12 +34,12 @@ const Home = () => {
   };
 
   const [fullTimeInput, setFullTimeInput] = useState({
-    contract: false,
+    contract: "false",
   });
 
   const searchSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("searchQuery", searchQuery);
+    setHasSearched(true);
     setSearchQuery({
       description: descriptionQuery,
       location: locationQuery,
@@ -45,25 +52,48 @@ const Home = () => {
       if (
         descriptionQuery !== "" &&
         locationQuery === "" &&
-        !fullTimeInput.contract
+        fullTimeInput.contract === "checked"
       ) {
         return (
           job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
-          job.contract.includes("Part Time")
+          job.contract.includes("Full Time")
         );
       } else if (
         descriptionQuery === "" &&
         locationQuery !== "" &&
-        !fullTimeInput.contract
+        fullTimeInput.contract === "checked"
       ) {
         return (
           job.location.toLowerCase().includes(locationQuery.toLowerCase()) &&
-          job.contract.includes("Part Time")
+          job.contract.includes("Full Time")
         );
       } else if (
         descriptionQuery !== "" &&
         locationQuery !== "" &&
-        fullTimeInput.contract
+        (fullTimeInput.contract === "" || fullTimeInput.contract === "false")
+      ) {
+        return (
+          job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
+          job.location.toLowerCase().includes(locationQuery.toLowerCase())
+        );
+      } else if (
+        descriptionQuery === "" &&
+        locationQuery !== "" &&
+        (fullTimeInput.contract === "" || fullTimeInput.contract === "false")
+      ) {
+        return job.location.toLowerCase().includes(locationQuery.toLowerCase());
+      } else if (
+        descriptionQuery !== "" &&
+        locationQuery === "" &&
+        (fullTimeInput.contract === "" || fullTimeInput.contract === "false")
+      ) {
+        return job.position
+          .toLowerCase()
+          .includes(descriptionQuery.toLowerCase());
+      } else if (
+        descriptionQuery !== "" &&
+        locationQuery !== "" &&
+        fullTimeInput.contract === "checked"
       ) {
         return (
           job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
@@ -72,56 +102,41 @@ const Home = () => {
         );
       } else if (
         descriptionQuery === "" &&
-        locationQuery !== "" &&
-        fullTimeInput.contract
-      ) {
-        return (
-          job.location.toLowerCase().includes(locationQuery.toLowerCase()) &&
-          job.contract.includes("Full Time")
-        );
-      } else if (
-        descriptionQuery !== "" &&
         locationQuery === "" &&
-        fullTimeInput.contract
-      ) {
-        return (
-          job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
-          job.contract.includes("Full Time")
-        );
-      } else if (
-        descriptionQuery !== "" &&
-        locationQuery !== "" &&
-        !fullTimeInput.contract
-      ) {
-        return (
-          job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
-          job.location.toLowerCase().includes(locationQuery.toLowerCase()) &&
-          job.contract.includes("Part Time")
-        );
-      } else if (
-        descriptionQuery === "" &&
-        locationQuery === "" &&
-        fullTimeInput.contract
-      ) {
-        return job.contract.includes("Full Time");
-      } else if (
-        descriptionQuery === "" &&
-        locationQuery === "" &&
-        !fullTimeInput.contract
+        (fullTimeInput.contract === "" || fullTimeInput.contract === "false")
       ) {
         return job;
+      } else if (
+        descriptionQuery === "" &&
+        locationQuery === "" &&
+        fullTimeInput.contract === "checked"
+      ) {
+        return job.contract.includes("Full Time");
       }
     });
 
-    setData(jobsFilter);
     if (jobsFilter.length > 0) {
-      setTimeout(() => {
-        setStatus("resolved");
-      }, 1000);
+      const setLoading = () =>
+        setTimeout(async () => {
+          await setStatus("loading");
+          await setData(jobsFilter);
+        }, 1000);
 
       // navigate(
       //   `/search?description=${descriptionQuery}&location=${locationQuery}&full_time=${fullTimeInput.contract}`
       // );
+      setLoading();
+    }
+
+    if (jobsFilter.length === 0) {
+      setTimeout(() => {
+        setStatus("rejected");
+      }, 1000);
+      setLocationQuery("");
+      setDescriptionQuery("");
+      setFullTimeInput({
+        contract: "false",
+      });
     }
   };
 
@@ -138,11 +153,10 @@ const Home = () => {
       ...fullTimeInput,
       contract: event.target.checked ? "checked" : "",
     });
-
-    console.log("fti", fullTimeInput);
   };
 
   const [disabled, setDisabled] = useState(false);
+
   React.useEffect(() => {
     if (data.length > 0) {
       if (data.length < pageLimit) {
@@ -158,36 +172,129 @@ const Home = () => {
       }
     }
 
-    if (status !== "resolved") {
-      setStatus("loading");
+    if (status === "loading") {
+      if (status !== "rejected") {
+        setTimeout(() => {
+          setStatus("resolved");
+        }, 1000);
+      }
+    } else if (status === "rejected") {
+      setTimeout(() => {
+        setStatus("rejected");
+      }, 0.1);
     }
-    setTimeout(() => {
-      setStatus("resolved");
-    }, 1000);
-  }, [data, pageLimit, status]);
-  return (
-    <>
-      <Header />
-      <Container maxWidth="lg" style={{ marginBottom: "100px" }}>
-        <SearchForm
-          searchSubmitHandler={searchSubmitHandler}
-          fulltimeHandler={handleFullTimeFilter}
-          locationQueryHandler={locationQueryHandler}
-          descriptionQueryHandler={descriptionQueryHandler}
-          fulltimeInput={fullTimeInput.contract}
-          descriptionQuery={descriptionQuery}
-        />
-        <Jobs
-          pageLimit={pageLimit}
-          status={status}
-          // setStatus={setStatus}
-          data={data.length > 0 ? data : Data}
-          handleLoader={handleLoader}
-          disabled={disabled}
-        />
-      </Container>
-    </>
-  );
+  }, [data, pageLimit, status, fullTimeInput]);
+
+  if (status === "rejected") {
+    return (
+      <div>
+        <Header />
+        <Container>
+          {" "}
+          <SearchForm
+            searchSubmitHandler={searchSubmitHandler}
+            fulltimeHandler={handleFullTimeFilter}
+            locationQueryHandler={locationQueryHandler}
+            descriptionQueryHandler={descriptionQueryHandler}
+            fulltimeInput={fullTimeInput.contract}
+            descriptionQuery={descriptionQuery}
+          />
+          <div style={{ textAlign: "left", marginBottom: "50px" }}>
+            no results found...please searching for something else or try again
+            later
+          </div>
+          <div
+            style={{
+              textAlign: "left",
+              marginTop: "0px",
+              marginBottom: "50px",
+            }}
+          >
+            <p style={{ display: "inline-block" }}>
+              Searched for {"  "}
+              <span style={{ fontWeight: "900" }}>
+                {searchQuery.description
+                  ? `"${searchQuery.description}"`
+                  : `"ANY" description, company or expertise"`}{" "}
+              </span>{" "}
+              <span style={{ fontWeight: "900" }}>
+                {" "}
+                {searchQuery.location
+                  ? `located in "${searchQuery.location}"`
+                  : `at "ANY" location`}{" "}
+              </span>
+              {"  and  "}
+              <span style={{ fontWeight: "900" }}>
+                {searchQuery.fullTime === "" ||
+                searchQuery.fullTime === "false" ||
+                fullTimeInput === "false"
+                  ? `"ANY"`
+                  : "FT ONLY "}{" "}
+              </span>
+            </p>
+            {""} type contacts
+          </div>
+        </Container>
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <Header />
+        <Container maxWidth="lg" style={{ marginBottom: "100px" }}>
+          <SearchForm
+            searchSubmitHandler={searchSubmitHandler}
+            fulltimeHandler={handleFullTimeFilter}
+            locationQueryHandler={locationQueryHandler}
+            descriptionQueryHandler={descriptionQueryHandler}
+            fulltimeInput={fullTimeInput.contract}
+            descriptionQuery={descriptionQuery}
+          />
+          {hasSearched && (
+            <div
+              style={{
+                textAlign: "left",
+                marginTop: "-80px",
+                marginBottom: "50px",
+              }}
+            >
+              <p style={{ display: "inline-block" }}>
+                Searched for {"  "}
+                <span style={{ fontWeight: "900" }}>
+                  {searchQuery.description
+                    ? `"${searchQuery.description}"`
+                    : `"ANY" description, company or expertise"`}{" "}
+                </span>{" "}
+                <span style={{ fontWeight: "900" }}>
+                  {" "}
+                  {searchQuery.location
+                    ? `located in "${searchQuery.location}"`
+                    : `at "ANY" location`}{" "}
+                </span>
+                {"  and  "}
+                <span style={{ fontWeight: "900" }}>
+                  {searchQuery.fullTime === "" ||
+                  searchQuery.fullTime === "false" ||
+                  fullTimeInput === "false"
+                    ? `"ANY"`
+                    : "FT ONLY "}{" "}
+                </span>
+              </p>
+              {""} type contacts
+            </div>
+          )}
+          <Jobs
+            pageLimit={pageLimit}
+            status={status}
+            // setStatus={setStatus}
+            data={data.length > 0 ? data : Data}
+            handleLoader={handleLoader}
+            disabled={disabled}
+          />
+        </Container>
+      </>
+    );
+  }
 };
 
 export default Home;

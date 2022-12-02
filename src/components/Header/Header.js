@@ -11,8 +11,8 @@ const Header = () => {
   return (
     <Wrapper role={"banner"}>
       <Container>
-        <h1 style={{ visibility: "hidden", display: "none" }}>DevJobs</h1>
         <Link to="/">
+          <h1 style={{ visibility: "hidden", display: "none" }}>DevJobs</h1>
           <Logo />
         </Link>
       </Container>

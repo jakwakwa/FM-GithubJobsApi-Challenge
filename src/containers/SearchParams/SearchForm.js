@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core/";
-import { PrimaryButton } from "../../components/Buttons/Buttons";
+import { themeColors } from "../../styles/theme/ThemeStyled";
+// import { PrimaryButton } from "../../components/Buttons/Buttons";
 import { LocationIcon, SearchIcon } from "./Icons/Icons";
 import FilterCheckbox from "../../components/Checkbox/CustomCheckbox";
 const LOCATION_INPUT_ID = "location";
@@ -24,7 +25,7 @@ export const SearchForm = ({
           alignItems="flex-start"
         >
           {/* DESCRIPTION */}
-          <Grid item xs sm={3} md={4}>
+          <Grid item xs sm={3} md={5}>
             <Label htmlFor={DESCRIPTION_INPUT_ID}>
               <IconWrapperLeft>
                 <SearchIcon />
@@ -40,7 +41,7 @@ export const SearchForm = ({
           </Grid>
 
           {/* LOCATION */}
-          <Grid item xs sm={3} md={4}>
+          <Grid item xs sm={3} md={3}>
             <Label htmlFor={LOCATION_INPUT_ID}>
               <IconWrapperLeft>
                 <LocationIcon />
@@ -75,9 +76,7 @@ export const SearchForm = ({
             />
 
             <div>
-              <PrimaryButton type="submit" variant="contained">
-                Search
-              </PrimaryButton>
+              <SearchButton type="submit">Search</SearchButton>
             </div>
           </Grid>
         </Grid>
@@ -129,5 +128,25 @@ const SearchInput = styled.input`
   padding-left: 60px;
   @media screen and (max-width: 600px) {
     padding-left: 24px;
+  }
+`;
+
+const SearchButton = styled.button`
+  appearance: none !important;
+  outline: none;
+  border: 1px solid ${themeColors.primary.violet};
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing  0.8px;
+  background-color: ${themeColors.primary.violet};
+  padding: 15px 32px;
+  width: 100%;
+  min-width: 100%;
+
+  &:hover {
+    background-color: ${themeColors.primary.lightViolet};
+    border: 1px solid ${themeColors.primary.lightViolet};
   }
 `;

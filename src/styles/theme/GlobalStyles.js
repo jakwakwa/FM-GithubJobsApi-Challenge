@@ -75,9 +75,14 @@ a, a:hover, a:focus, a:active {
 p a {
     color: ${themeColors.primary.violet};
     font-weight: 700;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 26px;
     text-decoration: underline;
+}
+
+button span  {
+
+    font-size: 14px !important;
 }
 
 div.span {

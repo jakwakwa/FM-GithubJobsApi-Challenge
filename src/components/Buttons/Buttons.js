@@ -5,13 +5,17 @@ import { themeColors } from "../../styles/theme/ThemeStyled";
 export const PrimaryButton = withStyles(() => ({
   root: {
     color: "#fff",
-    fontSize: "16px",
+    fontSize: "14px",
     fontWeight: "700",
     textTransform: "capitalize",
     backgroundColor: themeColors.primary.violet,
     padding: "10px 32px",
     width: "100%",
     minWidth: "100%",
+    "& > span": {
+      fontSize: "14px",
+      fontWeight: "700",
+    },
     "&:hover": {
       color: "#ffffff",
       backgroundColor: themeColors.primary.lightViolet,
@@ -26,6 +30,10 @@ export const IconButton = withStyles(() => ({
     padding: "15px 5px",
     width: "100%",
     minWidth: "100%",
+    "& > span": {
+      fontSize: "14px",
+      fontWeight: "700",
+    },
     "&:hover": {
       backgroundColor: themeColors.primary.lightViolet,
     },
@@ -35,11 +43,12 @@ export const IconButton = withStyles(() => ({
 export const SecondaryButton = withStyles(() => ({
   root: {
     color: themeColors.primary.violet,
-    fontSize: "16px",
+    fontSize: "14px",
     fontWeight: "700",
     textTransform: "capitalize",
     backgroundColor: themeColors.secondary.secondaryButton,
     padding: "10px 27px",
+
     "&:hover": {
       color: themeColors.primary.violet,
       backgroundColor: themeColors.secondary.secondaryButtonHover,

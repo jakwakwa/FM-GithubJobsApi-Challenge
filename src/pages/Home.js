@@ -120,7 +120,7 @@ const Home = () => {
         setTimeout(async () => {
           await setStatus("loading");
           await setData(jobsFilter);
-        }, 1);
+        }, 1000);
 
       setLoading();
     }
@@ -128,7 +128,7 @@ const Home = () => {
     if (jobsFilter.length === 0) {
       setTimeout(() => {
         setStatus("rejected");
-      }, 1);
+      }, 1000);
       setLocationQuery("");
       setDescriptionQuery("");
       setFullTimeInput({
@@ -173,7 +173,7 @@ const Home = () => {
       if (status !== "rejected") {
         setTimeout(() => {
           setStatus("resolved");
-        }, 1);
+        }, 1000);
       }
     } else if (status === "rejected") {
       setTimeout(() => {

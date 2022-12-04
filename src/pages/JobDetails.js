@@ -8,28 +8,23 @@ import Data from "./../data/data.json";
 import { useParams } from "react-router-dom";
 import NoImage from "../../public/no-image.png";
 import Header from "../components/Header/Header";
-// import LinearProgress from "@material-ui/core/LinearProgress";
 import JobSkeletons from "../components/JobCard/JobCardSkeletons";
 import JobDetailFooter from "./Components/JobDetailFooter";
 import { themeColors } from "./../styles/theme/ThemeStyled";
 import HowToBg from "../../public/bg-pattern-detail-footer.svg";
 
 const JobDetails = () => {
+  window.scrollTo(0, 0);
   const [state, setState] = React.useState([]);
-  // const [loading, setLoading] = React.useState(true);
   let { id } = useParams();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const setStore = (s) => {
-    // window.scrollTo(0, 0);
     const job = JSON.stringify(s);
-
     window.localStorage.setItem("jobDetail", job);
   };
 
   const getDataFromApi = async () => {
     const data = [...Data];
-
     const jsonData = data[id - 1];
 
     await setState({
@@ -48,10 +43,8 @@ const JobDetails = () => {
 
   useEffect(() => {
     getDataFromApi();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const jobFromStore = window.localStorage.key["jobDetail"];
 
   const {
     position,
@@ -89,7 +82,9 @@ const JobDetails = () => {
                 }}
               >
                 <CompanyLogoWrapper>
-                  <CompanyLogo logo={logo} />
+                  <LogoInnerWrapper>
+                    <Logo src={`.${logo}`}></Logo>
+                  </LogoInnerWrapper>
                 </CompanyLogoWrapper>
 
                 <CompanyInfoWrapper>
@@ -172,17 +167,17 @@ const JobDetails = () => {
               }}
             >
               <CompanyLogoWrapper>
-                <CompanyLogo logo={logo} />
+                <Logo logo={logo} />
               </CompanyLogoWrapper>
 
               <CompanyInfoWrapper>
-                <CompanyTitle>{company}</CompanyTitle>
-                <CompanySiteUrl>{website}</CompanySiteUrl>
+                <CompanyTitle>{"company"}</CompanyTitle>
+                <CompanySiteUrl>{"website"}</CompanySiteUrl>
               </CompanyInfoWrapper>
 
               <CompanyButtonWrapper>
                 <SecondaryButton
-                  href={website}
+                  href={"#"}
                   color="secondary"
                   variant="contained"
                 >
@@ -201,23 +196,20 @@ const JobDetails = () => {
             >
               <TitleWrapper>
                 <JobTime>
-                  <span>{jobFromStore.postedAt}</span>
+                  <span>{"posted_at"}</span>
                   <OvalIcon></OvalIcon>
-                  <span>{jobFromStore.contract}</span>
+                  <span>{"contract"}</span>
                 </JobTime>
-                <h1>{jobFromStore.position}</h1>
+                <h1>{"position"}</h1>
                 <JobType>
-                  {jobFromStore.contract}, {jobFromStore.location}
+                  {"contract"}, {"location"}
                 </JobType>
               </TitleWrapper>
-              <DescriptionButton
-                linkUrl={jobFromStore.website}
-                buttonText={"Apply Now"}
-              />
+              <DescriptionButton linkUrl={"#"} buttonText={"Apply Now"} />
             </Grid>
 
             <HtmlWrapper>
-              <p> {jobFromStore.description}</p>
+              <p> {"description"}</p>
             </HtmlWrapper>
           </JobDescription>
 
@@ -230,7 +222,7 @@ const JobDetails = () => {
               adipiscing varius, adipiscing in, lacinia vel, tellus.
             </p>
 
-            <a aria-current="page" href={jobFromStore.website}>
+            <a aria-current="page" href={"/#"}>
               https://examplelink.com/how-to-apply
             </a>
           </HowToSection>
@@ -267,17 +259,52 @@ const JobDescription = styled.div`
 const CompanyLogoWrapper = styled.div`
   float: left;
   width: 140px;
+  background-size: contain;
+  background-color: #000;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-origin: content-box;
+  /* width: 100%; */
+  padding: 20px;
+  height: 140px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border-right: 0px solid ${themeColors.secondary.checkBoxBgLight};
+  border-bottom: 0px solid ${themeColors.secondary.checkBoxBgLight};
 
   /*padding: 25px;*/
   @media screen and (max-width: 600px) {
-    width: 100%;
-    float: initial;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    top: -21px;
+    z-index: 90000;
+    position: relative;
+    border-radius: 15px;
   }
 `;
+
+const LogoInnerWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+`;
+
+const Logo = styled.img`
+  position: absolute;
+
+  width: 100%;
+  /* height: 100%; */
+  /* top: 50%; */
+`;
+
 const CompanyLogo = styled.div`
   padding: 20px;
-  background: url(${(props) => `/${props.logo}`});
-  /* background: url(${NoImage}) no-repeat; */
   background-size: contain;
   background-color: #000;
   background-repeat: no-repeat;
@@ -289,16 +316,6 @@ const CompanyLogo = styled.div`
   border-bottom-left-radius: 6px;
   border-right: 2px solid ${themeColors.secondary.checkBoxBgLight};
   border-bottom: 3px solid ${themeColors.secondary.checkBoxBgLight};
-  @media screen and (max-width: 600px) {
-    padding: 0;
-    width: 50px;
-    height: 50px;
-    margin: 0 auto;
-    top: -21px;
-    z-index: 90000;
-    position: relative;
-    border-radius: 15px;
-  }
 `;
 const CompanyInfoWrapper = styled.div`
   display: inline-block;

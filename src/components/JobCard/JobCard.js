@@ -4,20 +4,16 @@ import Grid from "@material-ui/core/Grid";
 import Oval from "../../../public/oval.svg";
 import NoImage from "../../../public/no-image.png";
 
-// import LogoDD from "../.././assets/blogr.svg";
-
 const JobCard = ({ job }) => {
   const { company, postedAt, location, contract, position, logo } = job;
-  const [logoImage, setLogoImage] = React.useState(null);
-
-  React.useEffect(() => {
-    setLogoImage(logo);
-  }, [logoImage, job, logo]);
 
   return (
     <Wrapper>
-      <Logo logod={logoImage !== null ? logoImage : null}></Logo>
-
+      <LogoWrapper>
+        <LogoInnerWrapper>
+          <Logo src={logo}></Logo>
+        </LogoInnerWrapper>
+      </LogoWrapper>
       <Grid
         container
         direction="row"
@@ -58,24 +54,35 @@ const Wrapper = styled.div`
   }
 `;
 
-const Logo = styled.div`
-  ${(props) => {
-    return props.logod
-      ? `background: url(${props.logod});`
-      : `background: url(${NoImage});`;
-  }}
+const LogoWrapper = styled.div`
+  position: absolute;
+  top: -26px;
+  margin: auto;
+  width: 50px;
+  border: 2.5px solid ${({ theme }) => theme.jobLogoBorder};
+  height: 50px;
+  border-radius: 15px;
+  padding: 5px;
+  box-shadow: rgb(0 0 0 / 6%) 0px 1px 0px, rgb(0 0 0 / 15%) 0px 3px 4px;
+  background-color: ${({ theme }) => theme.jobLogoBg};
+`;
+
+const LogoInnerWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+`;
+
+const Logo = styled.img`
   position: absolute;
 
-  background-size: cover;
-  background-color: #000;
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-radius: 15px;
-  border: 2.5px solid ${({ theme }) => theme.jobLogoBorder};
-  box-shadow: rgb(0 0 0 / 6%) 0px 1px 0px, rgb(0 0 0 / 15%) 0px 3px 4px;
-  width: 50px;
-  height: 50px;
-  top: -26px;
+  width: 100%;
+  /* height: 100%; */
+  /* top: 50%; */
 `;
 
 const OvalIcon = styled.div`

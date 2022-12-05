@@ -134,11 +134,10 @@ const Label = styled.label`
 const IconWrapperLeft = styled.div`
   position: absolute;
   top: -5px;
-  left: 10px;
+  left: 0px;
 `;
 
 const IconWrapperLeftLocation = styled.div`
   position: absolute;
   top: 88px;
-  left: -233px;
 `;

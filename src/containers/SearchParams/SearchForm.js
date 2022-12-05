@@ -137,7 +137,7 @@ const Wrapper = styled.div`
 
 const IconWrapperLeft = styled.span`
   position: absolute;
-  top: -15px;
+  top: -5px;
   left: 23px;
   @media screen and (max-width: 600px) {
     display: none;

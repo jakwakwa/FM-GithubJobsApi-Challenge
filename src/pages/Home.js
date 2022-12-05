@@ -8,7 +8,7 @@ import Data from "../../public/data/data.json";
 import Header from "../components/Header/Header";
 // Child Component
 import SearchForm from "../containers/SearchParams/SearchForm";
-import { Jobs } from "../components/Jobs/Jobs";
+import { ContainerPadding, Jobs } from "../components/Jobs/Jobs";
 import { filteredJobs } from "../utils/utils";
 
 import JobCardNoResult from "../components/JobCard/JobCardNoResult";
@@ -158,19 +158,21 @@ const Home = ({ data, setData }) => {
         <Header />
 
         <Container role="main" maxWidth="lg">
-          <SearchForm
-            role="search"
-            searchSubmitHandler={searchSubmitHandler}
-            fulltimeHandler={handleFullTimeFilter}
-            locationQueryHandler={locationQueryHandler}
-            descriptionQueryHandler={descriptionQueryHandler}
-            fulltimeInput={fullTimeInput.contract}
-            descriptionQuery={descriptionQuery}
-          />
-          {hasSearched && status !== "loading" && (
-            <JobCardResultText searchQuery={(searchQuery, fullTimeInput)} />
-          )}
+          <ContainerPadding>
+            <SearchForm
+              role="search"
+              searchSubmitHandler={searchSubmitHandler}
+              fulltimeHandler={handleFullTimeFilter}
+              locationQueryHandler={locationQueryHandler}
+              descriptionQueryHandler={descriptionQueryHandler}
+              fulltimeInput={fullTimeInput.contract}
+              descriptionQuery={descriptionQuery}
+            />
 
+            {hasSearched && status !== "loading" && (
+              <JobCardResultText searchQuery={(searchQuery, fullTimeInput)} />
+            )}
+          </ContainerPadding>
           <Jobs
             pageLimit={pageLimit}
             status={status}

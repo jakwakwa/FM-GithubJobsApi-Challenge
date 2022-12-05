@@ -14,7 +14,7 @@ const MobileSearchButton = ({ handleMobileSearchClick, type, value }) => {
 
         position: "absolute",
         left: 0,
-        top: "180px",
+        top: "120px",
         width: "100%",
         padding: "0px 20px",
       }}

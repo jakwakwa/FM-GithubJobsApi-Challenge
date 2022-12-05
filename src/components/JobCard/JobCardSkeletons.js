@@ -14,7 +14,7 @@ export const JobCardSkeletons = ({ variant, widthPerc, height }) => {
 export default JobCardSkeletons;
 export const JobDetaiSkeletonSearch = () => {
   return (
-    <WrapperDetails
+    <WrapperDetailsTop
       style={{
         width: "100%",
         marginTop: "-40px",
@@ -42,7 +42,7 @@ export const JobDetaiSkeletonSearch = () => {
         <Skeleton variant={"text"} width={"100%"} height={"20px"} />
         <Skeleton variant={"text"} width={"100%"} height={"20px"} />
       </div>
-    </WrapperDetails>
+    </WrapperDetailsTop>
   );
 };
 export const JobDetaiSkeletonTop = () => {
@@ -51,7 +51,7 @@ export const JobDetaiSkeletonTop = () => {
       style={{
         width: "100%",
         height: `${"150px"}`,
-        display: "flex",
+
         flexDirection: "row",
         justifyContent: "space-between",
         gap: "20px",
@@ -248,6 +248,12 @@ const Wrapper = styled.div`
   padding: 30px;
   padding-top: 50px;
   margin-bottom: 33px;
+
+  @media (max-width: 768px) {
+    flex-direction: column !important;
+
+    width: 100% !important;
+  }
 `;
 
 const WrapperDetails = styled.div`
@@ -261,6 +267,23 @@ const WrapperDetails = styled.div`
   padding: 0px;
   padding-top: 0px;
   margin-bottom: 33px;
+`;
+
+const WrapperDetailsTop = styled.div`
+  display: flex !important;
+  position: relative;
+  background: ${({ theme }) => theme.jobcards};
+  height: 228px;
+  gap: 0px;
+  width: 30%;
+  margin-right: 30px;
+  border-radius: 6px;
+  padding: 0px;
+  padding-top: 0px;
+  margin-bottom: 33px;
+  @media (max-width: 768px) {
+    display: none !important;
+  }
 `;
 
 const WrapperDetailsBottom = styled.div`

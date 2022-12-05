@@ -52,7 +52,7 @@ export function Jobs({ pageLimit, status, data, handleLoader, disabled }) {
 
 export const ContainerPadding = styled.div`
   /* marginbottom: 100px; */
-
+  padding: 0px 50px;
   @media (max-width: 768px) {
     padding: 0 0px;
   }

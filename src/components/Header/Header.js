@@ -30,8 +30,10 @@ const Wrapper = styled.header`
   border-bottom-left-radius: 100px;
   padding-top: 45px;
   padding: 45px 0px 110px 132px;
-  @media screen {
-    padding: 45px 0px 110px 0px;
+  @media screen and (max-width: 600px) {
+    padding: 44px 18px 22px 5px;
+    height: 106px;
+    border-radius: 0;
   }
 `;
 

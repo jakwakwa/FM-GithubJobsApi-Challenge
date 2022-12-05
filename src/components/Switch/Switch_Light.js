@@ -1,7 +1,7 @@
 import { withStyles } from "@material-ui/core/styles";
 import { Switch } from "@material-ui/core";
 
-const WhiteSwitch = withStyles({
+const SwitchLight = withStyles({
   root: {
     top: "-4px",
     width: "68px",
@@ -42,4 +42,4 @@ const WhiteSwitch = withStyles({
   },
 })(Switch);
 
-export default WhiteSwitch;
+export default SwitchLight;

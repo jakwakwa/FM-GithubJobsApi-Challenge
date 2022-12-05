@@ -30,6 +30,9 @@ const Wrapper = styled.header`
   border-bottom-left-radius: 100px;
   padding-top: 45px;
   padding: 45px 0px 110px 132px;
+  @media screen {
+    padding: 45px 0px 110px 0px;
+  }
 `;
 
 const Logo = styled.div`

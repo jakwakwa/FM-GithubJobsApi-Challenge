@@ -37,6 +37,7 @@ export const lightTheme = {
   checkBoxBg: themeColors.secondary.checkBoxBgLight,
   jobLogoBorder: themeColors.secondary.checkBoxBgLight,
   jobLogoBg: themeColors.primary.veryDarkBlue,
+  buttonText: themeColors.secondary.white,
 };
 export const darkTheme = {
   body: themeColors.primary.midnight,
@@ -53,4 +54,5 @@ export const darkTheme = {
   checkBoxBg: themeColors.secondary.checkBoxBgDark,
   jobLogoBorder: themeColors.primary.violet,
   jobLogoBg: themeColors.primary.veryDarkBlue,
+  buttonText: themeColors.secondary.white,
 };

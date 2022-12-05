@@ -11,6 +11,7 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./styles/theme/GlobalStyles";
 import Switch from "./components/Switch/Switch";
 import { lightTheme, darkTheme } from "./styles/theme/ThemeStyled";
+import Data from "../public/data/data.json";
 import Home from "./pages/Home";
 import JobDetails from "./pages/JobDetails";
 
@@ -45,11 +46,22 @@ const useDarkMode = () => {
 const App = () => {
   const [theme, toggleTheme] = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
+  const [data, setData] = useState([...Data]);
 
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route>
+        <Route path="/" element={<Home data={data} setData={setData} />} />,
+        <Route
+          path="/details/:id"
+          element={<JobDetails data={data} setData={setData} />}
+        />
+      </Route>
+    )
+  );
   return (
     <React.StrictMode>
       <Switch theme={theme} toggleTheme={toggleTheme} />
-      {/* <Layout /> */}
       <div>
         <ThemeProvider theme={themeMode}>
           <GlobalStyles />
@@ -62,12 +74,4 @@ const App = () => {
 const container = document.getElementById("root");
 const root = createRoot(container);
 
-export const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route>
-      <Route path="/" element={<Home />} />,
-      <Route path="/details/:id" element={<JobDetails />} />
-    </Route>
-  )
-);
 root.render(<App />);

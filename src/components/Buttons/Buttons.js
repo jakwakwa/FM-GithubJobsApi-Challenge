@@ -10,6 +10,7 @@ export const PrimaryButton = withStyles(() => ({
     textTransform: "capitalize",
     backgroundColor: themeColors.primary.violet,
     padding: "10px 32px",
+    marginBottom: "20px",
     width: "100%",
     minWidth: "100%",
     "& > span": {
@@ -28,7 +29,9 @@ export const IconButton = withStyles(() => ({
     textTransform: "capitalize",
     backgroundColor: themeColors.primary.violet,
     padding: "15px 5px",
+
     width: "100%",
+
     minWidth: "100%",
     "& > span": {
       fontSize: "14px",
@@ -48,6 +51,7 @@ export const SecondaryButton = withStyles(() => ({
     textTransform: "capitalize",
     backgroundColor: themeColors.secondary.secondaryButton,
     padding: "10px 27px",
+    marginBottom: "5px",
 
     "&:hover": {
       color: themeColors.primary.violet,

@@ -9,12 +9,18 @@ import Header from "../components/Header/Header";
 // Child Component
 import SearchForm from "../containers/SearchParams/SearchForm";
 import { Jobs } from "../components/Jobs/Jobs";
+import { filteredJobs } from "../utils/utils";
 
-const Home = () => {
+import JobCardNoResult from "../components/JobCard/JobCardNoResult";
+import JobCardLoading from "../components/JobCard/JobCardLoading";
+import JobCardResultText from "../components/JobCard/JobCardResultText";
+import { pageLimitCalc } from "./helpers/helpers";
+
+const Home = ({ data, setData }) => {
   const [status, setStatus] = useState("loading");
   const [descriptionQuery, setDescriptionQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
-  const [data, setData] = useState([]);
+
   const [hasSearched, setHasSearched] = useState(false);
 
   // eslint-disable-next-line no-unused-vars
@@ -48,72 +54,12 @@ const Home = () => {
 
     setStatus("loading");
 
-    let jobsFilter = Data.filter((job) => {
-      if (
-        descriptionQuery !== "" &&
-        locationQuery === "" &&
-        fullTimeInput.contract === "checked"
-      ) {
-        return (
-          job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
-          job.contract.includes("Full Time")
-        );
-      } else if (
-        descriptionQuery === "" &&
-        locationQuery !== "" &&
-        fullTimeInput.contract === "checked"
-      ) {
-        return (
-          job.location.toLowerCase().includes(locationQuery.toLowerCase()) &&
-          job.contract.includes("Full Time")
-        );
-      } else if (
-        descriptionQuery !== "" &&
-        locationQuery !== "" &&
-        (fullTimeInput.contract === "" || fullTimeInput.contract === "false")
-      ) {
-        return (
-          job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
-          job.location.toLowerCase().includes(locationQuery.toLowerCase())
-        );
-      } else if (
-        descriptionQuery === "" &&
-        locationQuery !== "" &&
-        (fullTimeInput.contract === "" || fullTimeInput.contract === "false")
-      ) {
-        return job.location.toLowerCase().includes(locationQuery.toLowerCase());
-      } else if (
-        descriptionQuery !== "" &&
-        locationQuery === "" &&
-        (fullTimeInput.contract === "" || fullTimeInput.contract === "false")
-      ) {
-        return job.position
-          .toLowerCase()
-          .includes(descriptionQuery.toLowerCase());
-      } else if (
-        descriptionQuery !== "" &&
-        locationQuery !== "" &&
-        fullTimeInput.contract === "checked"
-      ) {
-        return (
-          job.position.toLowerCase().includes(descriptionQuery.toLowerCase()) &&
-          job.location.toLowerCase().includes(locationQuery.toLowerCase()) &&
-          job.contract.includes("Full Time")
-        );
-      } else if (
-        descriptionQuery === "" &&
-        locationQuery === "" &&
-        (fullTimeInput.contract === "" || fullTimeInput.contract === "false")
-      ) {
-        return job;
-      } else if (
-        descriptionQuery === "" &&
-        locationQuery === "" &&
-        fullTimeInput.contract === "checked"
-      ) {
-        return job.contract.includes("Full Time");
-      }
-    });
+    const jobsFilter = filteredJobs(
+      data,
+      descriptionQuery,
+      locationQuery,
+      fullTimeInput
+    );
 
     if (jobsFilter.length > 0) {
       const setLoading = () =>
@@ -140,6 +86,7 @@ const Home = () => {
   const [count, setCount] = useState(0);
   const handleLoader = (e) => {
     e.preventDefault();
+
     const counter = count + 1;
     setCount(counter);
     setPageLimit(pageLimit + 3);
@@ -155,20 +102,12 @@ const Home = () => {
   const [disabled, setDisabled] = useState(false);
 
   React.useEffect(() => {
-    if (data.length > 0) {
-      if (data.length < pageLimit) {
-        setDisabled(true);
-      } else {
-        setDisabled(false);
-      }
+    if (data.length < pageLimit) {
+      setDisabled(true);
     } else {
-      if (Data.length < pageLimit) {
-        setDisabled(true);
-      } else {
-        setDisabled(false);
-      }
+      pageLimitCalc(data, pageLimit, setDisabled);
     }
-
+    // Mocking out API call with Status and Data
     if (status === "loading") {
       if (status !== "rejected") {
         setTimeout(() => {
@@ -180,61 +119,13 @@ const Home = () => {
         setStatus("rejected");
       }, 0.1);
     }
-  }, [data, pageLimit, status, fullTimeInput]);
+  }, [data, pageLimit, status, fullTimeInput, setDisabled, count]);
+
+  if (status === "loading") {
+    return <JobCardLoading />;
+  }
 
   if (status === "rejected") {
-    return (
-      <>
-        <Header />
-        <Container role="contentinfo">
-          <SearchForm
-            role="search"
-            searchSubmitHandler={searchSubmitHandler}
-            fulltimeHandler={handleFullTimeFilter}
-            locationQueryHandler={locationQueryHandler}
-            descriptionQueryHandler={descriptionQueryHandler}
-            fulltimeInput={fullTimeInput.contract}
-            descriptionQuery={descriptionQuery}
-          />
-          <div style={{ textAlign: "left", marginBottom: "50px" }}>
-            no results found...please searching for something else or try again
-            later
-          </div>
-          <div
-            style={{
-              textAlign: "left",
-              marginTop: "0px",
-              marginBottom: "50px",
-            }}
-          >
-            <p style={{ display: "inline-block" }}>
-              Searched for {"  "}
-              <span style={{ fontWeight: "900" }}>
-                {searchQuery.description
-                  ? `"${searchQuery.description}"`
-                  : `"ANY" description, company or expertise"`}{" "}
-              </span>{" "}
-              <span style={{ fontWeight: "900" }}>
-                {" "}
-                {searchQuery.location
-                  ? `located in "${searchQuery.location}"`
-                  : `at "ANY" location`}{" "}
-              </span>
-              {"  and  "}
-              <span style={{ fontWeight: "900" }}>
-                {searchQuery.fullTime === "" ||
-                searchQuery.fullTime === "false" ||
-                fullTimeInput === "false"
-                  ? `"ANY"`
-                  : "FT ONLY "}{" "}
-              </span>
-            </p>
-            {""} type contacts
-          </div>
-        </Container>
-      </>
-    );
-  } else {
     return (
       <>
         <Header />
@@ -252,43 +143,37 @@ const Home = () => {
             fulltimeInput={fullTimeInput.contract}
             descriptionQuery={descriptionQuery}
           />
+          <JobCardNoResult
+            searchQuery={searchQuery}
+            fullTimeInput={fullTimeInput}
+          />
+        </Container>
+      </>
+    );
+  }
+
+  if (status === "resolved") {
+    return (
+      <>
+        <Header />
+
+        <Container role="main" maxWidth="lg">
+          <SearchForm
+            role="search"
+            searchSubmitHandler={searchSubmitHandler}
+            fulltimeHandler={handleFullTimeFilter}
+            locationQueryHandler={locationQueryHandler}
+            descriptionQueryHandler={descriptionQueryHandler}
+            fulltimeInput={fullTimeInput.contract}
+            descriptionQuery={descriptionQuery}
+          />
           {hasSearched && status !== "loading" && (
-            <div
-              style={{
-                textAlign: "left",
-                marginTop: "-80px",
-                marginBottom: "50px",
-              }}
-            >
-              <p style={{ display: "inline-block" }}>
-                Searched for {"  "}
-                <span style={{ fontWeight: "900" }}>
-                  {searchQuery.description
-                    ? `"${searchQuery.description}"`
-                    : `"ANY" description, company or expertise"`}{" "}
-                </span>{" "}
-                <span style={{ fontWeight: "900" }}>
-                  {" "}
-                  {searchQuery.location
-                    ? `located in "${searchQuery.location}"`
-                    : `at "ANY" location`}{" "}
-                </span>
-                {"  and  "}
-                <span style={{ fontWeight: "900" }}>
-                  {searchQuery.fullTime === "" ||
-                  searchQuery.fullTime === "false" ||
-                  fullTimeInput === "false"
-                    ? `"ANY"`
-                    : "FT ONLY "}{" "}
-                </span>
-              </p>
-              {""} type contacts
-            </div>
+            <JobCardResultText searchQuery={(searchQuery, fullTimeInput)} />
           )}
+
           <Jobs
             pageLimit={pageLimit}
             status={status}
-            // setStatus={setStatus}
             data={data.length > 0 ? data : Data}
             handleLoader={handleLoader}
             disabled={disabled}
@@ -308,13 +193,9 @@ export const LoadMoreJobs = styled.div`
   align-items: center;
   margin-bottom: 100px;
   & .Mui-disabled {
-    background-color: #2d2d2d;
-    color: #4a4a4a;
-    pointer-events: auto !important;
+    background-color: rgba(157, 174, 194, 0.5);
+    color: #fff;
     cursor: not-allowed !important;
-    &:hover {
-      background-color: #2d2d2d;
-      color: #4a4a4a;
-    }
+    pointer-events: auto !important;
   }
 `;

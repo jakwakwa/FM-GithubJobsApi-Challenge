@@ -4,67 +4,85 @@ import { Container, Grid } from "@material-ui/core/";
 import { SecondaryButton } from "../components/Buttons/Buttons";
 import DescriptionButton from "../components/Buttons/ApplyNowButton";
 import Oval from "../../public/oval.svg";
-import Data from "./../data/data.json";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header/Header";
-import JobSkeletons from "../components/JobCard/JobCardSkeletons";
-import JobDetailFooter from "./Components/JobDetailFooter";
+import {
+  JobDetaiSkeletonTop,
+  JobDetaiSkeletonMiddle,
+  JobDetaiSkeletonBottom,
+} from "../components/JobCard/JobCardSkeletons";
 import { themeColors } from "./../styles/theme/ThemeStyled";
 import HowToBg from "../../public/bg-pattern-detail-footer.svg";
 
-const JobDetails = () => {
+const JobDetails = ({ data }) => {
   window.scrollTo(0, 0);
-  const [state, setState] = React.useState([]);
+  const [state, setState] = React.useState({});
+  const [mockLoader, setMockLoader] = React.useState(true);
   let { id } = useParams();
 
-  const setStore = (s) => {
-    const job = JSON.stringify(s);
-    window.localStorage.setItem("jobDetail", job);
-  };
-
-  const getDataFromApi = async () => {
-    const data = [...Data];
-    const jsonData = data[id - 1];
-
-    await setState({
-      position: jsonData.position,
-      contract: jsonData.contract,
-      company: jsonData.company,
-      website: jsonData.website,
-      location: jsonData.location,
-      postedAt: jsonData.postedAt,
-      logo: jsonData.logo,
-      description: jsonData.description,
-    });
-
-    setStore(jsonData);
-  };
-
-  useEffect(() => {
-    getDataFromApi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const {
-    position,
+  let position,
     contract,
     company,
     website,
     location,
     description,
     postedAt,
-    logo,
-  } = state;
+    logo = undefined;
 
-  if (!state) {
+  if (data.length > 0) {
+    position = state.position;
+    contract = state.contract;
+    company = state.company;
+    website = state.website;
+    location = state.location;
+    description = state.description;
+    postedAt = state.postedAt;
+    logo = state.logo;
+  }
+
+  const getData = async (dataFromProps) => {
+    const loadedData = [...dataFromProps];
+    const jobSelected = loadedData[id - 1];
+
+    await setState({
+      position: jobSelected.position,
+      contract: jobSelected.contract,
+      company: jobSelected.company,
+      website: jobSelected.website,
+      location: jobSelected.location,
+      postedAt: jobSelected.postedAt,
+      logo: jobSelected.logo,
+      description: jobSelected.description,
+    });
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMockLoader(false);
+    }, 1000);
+    getData(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (mockLoader) {
     return (
-      <Container maxWidth="md">
-        <Grid container>
-          <JobSkeletons variant="text" />
-          <JobSkeletons variant="text" />
-          <JobSkeletons variant="text" />
-        </Grid>
-      </Container>
+      <>
+        <Header />
+        <Container style={{ marginTop: "-60px" }} flex maxWidth="md">
+          <JobDetaiSkeletonTop
+            widthPerc={100}
+            height={"300px"}
+            variant="text"
+          />
+
+          <JobDetaiSkeletonMiddle
+            widthPerc={100}
+            height={"300px"}
+            variant="text"
+          />
+          <JobDetaiSkeletonBottom />
+        </Container>
+      </>
     );
   }
 
@@ -144,96 +162,24 @@ const JobDetails = () => {
             </HowToSection>
           </div>
         </Container>
-
-        <JobDetailFooter
-          title={company}
-          companySite={website}
-          weblink={website}
-        />
-      </>
-    );
-  }
-
-  if (state.position === "") {
-    <>
-      <Header />
-      <Container maxWidth="md">
-        <div>
-          <CompanyDetailsSection>
-            <div
-              style={{
-                borderRadius: "6px",
-              }}
-            >
-              <CompanyLogoWrapper>
-                <Logo logo={logo} />
-              </CompanyLogoWrapper>
-
-              <CompanyInfoWrapper>
-                <CompanyTitle>{"company"}</CompanyTitle>
-                <CompanySiteUrl>{"website"}</CompanySiteUrl>
-              </CompanyInfoWrapper>
-
-              <CompanyButtonWrapper>
-                <SecondaryButton
-                  href={"#"}
-                  color="secondary"
-                  variant="contained"
-                >
-                  Company Site
-                </SecondaryButton>
-              </CompanyButtonWrapper>
-            </div>
-          </CompanyDetailsSection>
-
-          <JobDescription>
+        <ApplyNowSection>
+          <Container maxWidth="md">
             <Grid
               container
               direction="row"
               justify="space-between"
               alignItems="center"
             >
-              <TitleWrapper>
-                <JobTime>
-                  <span>{"posted_at"}</span>
-                  <OvalIcon></OvalIcon>
-                  <span>{"contract"}</span>
-                </JobTime>
-                <h1>{"position"}</h1>
-                <JobType>
-                  {"contract"}, {"location"}
-                </JobType>
-              </TitleWrapper>
-              <DescriptionButton linkUrl={"#"} buttonText={"Apply Now"} />
+              <CompanyTitle>{position}</CompanyTitle>
+              <DescriptionButton
+                linkUrl={`${website}/apply`}
+                buttonText={"Apply Now"}
+              />
             </Grid>
-
-            <HtmlWrapper>
-              <p> {"description"}</p>
-            </HtmlWrapper>
-          </JobDescription>
-
-          <HowToSection>
-            <h3>How to Apply</h3>
-            <p>
-              Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia,
-              magna a ullamcorper laoreet, lectus arcu pulvinar risus, vitae
-              facilisis libero dolor a purus. Sed vel lacus. Mauris nibh felis,
-              adipiscing varius, adipiscing in, lacinia vel, tellus.
-            </p>
-
-            <a aria-current="page" href={"/#"}>
-              https://examplelink.com/how-to-apply
-            </a>
-          </HowToSection>
-        </div>
-      </Container>
-
-      <JobDetailFooter
-        title={company}
-        companySite={website}
-        weblink={website}
-      />
-    </>;
+          </Container>
+        </ApplyNowSection>
+      </>
+    );
   }
 };
 
@@ -336,6 +282,7 @@ const CompanyButtonWrapper = styled.div`
 
 const CompanyTitle = styled.h2`
   padding: 0px;
+  color: ( { props.theme }) => props.theme.text};
   @media screen and (max-width: 600px) {
     text-align: center;
   }
@@ -410,4 +357,10 @@ const OvalIcon = styled.span`
   bottom: -12px;
   margin-left: 10px;
   margin-right: 10px;
+`;
+
+const ApplyNowSection = styled.div`
+  position: relative;
+  padding: 25px 0;
+  background: ${({ theme }) => theme.jobcards};
 `;

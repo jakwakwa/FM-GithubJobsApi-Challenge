@@ -6,7 +6,6 @@ import DescriptionButton from "../components/Buttons/ApplyNowButton";
 import Oval from "../../public/oval.svg";
 import Data from "./../data/data.json";
 import { useParams } from "react-router-dom";
-import NoImage from "../../public/no-image.png";
 import Header from "../components/Header/Header";
 import JobSkeletons from "../components/JobCard/JobCardSkeletons";
 import JobDetailFooter from "./Components/JobDetailFooter";
@@ -297,26 +296,9 @@ const LogoInnerWrapper = styled.div`
 
 const Logo = styled.img`
   position: absolute;
-
   width: 100%;
-  /* height: 100%; */
-  /* top: 50%; */
 `;
 
-const CompanyLogo = styled.div`
-  padding: 20px;
-  background-size: contain;
-  background-color: #000;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-origin: content-box;
-  width: 100%;
-  height: 140px;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-  border-right: 2px solid ${themeColors.secondary.checkBoxBgLight};
-  border-bottom: 3px solid ${themeColors.secondary.checkBoxBgLight};
-`;
 const CompanyInfoWrapper = styled.div`
   display: inline-block;
   width: 28%;
@@ -351,6 +333,7 @@ const CompanyButtonWrapper = styled.div`
     margin-bottom: 32px;
   }
 `;
+
 const CompanyTitle = styled.h2`
   padding: 0px;
   @media screen and (max-width: 600px) {
@@ -372,7 +355,6 @@ const HtmlWrapper = styled.div`
     padding-bottom: 24px;
   }
   & p > strong {
-    /* styles to apply to the li tag */
     margin-bottom: 24px;
   }
 `;
@@ -389,11 +371,11 @@ const JobType = styled.span`
   margin-top: 13px;
   display: inline-block;
 `;
+
 const HowToSection = styled.div`
   background: url(${HowToBg}) no-repeat top center;
   background-color: ${themeColors.primary.violet};
   width: 100%;
-  /*height: 162px;*/
   margin-top: 50px;
   padding: 41px;
   margin-bottom: 92px;

@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Oval from "../../../public/oval.svg";
-import NoImage from "../../../public/no-image.png";
 
 const JobCard = ({ job }) => {
   const { company, postedAt, location, contract, position, logo } = job;
@@ -79,10 +78,7 @@ const LogoInnerWrapper = styled.div`
 
 const Logo = styled.img`
   position: absolute;
-
   width: 100%;
-  /* height: 100%; */
-  /* top: 50%; */
 `;
 
 const OvalIcon = styled.div`
